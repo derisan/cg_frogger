@@ -3,162 +3,101 @@
 #include <iostream>
 #include <algorithm>
 
-#include <GL/glew.h>
-#include <GL/freeglut.h>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "shader.h"
 #include "random.h"
-#include "cube.h"
-#include "plane.h"
+#include "actor.h"
+#include "renderer.h"
 
 Game::Game(int w, int h)
-	: mScrWidth{ w },
-	mScrHeight{ h },
-	mShouldCloseWindow{ false },
+	: mShouldCloseWindow{ false },
 	mShouldPause{ false },
-	mMeshShader{ nullptr },
-	mPhongShader{ nullptr },
-	mCamera{ nullptr }
+	mRenderer{ nullptr }
 {
 
 }
 
 bool Game::Init(int* argc, char** argv)
 {
-	glutInit(argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(mScrWidth, mScrHeight);
-	glutCreateWindow("Frogger");
-
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK)
+	mRenderer = new Renderer{ this };
+	if (!mRenderer->Init(argc, argv, 1024, 768))
 	{
-		std::cout << "Unable to initialize GLEW" << std::endl;
+		std::cout << "Failed to initialize renderer" << std::endl;
+		delete mRenderer;
+		mRenderer = nullptr;
 		return false;
 	}
 
 	Random::Init();
 
-	if (!LoadData())
-	{
-		std::cout << "Failed to load data" << std::endl;
-		return false;
-	}
+	LoadData();
 
 	return true;
 }
 
-bool Game::LoadData()
+void Game::LoadData()
 {
-	mMeshShader = new Shader{};
-	mPhongShader = new Shader{};
-	if (!mMeshShader->Load("Shaders/mesh.vert", "Shaders/mesh.frag")
-		|| !mPhongShader->Load("Shaders/phong.vert", "Shaders/phong.frag"))
-		return false;
 	
-	mCamera = new Camera{};
-	mCamera->position = glm::vec3{ 0.0f, 1.0f, 6.0f };
-	mCamera->target = glm::vec3{ 0.0f, 0.0f, -1.0f };
-	mCamera->up = glm::vec3{ 0.0f, 1.0f, 0.0f };
-
-	glm::mat4 proj{ 1.0f };
-	proj = glm::perspective(45.0f, static_cast<float>(mScrWidth) / static_cast<float>(mScrHeight), 
-		0.1f, 100.0f);
-
-	// Projection matrix rarely changes
-	mMeshShader->SetActive();
-	mMeshShader->SetMatrix4Uniform("uProj", proj);
-	mPhongShader->SetActive();
-	mPhongShader->SetMatrix4Uniform("uProj", proj);
-
-	Cube* cube{ new Cube{this} };
-	cube->SetColor(glm::vec3{ 1.0f, 0.0f, 0.0f });
-	cube->SetScale(glm::vec3{ 0.5f, 0.5f, 0.5f });
-
-	Plane* plane{ new Plane{this} };
-	plane->SetScale(glm::vec3{ 10.0f, 1.0f, 10.0f });
-	plane->SetColor(glm::vec3{ 0.0f, 1.0f, 1.0f });
-	
-	
-	return true;
 }
 
 void Game::Shutdown()
 {
-	delete mMeshShader;
-	delete mPhongShader;
-	delete mCamera;
+	while (!mActors.empty())
+		delete mActors.back();
 
-	while (!mObjs.empty())
-		delete mObjs.back();
+	if (mRenderer)
+	{
+		mRenderer->Shutdown();
+		delete mRenderer;
+	}
 }
 
 void Game::ProcessKeyboardInput(unsigned char key)
 {
 	switch (key)
 	{		
+		case 27:
+			mShouldCloseWindow = true;
+			break;
 		case 'p': case 'P':
 			mShouldPause = !mShouldPause;
 			break;
 	}
+
+	for (auto actor : mActors)
+		actor->ProcessInput(key);
 }
 
-void Game::ProcessMouseInput(int button, int state, int x, int y)
-{
-	
-}
 
 void Game::Update()
 {
 	if (mShouldPause)
 		return;
 
-	std::vector<Object*> deads;
-	for (auto obj : mObjs)
+	std::vector<Actor*> deads;
+	for (auto actor: mActors)
 	{
-		obj->Update();
-		if (obj->GetState() == Object::State::kDead)
-			deads.emplace_back(obj);
+		actor->Update();
+		if (actor->GetState() == Actor::State::kDead)
+			deads.emplace_back(actor);
 	}
 
-	for (auto obj : deads)
-		delete obj;
+	for (auto actor : deads)
+		delete actor;
 	deads.clear();
 }
 
 void Game::Draw()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	glm::mat4 view{ 1.0f };
-	view = glm::lookAt(mCamera->position, mCamera->position + mCamera->target, mCamera->up);
-	mMeshShader->SetActive();
-	mMeshShader->SetMatrix4Uniform("uView", view);
-
-	for (auto obj : mObjs)
-		obj->Draw(mMeshShader);
-
-	mPhongShader->SetActive();
-	mPhongShader->SetMatrix4Uniform("uView", view);
-	
-
-	glutSwapBuffers();
+	mRenderer->Draw();
 }
 
-void Game::AddObj(Object* obj)
+void Game::AddActor(Actor* actor)
 {
-	mObjs.emplace_back(obj);
+	mActors.emplace_back(actor);
 }
 
-void Game::RemoveObj(Object* obj)
+void Game::RemoveActor(Actor* actor)
 {
-	auto iter = std::find(std::begin(mObjs), std::end(mObjs), obj);
-	if (iter != std::end(mObjs))
-		mObjs.erase(iter);
+	auto iter = std::find(std::begin(mActors), std::end(mActors), actor);
+	if (iter != std::end(mActors))
+		mActors.erase(iter);
 }

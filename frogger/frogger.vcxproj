@@ -140,25 +140,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="component.cpp" />
-    <ClCompile Include="cube.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="movecomponent.cpp" />
-    <ClCompile Include="object.cpp" />
-    <ClCompile Include="plane.cpp" />
+    <ClCompile Include="actor.cpp" />
     <ClCompile Include="random.cpp" />
+    <ClCompile Include="renderer.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="vertexarray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="component.h" />
-    <ClInclude Include="cube.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="movecomponent.h" />
-    <ClInclude Include="object.h" />
-    <ClInclude Include="plane.h" />
+    <ClInclude Include="actor.h" />
     <ClInclude Include="random.h" />
+    <ClInclude Include="renderer.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="vertexarray.h" />

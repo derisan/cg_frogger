@@ -1,7 +1,7 @@
 #pragma once
 #include "object.h"
 class Plane :
-    public Object
+    public Actor
 {
 public:
     Plane(class Game* game);

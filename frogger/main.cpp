@@ -55,10 +55,7 @@ void ReshapeFunc(int w, int h)
 
 void KeyboardFunc(unsigned char key, int x, int y)
 {
-	if (key == 27)
-		Shutdown();
-	else
-		game.ProcessKeyboardInput(key);
+	game.ProcessKeyboardInput(key);
 }
 
 void MouseFunc(int button, int state, int x, int y)

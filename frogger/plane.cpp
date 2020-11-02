@@ -5,7 +5,7 @@
 #include "vertexarray.h"
 
 Plane::Plane(Game* game)
-	: Object{ game },
+	: Actor{ game },
 	mVertexArray{ nullptr }
 {
 	Load();
@@ -18,12 +18,12 @@ Plane::~Plane()
 
 void Plane::UpdateObject()
 {
-	Object::UpdateObject();
+	Actor::UpdateActor();
 }
 
 void Plane::Draw(Shader* shader)
 {
-	Object::Draw(shader);
+	Actor::Draw(shader);
 
 	mVertexArray->SetActive();
 	glDrawArrays(GL_TRIANGLES, 0, 6);

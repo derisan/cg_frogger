@@ -11,41 +11,30 @@ public:
 	~Game() = default;
 
 	bool Init(int* argc, char** argv);
-	bool LoadData();
+	void LoadData();
 	void Shutdown();
 
 	void ProcessKeyboardInput(unsigned char key);
-	void ProcessMouseInput(int button, int state, int x, int y);
+	void ProcessMouseInput(int button, int state, int x, int y) { };
 	void Update();
 	void Draw();
 
-	void AddObj(class Object* obj);
-	void RemoveObj(class Object* obj);
+	void AddActor(class Actor* obj);
+	void RemoveActor(class Actor* obj);
 
 	// Getters
 	bool GetShouldCloseWindow() const { return mShouldCloseWindow; }
+	class Renderer* GetRenderer() { return mRenderer; }
 
 	// Setters
 	void SetShouldCloseWindow(bool value) { mShouldCloseWindow = value; }
 
 private:
-	std::vector<class Object*> mObjs;
-
-	const int mScrWidth;
-	const int mScrHeight;
+	std::vector<class Actor*> mActors;
 
 	bool mShouldCloseWindow;
 	bool mShouldPause;
 
-	class Shader* mMeshShader;
-	class Shader* mPhongShader;
-
-	struct Camera
-	{
-		glm::vec3 position;
-		glm::vec3 target;
-		glm::vec3 up;
-	};
-	Camera* mCamera;
+	class Renderer* mRenderer;
 };
 

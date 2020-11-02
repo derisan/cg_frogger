@@ -2,7 +2,7 @@
 #include "object.h"
 
 class Cube :
-    public Object
+    public Actor
 {
 public:
     Cube(class Game* game);

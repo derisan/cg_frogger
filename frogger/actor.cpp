@@ -18,12 +18,12 @@ Actor::Actor(Game* game)
 	mRotation{ 0.0f },
 	mRecomputeWorldTransform{ true }
 {
-	mGame->AddObj(this);
+	mGame->AddActor(this);
 }
 
 Actor::~Actor()
 {
-	mGame->RemoveObj(this);
+	mGame->RemoveActor(this);
 }
 
 void Actor::Update()
@@ -45,12 +45,6 @@ void Actor::UpdateComponents()
 		comp->Update();
 }
 
-void Actor::Draw(Shader* shader)
-{
-	shader->SetActive();
-	shader->SetMatrix4Uniform("uWorld", mWorldTransform);
-	shader->SetVectorUniform("uObjectColor", mColor);
-}
 
 void Actor::ComputeWorldTransform()
 {

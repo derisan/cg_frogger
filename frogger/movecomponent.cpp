@@ -2,9 +2,9 @@
 
 #include <glm/vec3.hpp>
 
-#include "object.h"
+#include "actor.h"
 
-MoveComponent::MoveComponent(Object* owner)
+MoveComponent::MoveComponent(Actor* owner)
 	: Component{ owner },
 	mForwardSpeed{ 0.0f }
 {

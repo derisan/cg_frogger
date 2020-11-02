@@ -2,13 +2,13 @@
 class Component
 {
 public:
-	Component(class Object* owner);
+	Component(class Actor* owner);
 	virtual ~Component();
 
 	virtual void Update() { };
 	virtual void ProcessKeyboardInput(unsigned char key) { };
 	
 protected:
-	class Object* mOwner;
+	class Actor* mOwner;
 };
 

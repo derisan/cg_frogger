@@ -5,7 +5,7 @@ class MoveComponent :
     public Component
 {
 public:
-    MoveComponent(class Object* owner);
+    MoveComponent(class Actor* owner);
 
     void Update() override;
 

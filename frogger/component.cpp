@@ -1,8 +1,8 @@
 #include "component.h"
 
-#include "object.h"
+#include "actor.h"
 
-Component::Component(Object* owner)
+Component::Component(Actor* owner)
 	: mOwner{ owner }
 {
 	mOwner->AddComponent(this);

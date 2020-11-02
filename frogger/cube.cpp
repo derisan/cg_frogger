@@ -5,7 +5,7 @@
 #include "vertexarray.h"
 
 Cube::Cube(Game* game)
-	: Object{ game },
+	: Actor{ game },
     mVertexArray{ nullptr }
 {
     Load();
@@ -18,12 +18,12 @@ Cube::~Cube()
 
 void Cube::UpdateObject()
 {
-    Object::UpdateObject();
+    Actor::UpdateActor();
 }
 
 void Cube::Draw(Shader* shader)
 {
-	Object::Draw(shader);
+	Actor::Draw(shader);
 
 	mVertexArray->SetActive();
 	glDrawArrays(GL_TRIANGLES, 0, 36);
