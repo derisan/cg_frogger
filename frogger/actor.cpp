@@ -45,7 +45,6 @@ void Actor::UpdateComponents()
 		comp->Update();
 }
 
-
 void Actor::ComputeWorldTransform()
 {
 	if (mRecomputeWorldTransform)

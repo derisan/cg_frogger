@@ -12,4 +12,3 @@ Component::~Component()
 {
 	mOwner->RemoveComponent(this);
 }
-

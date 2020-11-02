@@ -2,12 +2,10 @@
 
 #include <vector>
 
-#include <glm/glm.hpp>
-
 class Game
 {
 public:
-	Game(int w, int h);
+	Game();
 	~Game() = default;
 
 	bool Init(int* argc, char** argv);
@@ -19,12 +17,13 @@ public:
 	void Update();
 	void Draw();
 
-	void AddActor(class Actor* obj);
-	void RemoveActor(class Actor* obj);
+	void AddActor(class Actor* actor);
+	void RemoveActor(class Actor* actor);
 
 	// Getters
 	bool GetShouldCloseWindow() const { return mShouldCloseWindow; }
-	class Renderer* GetRenderer() { return mRenderer; }
+	const std::vector<class Actor*>& GetActors() const { return mActors; }
+	class Renderer* GetRenderer() {	return mRenderer; }
 
 	// Setters
 	void SetShouldCloseWindow(bool value) { mShouldCloseWindow = value; }

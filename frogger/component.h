@@ -1,4 +1,5 @@
 #pragma once
+
 class Component
 {
 public:
@@ -7,7 +8,7 @@ public:
 
 	virtual void Update() { };
 	virtual void ProcessKeyboardInput(unsigned char key) { };
-	
+
 protected:
 	class Actor* mOwner;
 };

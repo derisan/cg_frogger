@@ -24,6 +24,8 @@ public:
 	void ProcessInput(unsigned char key);
 	virtual void ActorInput(unsigned char key) { };
 
+	virtual void Draw(class Shader* shader) { };
+
 	void AddComponent(class Component* component);
 	void RemoveComponent(class Component* component);
 
@@ -40,7 +42,7 @@ public:
 	void SetPosition(const glm::vec3& position) { mPosition = position; mRecomputeWorldTransform = true; }
 	void SetScale(const glm::vec3& scale) { mScale = scale; mRecomputeWorldTransform = true; }
 	void SetRotation(float rotation) { mRotation = rotation; mRecomputeWorldTransform = true; }
-	
+
 protected:
 	class Game* mGame;
 
@@ -56,7 +58,7 @@ private:
 	glm::vec3 mPosition;
 	glm::vec3 mScale;
 	float mRotation;
-	
+
 	bool mRecomputeWorldTransform;
 };
 

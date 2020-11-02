@@ -3,11 +3,11 @@
 #include <iostream>
 #include <algorithm>
 
-#include "random.h"
-#include "actor.h"
 #include "renderer.h"
+#include "actor.h"
+#include "player.h"
 
-Game::Game(int w, int h)
+Game::Game()
 	: mShouldCloseWindow{ false },
 	mShouldPause{ false },
 	mRenderer{ nullptr }
@@ -18,15 +18,8 @@ Game::Game(int w, int h)
 bool Game::Init(int* argc, char** argv)
 {
 	mRenderer = new Renderer{ this };
-	if (!mRenderer->Init(argc, argv, 1024, 768))
-	{
-		std::cout << "Failed to initialize renderer" << std::endl;
-		delete mRenderer;
-		mRenderer = nullptr;
+	if (!mRenderer->Init(argc, argv))
 		return false;
-	}
-
-	Random::Init();
 
 	LoadData();
 
@@ -35,7 +28,8 @@ bool Game::Init(int* argc, char** argv)
 
 void Game::LoadData()
 {
-	
+	auto player = new Player{this};
+	player->SetScale(glm::vec3{ 0.005f, 0.005f, 0.005f });
 }
 
 void Game::Shutdown()
@@ -52,37 +46,17 @@ void Game::Shutdown()
 
 void Game::ProcessKeyboardInput(unsigned char key)
 {
-	switch (key)
-	{		
-		case 27:
-			mShouldCloseWindow = true;
-			break;
-		case 'p': case 'P':
-			mShouldPause = !mShouldPause;
-			break;
-	}
+	if (key == 27)
+		mShouldCloseWindow = true;
 
 	for (auto actor : mActors)
 		actor->ProcessInput(key);
 }
 
-
 void Game::Update()
 {
-	if (mShouldPause)
-		return;
-
-	std::vector<Actor*> deads;
-	for (auto actor: mActors)
-	{
+	for (auto actor : mActors)
 		actor->Update();
-		if (actor->GetState() == Actor::State::kDead)
-			deads.emplace_back(actor);
-	}
-
-	for (auto actor : deads)
-		delete actor;
-	deads.clear();
 }
 
 void Game::Draw()

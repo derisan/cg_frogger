@@ -18,6 +18,37 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="actor.cpp" />
+    <ClCompile Include="component.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="random.cpp" />
+    <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="vertexarray.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="actor.h" />
+    <ClInclude Include="component.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="mesh.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="random.h" />
+    <ClInclude Include="renderer.h" />
+    <ClInclude Include="shader.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="vertexarray.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\basicMesh.frag" />
+    <None Include="Shaders\basicMesh.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,35 +169,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="component.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="movecomponent.cpp" />
-    <ClCompile Include="actor.cpp" />
-    <ClCompile Include="random.cpp" />
-    <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="utils.cpp" />
-    <ClCompile Include="vertexarray.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="component.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="movecomponent.h" />
-    <ClInclude Include="actor.h" />
-    <ClInclude Include="random.h" />
-    <ClInclude Include="renderer.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="utils.h" />
-    <ClInclude Include="vertexarray.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\mesh.frag" />
-    <None Include="Shaders\mesh.vert" />
-    <None Include="Shaders\phong.frag" />
-    <None Include="Shaders\phong.vert" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

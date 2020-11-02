@@ -19,10 +19,7 @@ void TimerFunc(int value);
 
 void Shutdown();
 
-constexpr int kScrWidth{ 1024 };
-constexpr int kScrHeight{ 768 };
-
-Game game{ kScrWidth, kScrHeight };
+Game game{};
 
 int main(int argc, char** argv)
 {
