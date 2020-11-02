@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include <glm/glm.hpp>
 
 class Object
@@ -15,11 +17,19 @@ public:
 	Object(class Game* game);
 	virtual ~Object();
 
-	virtual void Update();
+	void Update();
+	void UpdateComponents();
+	virtual void UpdateObject() { };
+
 	virtual void Draw(class Shader* shader);
 	virtual void Load() = 0;
 
-	
+	void ProcessKeyboardInput(unsigned char key);
+	virtual void ObjectKeyboardInput(unsigned char key) { };
+
+	void AddComponent(class Component* component);
+	void RemoveComponent(class Component* component);
+
 	// Getters
 	State GetState() const { return mState; }
 	const glm::mat4& GetWorldTransform() const { return mWorldTransform; }
@@ -27,6 +37,7 @@ public:
 	const glm::vec3& GetScale() const { return mScale; }
 	float GetRotation() const { return mRotation; }
 	const glm::vec3& GetColor() const { return mColor; }
+	glm::vec3 GetForward() const;
 
 	
 	// Setters
@@ -41,6 +52,8 @@ protected:
 
 private:
 	void ComputeWorldTransform();
+
+	std::vector<class Component*> mComponents;
 
 	State mState;
 

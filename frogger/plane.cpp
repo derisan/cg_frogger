@@ -16,10 +16,9 @@ Plane::~Plane()
 	delete mVertexArray;
 }
 
-void Plane::Update()
+void Plane::UpdateObject()
 {
-	if (GetState() == State::kActive)
-		Object::Update();
+	Object::UpdateObject();
 }
 
 void Plane::Draw(Shader* shader)

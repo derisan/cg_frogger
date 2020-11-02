@@ -8,7 +8,7 @@ public:
     Cube(class Game* game);
     ~Cube();
 
-    void Update() override;
+    void UpdateObject() override;
     void Draw(class Shader* shader);
     void Load();
 

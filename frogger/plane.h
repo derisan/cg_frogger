@@ -7,7 +7,7 @@ public:
     Plane(class Game* game);
     ~Plane();
 
-    void Update() override;
+    void UpdateObject() override;
     void Draw(class Shader* shader);
     void Load();
 

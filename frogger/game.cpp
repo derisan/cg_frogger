@@ -10,6 +10,7 @@
 #include "shader.h"
 #include "random.h"
 #include "cube.h"
+#include "plane.h"
 
 Game::Game(int w, int h)
 	: mScrWidth{ w },
@@ -75,6 +76,11 @@ bool Game::LoadData()
 	Cube* cube{ new Cube{this} };
 	cube->SetColor(glm::vec3{ 1.0f, 0.0f, 0.0f });
 	cube->SetScale(glm::vec3{ 0.5f, 0.5f, 0.5f });
+
+	Plane* plane{ new Plane{this} };
+	plane->SetScale(glm::vec3{ 10.0f, 1.0f, 10.0f });
+	plane->SetColor(glm::vec3{ 0.0f, 1.0f, 1.0f });
+	
 	
 	return true;
 }
@@ -109,8 +115,17 @@ void Game::Update()
 	if (mShouldPause)
 		return;
 
+	std::vector<Object*> deads;
 	for (auto obj : mObjs)
+	{
 		obj->Update();
+		if (obj->GetState() == Object::State::kDead)
+			deads.emplace_back(obj);
+	}
+
+	for (auto obj : deads)
+		delete obj;
+	deads.clear();
 }
 
 void Game::Draw()
@@ -118,6 +133,8 @@ void Game::Draw()
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
+
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glm::mat4 view{ 1.0f };
 	view = glm::lookAt(mCamera->position, mCamera->position + mCamera->target, mCamera->up);
