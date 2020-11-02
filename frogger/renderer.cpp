@@ -5,9 +5,12 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 
+#include "shader.h"
 
 Renderer::Renderer(Game* game)
 	: mGame{ game },
+	mLightCubeShader{ nullptr },
+	mMeshShader{ nullptr },
 	mScrWidth{ 0 },
 	mScrHeight{ 0 }
 {
@@ -32,6 +35,12 @@ bool Renderer::Init(int* argc, char** argv, int w, int h)
 		return false;
 	}
 
+	if (!LoadShaders())
+	{
+		std::cout << "Failed to load shaders" << std::endl;
+		return false;
+	}
+
 	return true;
 }
 
@@ -48,4 +57,17 @@ void Renderer::Draw()
 
 
 	glutSwapBuffers();
+}
+
+bool Renderer::LoadShaders()
+{
+	mLightCubeShader = new Shader{};
+	if(!mLightCubeShader->Load("Shaders/light_cube.vert", "Shaders/light_cube.frag"))
+		return false;
+
+	mMeshShader = new Shader{};
+	if (!mMeshShader->Load("Shaders/mesh.vert", "Shaders/mesh.frag"))
+		return false;
+
+	return true;
 }

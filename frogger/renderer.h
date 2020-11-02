@@ -14,7 +14,11 @@ public:
 	int GetScreenWidth() const { return mScrWidth; }
 	int GetScreenHeight() const { return mScrHeight; }
 private:
+	bool LoadShaders();
+
 	class Game* mGame;
+	class Shader* mLightCubeShader;
+	class Shader* mMeshShader;
 
 	int mScrWidth;
 	int mScrHeight;
