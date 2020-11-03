@@ -13,7 +13,7 @@ CircleComponent::CircleComponent(Actor* owner)
 
 float CircleComponent::GetRadius() const
 {
-	return mOwner->GetScale() * mRadius;
+	return 0.5f * mOwner->GetScale() * mRadius;
 }
 
 const glm::vec3& CircleComponent::GetCenter() const
