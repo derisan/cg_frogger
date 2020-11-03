@@ -24,6 +24,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="plane.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="random.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="component.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="mesh.h" />
+    <ClInclude Include="plane.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="renderer.h" />

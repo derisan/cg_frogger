@@ -15,7 +15,7 @@ Player::Player(Game* game)
     mMesh{ nullptr }
 {
     mMesh = new Mesh{};
-    mMesh = game->GetRenderer()->GetMesh("Assets/chr_knight.gpmesh");
+    mMesh = game->GetRenderer()->GetMesh("Assets/chr_sword.gpmesh");
 }
 
 Player::~Player()
@@ -28,7 +28,7 @@ void Player::UpdateActor()
 	Actor::UpdateActor();
 
     auto actorPos = GetPosition();
-    auto cameraPos = glm::vec3{ actorPos.x , actorPos.y + 1.0f, actorPos.z + 3.0f };
+    auto cameraPos = glm::vec3{ 0.0f, 2.0f, 6.0f };
     auto cameraTarget = GetForward() * 2.0f;
     auto cameraUp = glm::vec3{ 0.0f, 1.0f, 0.0f };
 

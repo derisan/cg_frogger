@@ -4,8 +4,8 @@
 #include <algorithm>
 
 #include "renderer.h"
-#include "actor.h"
 #include "player.h"
+#include "plane.h"
 
 Game::Game()
 	: mShouldCloseWindow{ false },
@@ -28,8 +28,8 @@ bool Game::Init(int* argc, char** argv)
 
 void Game::LoadData()
 {
-	auto player = new Player{this};
-	player->SetScale(glm::vec3{ 0.005f, 0.005f, 0.005f });
+	auto player = new Player{ this };
+	auto road = new Plane{ this, Plane::Type::kGrass};
 }
 
 void Game::Shutdown()
