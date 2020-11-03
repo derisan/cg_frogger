@@ -6,20 +6,20 @@ class Vehicle :
     public Actor
 {
 public:
-    enum class Type
+    enum class VehicleType
     {
         kCar,
         kTruck,
         kTrain
     };
 
-    Vehicle(class Game* game, Type type);
+    Vehicle(class Game* game, VehicleType type);
     
     void UpdateActor() override;
     void Draw(class Shader* shader) override;
 
     // Getters
-    Type GetType() const { return mType; }
+    VehicleType GetType() const { return mType; }
     class BoxComponent* GetBox() const { return mBox; }
 
     // Setters
@@ -31,6 +31,6 @@ private:
 
     float mSpeed;
 
-    Type mType;
+    VehicleType mType;
 };
 

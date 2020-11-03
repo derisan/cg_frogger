@@ -10,7 +10,7 @@
 #include "vertexarray.h"
 #include "box_component.h"
 
-Vehicle::Vehicle(Game* game, Type type)
+Vehicle::Vehicle(Game* game, VehicleType type)
 	: Actor{ game },
 	mMesh{ nullptr },
 	mBox{ nullptr },
@@ -19,9 +19,9 @@ Vehicle::Vehicle(Game* game, Type type)
 {
 	mMesh = new Mesh{};
 
-	if (mType == Type::kCar)
+	if (mType == VehicleType::kCar)
 		mMesh = game->GetRenderer()->GetMesh("Assets/car.gpmesh");
-	else if (mType == Type::kTruck)
+	else if (mType == VehicleType::kTruck)
 		mMesh = game->GetRenderer()->GetMesh("Assets/truck.gpmesh");
 	else
 		mMesh = game->GetRenderer()->GetMesh("Assets/train.gpmesh");
