@@ -11,6 +11,7 @@ public:
 	static float GetFloat();
 	static float GetFloatRange(float min, float max);
 	static int GetIntRange(int min, int max);
+	static int GetChoice(int a, int b);
 
 private:
 	static std::mt19937 mEngine;

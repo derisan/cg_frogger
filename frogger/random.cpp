@@ -23,6 +23,15 @@ int Random::GetIntRange(int min, int max)
 	return uid(mEngine);
 }
 
+int Random::GetChoice(int a, int b)
+{
+	std::uniform_int_distribution<int> uid{ 0, 1 };
+	if (uid(mEngine))
+		return a;
+	else
+		return b;
+}
+
 std::mt19937 Random::mEngine;
 
 
