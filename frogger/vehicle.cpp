@@ -14,6 +14,7 @@ Vehicle::Vehicle(Game* game, Type type)
 	: Actor{ game },
 	mMesh{ nullptr },
 	mBox{ nullptr },
+	mSpeed{ 5.0f },
 	mType{ type }
 {
 	mMesh = new Mesh{};
@@ -32,6 +33,16 @@ Vehicle::Vehicle(Game* game, Type type)
 void Vehicle::UpdateActor()
 {
 	Actor::UpdateActor();
+
+	auto right = GetRight();
+
+	auto pos = GetPosition();
+	pos += right * mSpeed * dt;
+
+	if (pos.x > 15.0f || pos.x < -15.0f)
+		SetState(State::kDead);
+
+	SetPosition(pos);
 }
 
 void Vehicle::Draw(Shader* shader)
