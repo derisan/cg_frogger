@@ -88,5 +88,5 @@ glm::vec3 Actor::GetForward() const
 
 glm::vec3 Actor::GetRight() const
 {
-	return glm::rotateY(glm::vec3{ 0.0f, 0.0f, -1.0f }, glm::radians(-90.0f));
+	return glm::rotateY(glm::vec3{ 0.0f, 0.0f, -1.0f }, glm::radians(mRotation - 90.0f));
 }
