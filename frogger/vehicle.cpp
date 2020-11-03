@@ -29,7 +29,7 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	mBox = new BoxComponent{ this };
 	mBox->SetObjectBox(mMesh->GetBox());
 }
-
+	
 void Vehicle::UpdateActor()
 {
 	Actor::UpdateActor();

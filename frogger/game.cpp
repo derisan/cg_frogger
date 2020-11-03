@@ -1,6 +1,8 @@
 #include "game.h"
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <algorithm>
 
 #include "renderer.h"
@@ -29,16 +31,34 @@ bool Game::Init(int* argc, char** argv)
 
 	Random::Init();
 
-	LoadData();
+	if (!LoadData())
+		return false;
 
 	return true;
 }
 
-void Game::LoadData()
+bool Game::LoadData()
 {
+	std::ifstream file{ "Assets/stage.txt" };
+	if (!file.is_open())
+	{
+		std::cout << "Failed to read stage file" << std::endl;
+		return false;
+	}
+
+	std::stringstream s;
+	s << file.rdbuf();
+	std::string contents = s.str();
+
+	for (auto ch : contents)
+		if (ch != '\n' && ch != ' ')
+			mStage.emplace_back(ch - 65);
+
 	mPlayer = new Player{ this };
 		
 	CreateMap();
+
+	return true;
 }
 
 void Game::Shutdown()
@@ -121,19 +141,10 @@ void Game::RemoveActor(Actor* actor)
 
 void Game::CreateMap()
 {
-	int start{ 0 };
-	int end{ 2 };
-
-	for (; start < end; ++start)
+	int idx{ 0 };
+	for (auto st : mStage)
 	{
-		auto plane = new Plane{ this, Plane::PlaneType::kGrass };
-		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * start });
-	}
-	
-	end = 10;
-	for (; start < end; ++start)
-	{
-		auto plane = new Plane{ this, Plane::PlaneType::kRoad };
-		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * start });
+		auto plane = new Plane{ this, static_cast<Plane::PlaneType>(st) };
+		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * idx++ });
 	}
 }

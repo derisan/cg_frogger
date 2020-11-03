@@ -8,7 +8,7 @@ public:
 	Game();
 
 	bool Init(int* argc, char** argv);
-	void LoadData();
+	bool LoadData();
 	void CreateMap();
 	void Shutdown();
 
@@ -33,6 +33,7 @@ private:
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class Vehicle*> mVehicles;
+	std::vector<int> mStage;
 
 	bool mShouldCloseWindow;
 	bool mShouldPause;
