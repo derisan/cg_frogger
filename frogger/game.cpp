@@ -40,7 +40,7 @@ void Game::Shutdown()
 	if (mRenderer)
 	{
 		mRenderer->Shutdown();
-		delete mRenderer;
+		//delete mRenderer;
 	}
 }
 

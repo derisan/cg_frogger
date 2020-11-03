@@ -12,7 +12,6 @@
 
 Player::Player(Game* game)
     : Actor{ game },
-    mVertexArray{ nullptr },
     mMesh{ nullptr }
 {
     mMesh = new Mesh{};
@@ -21,43 +20,44 @@ Player::Player(Game* game)
 
 Player::~Player()
 {
-	delete mVertexArray;
+
 }
 
 void Player::UpdateActor()
 {
 	Actor::UpdateActor();
+
 }
 
 void Player::ActorInput(unsigned char key)
 {
     auto pos = GetPosition();
+    auto forward = GetForward();
+    auto right = GetRight();
 
     switch (key)
     {
         case 'w': case 'W':
-            pos.z -= 0.2f;
+            pos += forward * 0.1f;
             break;
         case 's': case 'S':
-            pos.z += 0.2f;
+            pos -= forward * 0.1f;
             break;
         case 'a': case 'A':
-            pos.x -= 0.2f;
+            pos -= right * 0.1f;
             break;
         case 'd': case 'D':
-            pos.x += 0.2f;
+            pos += right * 0.1f;
             break;
     }
-
     SetPosition(pos);
 }
 
 void Player::Draw(Shader* shader)
 {
-	shader->SetMatrix4Uniform("uWorld", GetWorldTransform());
-    //mTexture->SetActive();
+    shader->SetMatrix4Uniform("uWorld", GetWorldTransform());
     mMesh->GetTexture()->SetActive();
-    mVertexArray = mMesh->GetVertexArray();
-    mVertexArray->SetActive();
-    glDrawElements(GL_TRIANGLES, mVertexArray->GetNumIndices(), GL_UNSIGNED_INT, nullptr);
+    auto va = mMesh->GetVertexArray();
+    va->SetActive();
+    glDrawElements(GL_TRIANGLES, va->GetNumIndices(), GL_UNSIGNED_INT, nullptr);
 }

@@ -36,6 +36,7 @@ public:
 	const glm::vec3& GetScale() const { return mScale; }
 	float GetRotation() const { return mRotation; }
 	glm::vec3 GetForward() const;
+	glm::vec3 GetRight() const;
 
 	// Setters
 	void SetState(State state) { mState = state; }

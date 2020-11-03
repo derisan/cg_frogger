@@ -13,7 +13,6 @@ public:
     void Draw(class Shader* shader) override;
 
 private:
-    class VertexArray* mVertexArray;
     class Mesh* mMesh;
 };
 
