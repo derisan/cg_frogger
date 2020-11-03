@@ -126,14 +126,14 @@ void Game::CreateMap()
 
 	for (; start < end; ++start)
 	{
-		auto plane = new Plane{ this, Plane::Type::kGrass };
+		auto plane = new Plane{ this, Plane::PlaneType::kGrass };
 		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * start });
 	}
 	
 	end = 10;
 	for (; start < end; ++start)
 	{
-		auto plane = new Plane{ this, Plane::Type::kRoad };
+		auto plane = new Plane{ this, Plane::PlaneType::kRoad };
 		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * start });
 	}
 }

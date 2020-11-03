@@ -14,7 +14,7 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	: Actor{ game },
 	mMesh{ nullptr },
 	mBox{ nullptr },
-	mSpeed{ 5.0f },
+	mSpeed{ 0.0f },
 	mType{ type }
 {
 	mMesh = new Mesh{};

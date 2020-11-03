@@ -9,19 +9,20 @@
 #include "texture.h"
 #include "vertexarray.h"
 #include "random.h"
-#include "vehicle.h"
 
-Plane::Plane(Game* game, Type type)
+Plane::Plane(Game* game, PlaneType type)
 	: Actor{ game },
 	mMesh{ nullptr },
-	mCooldown{ Random::GetFloatRange(0.5f, 2.5f) },
-	mType{ type }
+	mCooldown{ Random::GetFloatRange(0.5f, 1.5f) },
+	mType{ type },
+	mVehicleType{static_cast<Vehicle::VehicleType>(Random::GetIntRange(0, 2))},
+	mLeftOrRight{ Random::GetChoice(-1, 1) }
 {
 	mMesh = new Mesh{};
 
-	if (mType == Type::kGrass)
+	if (mType == PlaneType::kGrass)
 		mMesh = game->GetRenderer()->GetMesh("Assets/grass.gpmesh");
-	else if (mType == Type::kRoad)
+	else if (mType == PlaneType::kRoad)
 		mMesh = game->GetRenderer()->GetMesh("Assets/road.gpmesh");
 	else
 		mMesh = game->GetRenderer()->GetMesh("Assets/rail.gpmesh");
@@ -32,12 +33,13 @@ void Plane::UpdateActor()
 	Actor::UpdateActor();
 
 	mCooldown -= dt;
-	if (mType != Type::kGrass && mCooldown < 0)
+	if (mType != PlaneType::kGrass && mCooldown + static_cast<int>(mVehicleType) < 0)
 	{
-		mCooldown = Random::GetFloatRange(1.5f, 3.0f);
-		auto vehicle = new Vehicle{ mGame, Vehicle::Type::kCar };
+		mCooldown = Random::GetFloatRange(1.0f, 2.0f);
+		auto vehicle = new Vehicle{ mGame, mVehicleType };
 		auto pos = GetPosition();
-		vehicle->SetPosition(glm::vec3{ -15.0f, pos.y + 0.1f, pos.z });
+		vehicle->SetPosition(glm::vec3{ mLeftOrRight * 15.0f, pos.y + 0.1f, pos.z });
+		vehicle->SetSpeed(mLeftOrRight * -5.0f);
 		mGame->GetVehicles().emplace_back(vehicle);
 	}
 }
