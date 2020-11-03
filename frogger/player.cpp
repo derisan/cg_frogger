@@ -1,7 +1,5 @@
 #include "player.h"
 
-#include <iostream>
-
 #include <GL/glew.h>
 
 #include "game.h"
@@ -9,13 +7,14 @@
 #include "shader.h"
 #include "texture.h"
 #include "mesh.h"
+#include "renderer.h"
 
 Player::Player(Game* game)
     : Actor{ game },
     mMesh{ nullptr }
 {
     mMesh = new Mesh{};
-    mMesh->Load("Assets/chr_knight.gpmesh", game->GetRenderer());
+    mMesh = game->GetRenderer()->GetMesh("Assets/chr_knight.gpmesh");
 }
 
 Player::~Player()
