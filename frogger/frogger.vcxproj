@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="aabb.cpp" />
     <ClCompile Include="actor.cpp" />
+    <ClCompile Include="box_component.cpp" />
     <ClCompile Include="circle_component.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="game.cpp" />
@@ -36,7 +38,9 @@
     <ClCompile Include="vertexarray.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aabb.h" />
     <ClInclude Include="actor.h" />
+    <ClInclude Include="box_component.h" />
     <ClInclude Include="circle_component.h" />
     <ClInclude Include="component.h" />
     <ClInclude Include="game.h" />

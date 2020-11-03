@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "aabb.h"
+
 class Mesh
 {
 public:
@@ -14,9 +16,11 @@ public:
 	class Texture* GetTexture() { return mTexture; };
 
 	float GetRadius() const { return mRadius; }
+	const AABB& GetBox() const { return mBox; }
 private:
 	class Texture* mTexture;
 	class VertexArray* mVertexArray;
 
 	float mRadius;
+	AABB mBox;
 };

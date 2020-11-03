@@ -55,6 +55,9 @@ void Actor::ComputeWorldTransform()
 		mWorldTransform = glm::translate(mWorldTransform, mPosition);
 		mWorldTransform = glm::rotate(mWorldTransform, glm::radians(mRotation), glm::vec3{ 0.0f, 1.0f, 0.0f });
 		mWorldTransform = glm::scale(mWorldTransform, glm::vec3{ mScale });
+
+		for (auto comp : mComponents)
+			comp->OnUpdateWorldTransform();
 	}
 }
 

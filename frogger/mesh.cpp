@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <limits>
 
 #include <rapidjson/document.h>
 #include <glm/glm.hpp>
@@ -12,10 +13,12 @@
 #include "texture.h"
 #include "vertexarray.h"
 
+
 Mesh::Mesh()
 	: mTexture{ nullptr },
 	mVertexArray{ nullptr },
-	mRadius{ 0.0f }
+	mRadius{ 0.0f },
+	mBox{ glm::vec3{std::numeric_limits<float>::max()}, glm::vec3{std::numeric_limits<float>::min()} }
 {
 
 }
@@ -108,7 +111,8 @@ bool Mesh::Load(const std::string& file, Renderer* renderer)
 		}
 
 		glm::vec3 pos{ vert[0].GetDouble(), vert[1].GetDouble(), vert[2].GetDouble() };
-		mRadius = glm::max<float>(mRadius, glm::distance2(pos, glm::vec3{ 0.0f }));
+		mRadius = glm::max(mRadius, glm::distance2(pos, glm::vec3{ 0.0f }));
+		mBox.UpdateMinMax(pos);
 
 		// Add the floats
 		for (rapidjson::SizeType i = 0; i < vert.Size(); i++)

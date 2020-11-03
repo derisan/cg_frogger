@@ -9,18 +9,18 @@
 #include "texture.h"
 #include "mesh.h"
 #include "renderer.h"
-#include "circle_component.h"
+#include "box_component.h"
 
 Player::Player(Game* game)
     : Actor{ game },
     mMesh{ nullptr },
-    mCircle{ nullptr }
+    mBox{ nullptr }
 {
     mMesh = new Mesh{};
     mMesh = game->GetRenderer()->GetMesh("Assets/chr_sword.gpmesh");
 
-    mCircle = new CircleComponent{ this };
-    mCircle->SetRadius(mMesh->GetRadius());
+    mBox = new BoxComponent{ this };
+    mBox->SetObjectBox(mMesh->GetBox());
 }
 
 Player::~Player()

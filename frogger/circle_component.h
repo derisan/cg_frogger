@@ -20,5 +20,5 @@ private:
     float mRadius;
 };
 
-bool Intersect(const CircleComponent& a, const CircleComponent& b);
+bool Intersects(const CircleComponent& a, const CircleComponent& b);
 

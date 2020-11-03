@@ -8,6 +8,7 @@
 #include "plane.h"
 #include "vehicle.h"
 #include "circle_component.h"
+#include "box_component.h"
 
 Game::Game()
 	: mShouldCloseWindow{ false },
@@ -34,7 +35,9 @@ void Game::LoadData()
 	mPlayer = new Player{ this };
 	mPlayer->SetPosition(glm::vec3{ 0.0f, 0.1f, 0.0f });
 
-	auto car = new Vehicle{ this, Vehicle::Type::kCar };
+	auto car = new Vehicle{ this, Vehicle::Type::kTrain};
+	car->SetPosition(glm::vec3{ -8.0f, 0.0f, -4.0f });
+	car->SetRotation(90.0f);
 	mVehicles.emplace_back(car);
 		
 	for (int i = 0; i < 10; ++i)
@@ -115,9 +118,9 @@ void Game::Update()
 		delete actor;
 
 	static int times = 0;
-	for(auto vehicle : mVehicles)
-		if(Intersect(*(mPlayer->GetCircle()), *(vehicle->GetCircle())))
-			std::cout << "player collides" << times++ << std::endl;
+	for(auto vehicle: mVehicles)
+		if(Intersects(mPlayer->GetBox()->GetWorldBox(), vehicle->GetBox()->GetWorldBox()))
+				std::cout << "Player collides " << times++ << std::endl;
 }
 
 void Game::Draw()

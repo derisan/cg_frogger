@@ -1,5 +1,7 @@
 #pragma once
+
 #include "actor.h"
+
 class Vehicle :
     public Actor
 {
@@ -18,11 +20,11 @@ public:
     void Draw(class Shader* shader) override;
 
     Type GetType() const { return mType; }
-    class CircleComponent* GetCircle() { return mCircle; }
+    class BoxComponent* GetBox() const { return mBox; }
 
 private:
     class Mesh* mMesh;
-    class CircleComponent* mCircle;
+    class BoxComponent* mBox;
 
     Type mType;
 };

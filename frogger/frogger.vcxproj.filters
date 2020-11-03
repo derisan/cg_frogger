@@ -60,6 +60,12 @@
     <ClCompile Include="circle_component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="box_component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aabb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h">
@@ -102,6 +108,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="circle_component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="box_component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aabb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

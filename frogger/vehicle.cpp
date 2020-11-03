@@ -8,12 +8,12 @@
 #include "shader.h"
 #include "texture.h"
 #include "vertexarray.h"
-#include "circle_component.h"
+#include "box_component.h"
 
 Vehicle::Vehicle(Game* game, Type type)
 	: Actor{ game },
 	mMesh{ nullptr },
-	mCircle{ nullptr },
+	mBox{ nullptr },
 	mType{ type }
 {
 	mMesh = new Mesh{};
@@ -25,8 +25,8 @@ Vehicle::Vehicle(Game* game, Type type)
 	else
 		mMesh = game->GetRenderer()->GetMesh("Assets/train.gpmesh");
 
-	mCircle = new CircleComponent{ this };
-	mCircle->SetRadius(mMesh->GetRadius());
+	mBox = new BoxComponent{ this };
+	mBox->SetObjectBox(mMesh->GetBox());
 }
 
 Vehicle::~Vehicle()
