@@ -16,15 +16,11 @@
 Renderer::Renderer(Game* game)
 	: mGame{ game },
 	mMeshShader{ nullptr },
+	mView{ 1.0f },
 	mScrWidth{ 0 },
 	mScrHeight{ 0 }
 {
 
-}
-
-Renderer::~Renderer()
-{
-	
 }
 
 bool Renderer::Init(int* argc, char** argv, int w, int h)

@@ -8,8 +8,7 @@ class Renderer
 {
 public:
 	Renderer(class Game* game);
-	~Renderer();
-
+	
 	bool Init(int* argc, char** argv, int w = 1024, int h = 768);
 	void Shutdown();
 

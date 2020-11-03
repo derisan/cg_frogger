@@ -28,7 +28,7 @@ void Player::UpdateActor()
 	Actor::UpdateActor();
 
     auto actorPos = GetPosition();
-    auto cameraPos = glm::vec3{ actorPos.x, 10.0f, actorPos.z + 10.0f };
+    auto cameraPos = glm::vec3{ actorPos.x, 15.0f, actorPos.z + 10.0f };
     auto cameraTarget = actorPos;
     auto cameraUp = glm::vec3{ 0.0f, 1.0f, 0.0f };
 
