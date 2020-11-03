@@ -12,8 +12,7 @@ public:
     };
 
     Plane(class Game* game, Type type = Type::kGrass);
-    ~Plane();
-
+    
     void UpdateActor() override;
     void Draw(class Shader* shader) override;
 

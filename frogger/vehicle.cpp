@@ -29,11 +29,6 @@ Vehicle::Vehicle(Game* game, Type type)
 	mBox->SetObjectBox(mMesh->GetBox());
 }
 
-Vehicle::~Vehicle()
-{
-
-}
-
 void Vehicle::UpdateActor()
 {
 	Actor::UpdateActor();

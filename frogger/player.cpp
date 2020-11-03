@@ -23,11 +23,6 @@ Player::Player(Game* game)
     mBox->SetObjectBox(mMesh->GetBox());
 }
 
-Player::~Player()
-{
-
-}
-
 void Player::UpdateActor()
 {
 	Actor::UpdateActor();

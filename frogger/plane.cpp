@@ -24,11 +24,6 @@ Plane::Plane(Game* game, Type type)
 		mMesh = game->GetRenderer()->GetMesh("Assets/rail.gpmesh");
 }
 
-Plane::~Plane()
-{
-
-}
-
 void Plane::UpdateActor()
 {
 	Actor::UpdateActor();

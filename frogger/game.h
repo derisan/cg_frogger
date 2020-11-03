@@ -6,7 +6,6 @@ class Game
 {
 public:
 	Game();
-	~Game() = default;
 
 	bool Init(int* argc, char** argv);
 	void LoadData();

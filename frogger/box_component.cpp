@@ -11,11 +11,6 @@ BoxComponent::BoxComponent(Actor* owner)
 
 }
 
-BoxComponent::~BoxComponent()
-{
-
-}
-
 void BoxComponent::OnUpdateWorldTransform()
 {
 	mWorldBox = mObjectBox;

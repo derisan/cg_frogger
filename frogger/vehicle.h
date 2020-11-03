@@ -14,8 +14,7 @@ public:
     };
 
     Vehicle(class Game* game, Type type);
-    ~Vehicle();
-
+    
     void UpdateActor() override;
     void Draw(class Shader* shader) override;
 

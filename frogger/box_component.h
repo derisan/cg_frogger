@@ -8,12 +8,13 @@ class BoxComponent :
 {
 public:
 	BoxComponent(class Actor* owner);
-	~BoxComponent();
-
+	
 	void OnUpdateWorldTransform() override;
 
+	// Getters
 	const AABB& GetWorldBox() const { return mWorldBox; }
 
+	// Setters
 	void SetObjectBox(const AABB& box) { mObjectBox = box; }
 	void SetShouldRotate(bool value) { mShouldRotate = value; }
 

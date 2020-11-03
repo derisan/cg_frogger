@@ -6,8 +6,7 @@ class Player :
 {
 public:
     Player(class Game* game);
-    ~Player();
-
+   
     void UpdateActor() override;
     void ActorInput(unsigned char key) override;
     void Draw(class Shader* shader) override;
