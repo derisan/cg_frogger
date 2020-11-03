@@ -26,6 +26,8 @@ public:
 
 	virtual void Draw(class Shader* shader) { };
 
+	void ComputeWorldTransform();
+
 	void AddComponent(class Component* component);
 	void RemoveComponent(class Component* component);
 
@@ -48,8 +50,6 @@ protected:
 	class Game* mGame;
 
 private:
-	void ComputeWorldTransform();
-
 	std::vector<class Component*> mComponents;
 
 	State mState;

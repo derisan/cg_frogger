@@ -23,6 +23,7 @@ public:
 	// Getters
 	bool GetShouldCloseWindow() const { return mShouldCloseWindow; }
 	const std::vector<class Actor*>& GetActors() const { return mActors; }
+	std::vector<class Vehicle*>& GetVehicles() { return mVehicles; }
 	class Renderer* GetRenderer() {	return mRenderer; }
 
 	// Setters
@@ -30,10 +31,12 @@ public:
 
 private:
 	std::vector<class Actor*> mActors;
+	std::vector<class Actor*> mPendingActors;
 	std::vector<class Vehicle*> mVehicles;
 
 	bool mShouldCloseWindow;
 	bool mShouldPause;
+	bool mIsUpdating;
 
 	class Renderer* mRenderer;
 	class Player* mPlayer;

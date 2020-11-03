@@ -9,10 +9,12 @@
 #include "vehicle.h"
 #include "circle_component.h"
 #include "box_component.h"
+#include "random.h"
 
 Game::Game()
 	: mShouldCloseWindow{ false },
 	mShouldPause{ false },
+	mIsUpdating{ false },
 	mRenderer{ nullptr },
 	mPlayer{ nullptr }
 {
@@ -24,6 +26,8 @@ bool Game::Init(int* argc, char** argv)
 	mRenderer = new Renderer{ this };
 	if (!mRenderer->Init(argc, argv))
 		return false;
+
+	Random::Init();
 
 	LoadData();
 
@@ -61,12 +65,21 @@ void Game::ProcessKeyboardInput(unsigned char key)
 void Game::Update()
 {
 	std::vector<Actor*> deads;
+	mIsUpdating = true;
 	for (auto actor : mActors)
 	{
 		actor->Update();
 		if (actor->GetState() == Actor::State::kDead)
 			deads.emplace_back(actor);
 	}
+	mIsUpdating = false;
+
+	for (auto pending : mPendingActors)
+	{
+		pending->ComputeWorldTransform();
+		mActors.emplace_back(pending);
+	}
+	mPendingActors.clear();
 
 	for (auto actor : deads)
 		delete actor;
@@ -84,12 +97,19 @@ void Game::Draw()
 
 void Game::AddActor(Actor* actor)
 {
-	mActors.emplace_back(actor);
+	if (mIsUpdating)
+		mPendingActors.emplace_back(actor);
+	else
+		mActors.emplace_back(actor);
 }
 
 void Game::RemoveActor(Actor* actor)
 {
-	auto iter = std::find(std::begin(mActors), std::end(mActors), actor);
+	auto iter = std::find(std::begin(mPendingActors), std::end(mPendingActors), actor);
+	if (iter != std::end(mPendingActors))
+		mPendingActors.erase(iter);
+
+	iter = std::find(std::begin(mActors), std::end(mActors), actor);
 	if (iter != std::end(mActors))
 		mActors.erase(iter);
 }
