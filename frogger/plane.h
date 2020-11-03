@@ -20,6 +20,7 @@ public:
 
 private:
     class Mesh* mMesh;
+    float mCooldown;
 
     Type mType;
 };

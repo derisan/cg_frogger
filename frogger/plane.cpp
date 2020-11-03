@@ -8,10 +8,13 @@
 #include "shader.h"
 #include "texture.h"
 #include "vertexarray.h"
+#include "random.h"
+#include "vehicle.h"
 
 Plane::Plane(Game* game, Type type)
 	: Actor{ game },
 	mMesh{ nullptr },
+	mCooldown{ Random::GetFloatRange(0.5f, 2.5f) },
 	mType{ type }
 {
 	mMesh = new Mesh{};
@@ -27,6 +30,16 @@ Plane::Plane(Game* game, Type type)
 void Plane::UpdateActor()
 {
 	Actor::UpdateActor();
+
+	mCooldown -= dt;
+	if (mType != Type::kGrass && mCooldown < 0)
+	{
+		mCooldown = Random::GetFloatRange(1.5f, 3.0f);
+		auto vehicle = new Vehicle{ mGame, Vehicle::Type::kCar };
+		auto pos = GetPosition();
+		vehicle->SetPosition(glm::vec3{ -15.0f, pos.y + 0.1f, pos.z });
+		mGame->GetVehicles().emplace_back(vehicle);
+	}
 }
 
 void Plane::Draw(Shader* shader)
