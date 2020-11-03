@@ -77,7 +77,7 @@ void Renderer::Draw()
 	glEnable(GL_DEPTH_TEST);
 
 	mMeshShader->SetActive();
-	
+	mMeshShader->SetMatrix4Uniform("uView", mView);
 	for (auto actor : mGame->GetActors())
 		actor->Draw(mMeshShader);
 
@@ -91,9 +91,6 @@ bool Renderer::LoadShaders()
 		return false;
 
 	mMeshShader->SetActive();
-	glm::mat4 view{ 1.0f };
-	view = glm::lookAt(glm::vec3{ 0.0f, 0.5f, 3.0f }, glm::vec3{ 0.0f, 0.0f, -1.0f }, glm::vec3{ 0.0f, 1.0f, 0.0f });
-	mMeshShader->SetMatrix4Uniform("uView", view);
 	glm::mat4 proj{ 1.0f };
 	proj = glm::perspective(45.0f, static_cast<float>(mScrWidth) / mScrHeight, 0.1f, 100.0f);
 	mMeshShader->SetMatrix4Uniform("uProj", proj);

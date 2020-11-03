@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include <GL/glew.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "game.h"
 #include "vertexarray.h"
@@ -26,6 +27,14 @@ void Player::UpdateActor()
 {
 	Actor::UpdateActor();
 
+    auto actorPos = GetPosition();
+    auto cameraPos = glm::vec3{ actorPos.x , actorPos.y + 1.0f, actorPos.z + 3.0f };
+    auto cameraTarget = GetForward() * 2.0f;
+    auto cameraUp = glm::vec3{ 0.0f, 1.0f, 0.0f };
+
+    glm::mat4 view = lookAt(cameraPos, cameraPos + cameraTarget, cameraUp);
+
+    mGame->GetRenderer()->SetViewMatrix(view);
 }
 
 void Player::ActorInput(unsigned char key)

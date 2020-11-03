@@ -2,6 +2,8 @@
 
 #include <unordered_map>
 
+#include <glm/glm.hpp>
+
 class Renderer
 {
 public:
@@ -13,8 +15,12 @@ public:
 
 	void Draw();
 
+	// Getters
 	class Texture* GetTexture(const std::string& file);
 	class Mesh* GetMesh(const std::string& file);
+
+	// Setters
+	void SetViewMatrix(const glm::mat4& view) { mView = view; }
 
 private:
 	bool LoadShaders();
@@ -24,6 +30,8 @@ private:
 
 	class Game* mGame;
 	class Shader* mMeshShader;
+
+	glm::mat4 mView;
 
 	int mScrWidth;
 	int mScrHeight;
