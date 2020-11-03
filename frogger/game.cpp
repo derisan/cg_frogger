@@ -81,13 +81,18 @@ void Game::Update()
 	}
 	mPendingActors.clear();
 
+	static int times = 0;
+	for (auto vehicle : mVehicles)
+	{
+		if (vehicle->GetState() != Actor::State::kActive)
+			continue;
+
+		if (Intersects(mPlayer->GetBox()->GetWorldBox(), vehicle->GetBox()->GetWorldBox()))
+			std::cout << "Player collides " << times++ << std::endl;
+	}
+
 	for (auto actor : deads)
 		delete actor;
-
-	static int times = 0;
-	for(auto vehicle: mVehicles)
-		if(Intersects(mPlayer->GetBox()->GetWorldBox(), vehicle->GetBox()->GetWorldBox()))
-				std::cout << "Player collides " << times++ << std::endl;
 }
 
 void Game::Draw()
