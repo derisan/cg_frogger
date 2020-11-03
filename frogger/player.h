@@ -12,7 +12,10 @@ public:
     void ActorInput(unsigned char key) override;
     void Draw(class Shader* shader) override;
 
+    class CircleComponent* GetCircle() const { return mCircle; }
+
 private:
     class Mesh* mMesh;
+    class CircleComponent* mCircle;
 };
 

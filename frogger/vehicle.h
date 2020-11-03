@@ -18,9 +18,11 @@ public:
     void Draw(class Shader* shader) override;
 
     Type GetType() const { return mType; }
+    class CircleComponent* GetCircle() { return mCircle; }
 
 private:
     class Mesh* mMesh;
+    class CircleComponent* mCircle;
 
     Type mType;
 };

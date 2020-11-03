@@ -22,8 +22,7 @@ const glm::vec3& CircleComponent::GetCenter() const
 }
 
 bool Intersect(const CircleComponent& a, const CircleComponent& b)
-{
-	
+{	
 	float dist = glm::length2(a.GetCenter() - b.GetCenter());
 
 	float radii = glm::length2(a.GetRadius() + b.GetRadius());

@@ -30,10 +30,12 @@ public:
 
 private:
 	std::vector<class Actor*> mActors;
+	std::vector<class Vehicle*> mVehicles;
 
 	bool mShouldCloseWindow;
 	bool mShouldPause;
 
 	class Renderer* mRenderer;
+	class Player* mPlayer;
 };
 

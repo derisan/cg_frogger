@@ -6,11 +6,14 @@
 #include "renderer.h"
 #include "player.h"
 #include "plane.h"
+#include "vehicle.h"
+#include "circle_component.h"
 
 Game::Game()
 	: mShouldCloseWindow{ false },
 	mShouldPause{ false },
-	mRenderer{ nullptr }
+	mRenderer{ nullptr },
+	mPlayer{ nullptr }
 {
 
 }
@@ -28,8 +31,11 @@ bool Game::Init(int* argc, char** argv)
 
 void Game::LoadData()
 {
-	auto player = new Player{ this };
-	player->SetPosition(glm::vec3{ 0.0f, 0.1f, 0.0f });
+	mPlayer = new Player{ this };
+	mPlayer->SetPosition(glm::vec3{ 0.0f, 0.1f, 0.0f });
+
+	auto car = new Vehicle{ this, Vehicle::Type::kCar };
+	mVehicles.emplace_back(car);
 		
 	for (int i = 0; i < 10; ++i)
 	{
@@ -97,8 +103,21 @@ void Game::ProcessKeyboardInput(unsigned char key)
 
 void Game::Update()
 {
+	std::vector<Actor*> deads;
 	for (auto actor : mActors)
+	{
 		actor->Update();
+		if (actor->GetState() == Actor::State::kDead)
+			deads.emplace_back(actor);
+	}
+
+	for (auto actor : deads)
+		delete actor;
+
+	static int times = 0;
+	for(auto vehicle : mVehicles)
+		if(Intersect(*(mPlayer->GetCircle()), *(vehicle->GetCircle())))
+			std::cout << "player collides" << times++ << std::endl;
 }
 
 void Game::Draw()

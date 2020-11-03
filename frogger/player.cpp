@@ -9,13 +9,18 @@
 #include "texture.h"
 #include "mesh.h"
 #include "renderer.h"
+#include "circle_component.h"
 
 Player::Player(Game* game)
     : Actor{ game },
-    mMesh{ nullptr }
+    mMesh{ nullptr },
+    mCircle{ nullptr }
 {
     mMesh = new Mesh{};
     mMesh = game->GetRenderer()->GetMesh("Assets/chr_sword.gpmesh");
+
+    mCircle = new CircleComponent{ this };
+    mCircle->SetRadius(mMesh->GetRadius());
 }
 
 Player::~Player()
