@@ -48,6 +48,7 @@ public:
 
 protected:
 	class Game* mGame;
+	const float dt{ 16.0f / 1000.0f };
 
 private:
 	std::vector<class Component*> mComponents;
