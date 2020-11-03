@@ -29,7 +29,48 @@ bool Game::Init(int* argc, char** argv)
 void Game::LoadData()
 {
 	auto player = new Player{ this };
-	auto road = new Plane{ this, Plane::Type::kGrass};
+		
+	for (int i = 0; i < 10; ++i)
+	{
+		auto road = new Plane{ this, Plane::Type::kGrass };
+		road->SetRotation(90.0f);
+		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, 0.0f });
+	}
+
+	for (int i = 0; i < 10; ++i)
+	{
+		auto road = new Plane{ this, Plane::Type::kRoad};
+		road->SetRotation(90.0f);
+		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -2.0f });
+	}
+
+	for (int i = 0; i < 10; ++i)
+	{
+		auto road = new Plane{ this, Plane::Type::kRoad };
+		road->SetRotation(90.0f);
+		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -4.0f });
+	}
+
+	for (int i = 0; i < 10; ++i)
+	{
+		auto road = new Plane{ this, Plane::Type::kRoad };
+		road->SetRotation(90.0f);
+		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -6.0f });
+	}
+
+	for (int i = 0; i < 10; ++i)
+	{
+		auto road = new Plane{ this, Plane::Type::kRoad };
+		road->SetRotation(90.0f);
+		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -8.0f });
+	}
+
+	for (int i = 0; i < 10; ++i)
+	{
+		auto road = new Plane{ this, Plane::Type::kGrass };
+		road->SetRotation(90.0f);
+		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -10.0f });
+	}
 }
 
 void Game::Shutdown()
