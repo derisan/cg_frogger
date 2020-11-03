@@ -29,6 +29,7 @@ bool Game::Init(int* argc, char** argv)
 void Game::LoadData()
 {
 	auto player = new Player{ this };
+	player->SetPosition(glm::vec3{ 0.0f, 0.1f, 0.0f });
 		
 	for (int i = 0; i < 10; ++i)
 	{
@@ -39,7 +40,7 @@ void Game::LoadData()
 
 	for (int i = 0; i < 10; ++i)
 	{
-		auto road = new Plane{ this, Plane::Type::kRoad};
+		auto road = new Plane{ this, Plane::Type::kRail};
 		road->SetRotation(90.0f);
 		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -2.0f });
 	}
