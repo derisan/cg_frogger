@@ -8,6 +8,7 @@ public:
 
 	virtual void Update() { };
 	virtual void ProcessKeyboardInput(unsigned char key) { };
+	virtual void OnUpdateWorldTransform() { };
 
 protected:
 	class Actor* mOwner;
