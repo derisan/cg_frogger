@@ -33,54 +33,8 @@ bool Game::Init(int* argc, char** argv)
 void Game::LoadData()
 {
 	mPlayer = new Player{ this };
-	mPlayer->SetPosition(glm::vec3{ 0.0f, 0.1f, 0.0f });
-
-	auto car = new Vehicle{ this, Vehicle::Type::kTrain};
-	car->SetPosition(glm::vec3{ -8.0f, 0.0f, -4.0f });
-	car->SetRotation(90.0f);
-	mVehicles.emplace_back(car);
 		
-	for (int i = 0; i < 10; ++i)
-	{
-		auto road = new Plane{ this, Plane::Type::kGrass };
-		road->SetRotation(90.0f);
-		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, 0.0f });
-	}
-
-	for (int i = 0; i < 10; ++i)
-	{
-		auto road = new Plane{ this, Plane::Type::kRail};
-		road->SetRotation(90.0f);
-		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -2.0f });
-	}
-
-	for (int i = 0; i < 10; ++i)
-	{
-		auto road = new Plane{ this, Plane::Type::kRoad };
-		road->SetRotation(90.0f);
-		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -4.0f });
-	}
-
-	for (int i = 0; i < 10; ++i)
-	{
-		auto road = new Plane{ this, Plane::Type::kRoad };
-		road->SetRotation(90.0f);
-		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -6.0f });
-	}
-
-	for (int i = 0; i < 10; ++i)
-	{
-		auto road = new Plane{ this, Plane::Type::kRoad };
-		road->SetRotation(90.0f);
-		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -8.0f });
-	}
-
-	for (int i = 0; i < 10; ++i)
-	{
-		auto road = new Plane{ this, Plane::Type::kGrass };
-		road->SetRotation(90.0f);
-		road->SetPosition(glm::vec3{ -10.0f + i * 2.0f, 0.0f, -10.0f });
-	}
+	CreateMap();
 }
 
 void Game::Shutdown()
@@ -138,4 +92,23 @@ void Game::RemoveActor(Actor* actor)
 	auto iter = std::find(std::begin(mActors), std::end(mActors), actor);
 	if (iter != std::end(mActors))
 		mActors.erase(iter);
+}
+
+void Game::CreateMap()
+{
+	int start{ 0 };
+	int end{ 2 };
+
+	for (; start < end; ++start)
+	{
+		auto plane = new Plane{ this, Plane::Type::kGrass };
+		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * start });
+	}
+	
+	end = 10;
+	for (; start < end; ++start)
+	{
+		auto plane = new Plane{ this, Plane::Type::kRoad };
+		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * start });
+	}
 }

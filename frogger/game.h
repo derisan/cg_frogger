@@ -9,6 +9,7 @@ public:
 
 	bool Init(int* argc, char** argv);
 	void LoadData();
+	void CreateMap();
 	void Shutdown();
 
 	void ProcessKeyboardInput(unsigned char key);
