@@ -46,16 +46,16 @@ void Player::ActorInput(unsigned char key)
     switch (key)
     {
         case 'w': case 'W':
-            pos += forward * 0.1f;
+            pos += forward * 2.0f;
             break;
         case 's': case 'S':
-            pos -= forward * 0.1f;
+            pos -= forward * 2.0f;
             break;
         case 'a': case 'A':
-            pos -= right * 0.1f;
+            pos -= right * 2.0f;
             break;
         case 'd': case 'D':
-            pos += right * 0.1f;
+            pos += right * 2.0f;
             break;
     }
     SetPosition(pos);
