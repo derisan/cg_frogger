@@ -78,6 +78,8 @@ void Game::Shutdown()
 		mRenderer->Shutdown();
 		//delete mRenderer;
 	}
+
+	delete mSoundEngine;
 }
 
 void Game::ProcessKeyboardInput(unsigned char key)
