@@ -22,6 +22,9 @@ public:
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 
+	bool RemoveVehicle(class Actor* actor);
+	bool RemovePlane(class Actor* actor);
+
 	// Getters
 	bool GetShouldCloseWindow() const { return mShouldCloseWindow; }
 	const std::vector<class Actor*>& GetActors() const { return mActors; }

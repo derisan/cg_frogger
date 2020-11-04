@@ -116,7 +116,13 @@ void Game::Update()
 	CollisionCheck();
 
 	for (auto actor : deads)
+	{
 		delete actor;
+		if (RemoveVehicle(actor))
+			;
+		else
+			RemovePlane(actor);
+	}
 }
 
 void Game::Draw()
@@ -165,8 +171,7 @@ void Game::CollisionCheck()
 
 		if (Intersects(playerBox, vehicle->GetBox()->GetWorldBox()))
 		{
-			std::cout << "Player collides with vehicle" << times++ << std::endl;
-			//mShouldPause = true;
+			//std::cout << "Player collides with vehicle" << times++ << std::endl;
 		}
 	}
 
@@ -179,9 +184,31 @@ void Game::CollisionCheck()
 		{
 			if (plane->GetType() == Plane::PlaneType::kWater)
 			{
-				std::cout << "water" << std::endl;
+				
 			}
-			std::cout << "Player collides with plane" << times++ << std::endl;
+			//std::cout << "Player collides with plane" << times++ << std::endl;
 		}
 	}
+}
+
+bool Game::RemoveVehicle(Actor* actor)
+{
+	auto iter = std::find(std::begin(mVehicles), std::end(mVehicles), actor);
+	if (iter != std::end(mVehicles))
+	{
+		mVehicles.erase(iter);
+		return true;
+	}
+	return false;
+}
+
+bool Game::RemovePlane(Actor* actor)
+{
+	auto iter = std::find(std::begin(mPlanes), std::end(mPlanes), actor);
+	if (iter != std::end(mPlanes))
+	{
+		mPlanes.erase(iter);
+		return true;
+	}
+	return false;
 }
