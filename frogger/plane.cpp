@@ -13,7 +13,7 @@
 Plane::Plane(Game* game, PlaneType type)
 	: Actor{ game },
 	mMesh{ nullptr },
-	mCooldown{ Random::GetFloatRange(0.5f, 1.5f) },
+	mCooldown{ Random::GetFloatRange(0.0f, 0.5f) },
 	mType{ type },
 	mVehicleType{static_cast<Vehicle::VehicleType>(Random::GetIntRange(0, 2))},
 	mLeftOrRight{ Random::GetChoice(-1, 1) }

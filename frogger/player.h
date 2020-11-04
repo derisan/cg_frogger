@@ -16,5 +16,12 @@ public:
 private:
     class Mesh* mMesh;
     class BoxComponent* mBox;
+
+    struct Border
+    {
+        float x;
+        float z;
+    };
+    const Border mBorder;
 };
 

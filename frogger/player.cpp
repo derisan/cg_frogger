@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include <iostream>
+
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -14,7 +16,8 @@
 Player::Player(Game* game)
     : Actor{ game },
     mMesh{ nullptr },
-    mBox{ nullptr }
+    mBox{ nullptr },
+    mBorder{ 12.0f, 0.0f }
 {
     mMesh = new Mesh{};
     mMesh = game->GetRenderer()->GetMesh("Assets/chr_sword.gpmesh");
@@ -58,6 +61,15 @@ void Player::ActorInput(unsigned char key)
             pos += right * 2.0f;
             break;
     }
+
+    if (pos.x > mBorder.x)
+        pos.x = mBorder.x;
+    else if (pos.x < -mBorder.x)
+        pos.x = -mBorder.x;
+
+    if (pos.z > mBorder.z)
+        pos.z = mBorder.z;
+
     SetPosition(pos);
 }
 
