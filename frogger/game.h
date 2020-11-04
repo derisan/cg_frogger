@@ -29,6 +29,7 @@ public:
 	std::vector<class Plane*>& GetPlanes() { return mPlanes; }
 	class Renderer* GetRenderer() {	return mRenderer; }
 	class Player* GetPlayer() { return mPlayer; }
+	class SoundEngine* GetSoundEngine() { return mSoundEngine; }
 
 	// Setters
 	void SetShouldCloseWindow(bool value) { mShouldCloseWindow = value; }
@@ -46,5 +47,6 @@ private:
 
 	class Renderer* mRenderer;
 	class Player* mPlayer;
+	class SoundEngine* mSoundEngine;
 };
 

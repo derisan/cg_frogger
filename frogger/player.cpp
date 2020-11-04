@@ -12,6 +12,7 @@
 #include "mesh.h"
 #include "renderer.h"
 #include "box_component.h"
+#include "sound_engine.h"
 
 Player::Player(Game* game)
     : Actor{ game },
@@ -49,15 +50,19 @@ void Player::ActorInput(unsigned char key)
     switch (key)
     {
         case 'w': case 'W':
+            PlayJumpSound();
             pos += forward * 2.0f;
             break;
         case 's': case 'S':
+            PlayJumpSound();
             pos -= forward * 2.0f;
             break;
         case 'a': case 'A':
+            PlayJumpSound();
             pos -= right * 2.0f;
             break;
         case 'd': case 'D':
+            PlayJumpSound();
             pos += right * 2.0f;
             break;
     }
@@ -80,4 +85,10 @@ void Player::Draw(Shader* shader)
     auto va = mMesh->GetVertexArray();
     va->SetActive();
     glDrawElements(GL_TRIANGLES, va->GetNumIndices(), GL_UNSIGNED_INT, nullptr);
+}
+
+void Player::PlayJumpSound()
+{
+    SoundEngine::Get()->Stop("jump");
+    SoundEngine::Get()->Play("jump");
 }

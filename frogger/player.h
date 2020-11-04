@@ -11,6 +11,8 @@ public:
     void ActorInput(unsigned char key) override;
     void Draw(class Shader* shader) override;
 
+    void PlayJumpSound();
+
     // Getters
     class BoxComponent* GetBox() const { return mBox; }
 

@@ -12,13 +12,15 @@
 #include "circle_component.h"
 #include "box_component.h"
 #include "random.h"
+#include "sound_engine.h"
 
 Game::Game()
 	: mShouldCloseWindow{ false },
 	mShouldPause{ false },
 	mIsUpdating{ false },
 	mRenderer{ nullptr },
-	mPlayer{ nullptr }
+	mPlayer{ nullptr },
+	mSoundEngine{ nullptr }
 {
 
 }
@@ -57,6 +59,11 @@ bool Game::LoadData()
 	mPlayer = new Player{ this };
 		
 	CreateMap();
+
+	mSoundEngine = SoundEngine::Get();
+	mSoundEngine->Create("Sounds/bgm.wav", "bgm", true);
+	mSoundEngine->Create("Sounds/jump.wav", "jump", false);
+	mSoundEngine->Play("bgm");
 
 	return true;
 }
