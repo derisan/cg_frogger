@@ -11,7 +11,7 @@ public:
     {
         kGrass,
         kRoad,
-        kRail
+        kRailroad
     };
 
     Plane(class Game* game, PlaneType type = PlaneType::kGrass);

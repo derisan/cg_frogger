@@ -16,7 +16,7 @@ Plane::Plane(Game* game, PlaneType type)
 	mMesh{ nullptr },
 	mCooldown{ Random::GetFloatRange(0.0f, 0.5f) },
 	mType{ type },
-	mVehicleType{static_cast<Vehicle::VehicleType>(Random::GetIntRange(0, 2))},
+	mVehicleType{ Vehicle::VehicleType::kCar },
 	mLeftOrRight{ Random::GetChoice(-1, 1) }
 {
 	mMesh = new Mesh{};
@@ -26,7 +26,12 @@ Plane::Plane(Game* game, PlaneType type)
 	else if (mType == PlaneType::kRoad)
 		mMesh = game->GetRenderer()->GetMesh("Assets/road.gpmesh");
 	else
-		mMesh = game->GetRenderer()->GetMesh("Assets/rail.gpmesh");
+		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
+
+	if (mType == PlaneType::kRoad)
+		mVehicleType = static_cast<Vehicle::VehicleType>(Random::GetIntRange(0, 1));
+	else if (mType == PlaneType::kRailroad)
+		mVehicleType = Vehicle::VehicleType::kTrain;
 }
 
 void Plane::UpdateActor()
