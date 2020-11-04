@@ -187,9 +187,11 @@ void Game::CollisionCheck()
 
 		if (Intersects(playerBox, plane))
 		{
-			if (plane->GetType() == Plane::PlaneType::kWater)
+			if (plane->GetType() != Plane::PlaneType::kWater)
 			{
-				
+				auto pos = mPlayer->GetPosition();
+				pos.y = 0.0f;
+				mPlayer->SetPosition(pos);
 			}
 			//std::cout << "Player collides with plane" << times++ << std::endl
 		}

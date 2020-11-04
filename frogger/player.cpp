@@ -18,7 +18,8 @@ Player::Player(Game* game)
     : Actor{ game },
     mMesh{ nullptr },
     mBox{ nullptr },
-    mBorder{ 12.0f, 0.0f }
+    mBorder{ 12.0f, 0.0f },
+    mGravity{ 0.01f }
 {
     mMesh = new Mesh{};
     mMesh = game->GetRenderer()->GetMesh("Assets/chr_sword.gpmesh");
@@ -39,6 +40,10 @@ void Player::UpdateActor()
     glm::mat4 view = lookAt(cameraPos, cameraTarget, cameraUp);
 
     mGame->GetRenderer()->SetViewMatrix(view);
+
+    auto pos = GetPosition();
+    pos.y -= mGravity;
+    SetPosition(pos);
 }
 
 void Player::ActorInput(unsigned char key)
