@@ -56,7 +56,9 @@ void Plane::UpdateActor()
 		auto vehicle = new Vehicle{ mGame, mVehicleType };
 		auto pos = GetPosition();
 		vehicle->SetPosition(glm::vec3{ mLeftOrRight * 15.0f, pos.y + 0.1f, pos.z });
-		vehicle->SetSpeed(mLeftOrRight * -5.0f);
+		vehicle->SetSpeed(-5.0f);
+		if (mLeftOrRight == -1)
+			vehicle->SetRotation(180.0f);
 		mGame->GetVehicles().emplace_back(vehicle);
 
 		mCooldown = Random::GetFloatRange(1.0f, 2.0f) + vehicle->GetGenTerm();
