@@ -142,7 +142,7 @@ void Game::CreateMap()
 	for (auto st : mStage)
 	{
 		auto plane = new Plane{ this, static_cast<Plane::PlaneType>(st) };
-		plane->SetPosition(glm::vec3{ 0.0f, -0.2f, -2.0f * idx++ });
+		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * idx++ });
 	}
 }
 
@@ -170,6 +170,10 @@ void Game::CollisionCheck()
 
 		if (Intersects(playerBox, plane))
 		{
+			if (plane->GetType() == Plane::PlaneType::kWater)
+			{
+				std::cout << "water" << std::endl;
+			}
 			std::cout << "Player collides with plane" << times++ << std::endl;
 		}
 	}
