@@ -32,9 +32,9 @@ void Player::UpdateActor()
 {
 	Actor::UpdateActor();
 
-    auto actorPos = GetPosition();
+    const auto& actorPos = GetPosition();
     auto cameraPos = glm::vec3{ actorPos.x, 15.0f, actorPos.z + 10.0f };
-    auto cameraTarget = actorPos;
+    const auto& cameraTarget = actorPos;
     auto cameraUp = glm::vec3{ 0.0f, 1.0f, 0.0f };
 
     glm::mat4 view = lookAt(cameraPos, cameraTarget, cameraUp);

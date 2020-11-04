@@ -21,10 +21,14 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	mMesh = new Mesh{};
 
 	if (mType == VehicleType::kCar)
+	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/car.gpmesh");
+		SetScale(0.4f);
+	}
 	else if (mType == VehicleType::kTruck)
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/truck.gpmesh");
+		SetScale(0.15f);
 		mGenTerm = 0.5f;
 	}
 	else if (mType == VehicleType::kTrain)

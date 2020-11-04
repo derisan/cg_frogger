@@ -171,7 +171,7 @@ void Game::CreateMap()
 
 void Game::CollisionCheck()
 {
-	auto playerBox = mPlayer->GetBox()->GetWorldBox();
+	const auto& playerBox = mPlayer->GetBox()->GetWorldBox();
 
 	static int times = 0;
 	for (auto vehicle : mVehicles)
@@ -188,6 +188,8 @@ void Game::CollisionCheck()
 				pos.y = 0.0f;
 				mPlayer->SetPosition(pos);
 			}
+
+			std::cout << times++ << std::endl;
 		}
 	}
 
