@@ -19,10 +19,13 @@ public:
     void UpdateActor() override;
     void Draw(class Shader* shader) override;
 
+    // Getters
+    class BoxComponent* GetBox() const { return mBox; }
     PlaneType GetType() const { return mType; }
 
 private:
     class Mesh* mMesh;
+    class BoxComponent* mBox;
     float mCooldown;
 
     PlaneType mType;

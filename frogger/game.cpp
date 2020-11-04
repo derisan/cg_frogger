@@ -77,6 +77,8 @@ void Game::ProcessKeyboardInput(unsigned char key)
 {
 	if (key == 27)
 		mShouldCloseWindow = true;
+	else if (key == 'p' || key == 'P')
+		mShouldPause = !mShouldPause;
 
 	for (auto actor : mActors)
 		actor->ProcessInput(key);
@@ -104,18 +106,7 @@ void Game::Update()
 	}
 	mPendingActors.clear();
 
-	static int times = 0;
-	for (auto vehicle : mVehicles)
-	{
-		if (vehicle->GetState() != Actor::State::kActive)
-			continue;
-
-		if (Intersects(mPlayer->GetBox()->GetWorldBox(), vehicle->GetBox()->GetWorldBox()))
-		{
-			std::cout << "Player collides " << times++ << std::endl;
-			//mShouldPause = true;
-		}
-	}
+	CollisionCheck();
 
 	for (auto actor : deads)
 		delete actor;
@@ -151,6 +142,38 @@ void Game::CreateMap()
 	for (auto st : mStage)
 	{
 		auto plane = new Plane{ this, static_cast<Plane::PlaneType>(st) };
-		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * idx++ });
+		plane->SetPosition(glm::vec3{ 0.0f, -0.2f, -2.0f * idx++ });
+	}
+}
+
+void Game::CollisionCheck()
+{
+	auto playerBox = mPlayer->GetBox()->GetWorldBox();
+
+	static int times = 0;
+	for (auto vehicle : mVehicles)
+	{
+		if (vehicle->GetState() != Actor::State::kActive)
+			continue;
+
+		if (Intersects(playerBox, vehicle->GetBox()->GetWorldBox()))
+		{
+			std::cout << "Player collides with vehicle" << times++ << std::endl;
+			//mShouldPause = true;
+		}
+	}
+
+	for (auto plane : mPlanes)
+	{
+		if (plane->GetState() != Actor::State::kActive)
+			continue;
+
+		auto planeBox = plane->GetBox()->GetWorldBox();
+		if (planeBox.mMax.y > playerBox.mMin.y)
+		{
+			//std::cout << planeBox.mMax.y << std::endl;
+			//std::cout << playerBox.mMin.y << std::endl;
+			std::cout << "Player collides with plane" << times++ << std::endl;
+		}
 	}
 }

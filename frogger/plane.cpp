@@ -10,15 +10,18 @@
 #include "vertexarray.h"
 #include "random.h"
 #include "player.h"
+#include "box_component.h"
 
 Plane::Plane(Game* game, PlaneType type)
 	: Actor{ game },
 	mMesh{ nullptr },
+	mBox{ nullptr },
 	mCooldown{ Random::GetFloatRange(0.0f, 0.5f) },
 	mType{ type },
 	mVehicleType{ Vehicle::VehicleType::kCar },
 	mLeftOrRight{ Random::GetChoice(-1, 1) }
 {
+	mGame->GetPlanes().emplace_back(this);
 	mMesh = new Mesh{};
 
 	if (mType == PlaneType::kGrass)
@@ -33,6 +36,9 @@ Plane::Plane(Game* game, PlaneType type)
 		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
 		mVehicleType = Vehicle::VehicleType::kTrain;
 	}
+
+	mBox = new BoxComponent{ this };
+	mBox->SetObjectBox(mMesh->GetBox());
 }
 
 void Plane::UpdateActor()

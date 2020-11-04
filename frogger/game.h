@@ -17,6 +17,8 @@ public:
 	void Update();
 	void Draw();
 
+	void CollisionCheck();
+
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 
@@ -24,6 +26,7 @@ public:
 	bool GetShouldCloseWindow() const { return mShouldCloseWindow; }
 	const std::vector<class Actor*>& GetActors() const { return mActors; }
 	std::vector<class Vehicle*>& GetVehicles() { return mVehicles; }
+	std::vector<class Plane*>& GetPlanes() { return mPlanes; }
 	class Renderer* GetRenderer() {	return mRenderer; }
 	class Player* GetPlayer() { return mPlayer; }
 
@@ -34,6 +37,7 @@ private:
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class Vehicle*> mVehicles;
+	std::vector<class Plane*> mPlanes;
 	std::vector<int> mStage;
 
 	bool mShouldCloseWindow;
