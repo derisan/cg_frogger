@@ -92,5 +92,7 @@ bool Intersects(const AABB& a, Plane* plane)
 {
 	const auto& b = plane->GetBox()->GetWorldBox();
 
-	return a.mMin.y < b.mMax.y;
+	bool res = (b.mMax.z > a.mMin.z) && (b.mMin.z < a.mMin.z) && (a.mMin.y <= b.mMax.y);
+
+	return res;
 }
