@@ -19,7 +19,7 @@ Player::Player(Game* game)
     mMesh{ nullptr },
     mBox{ nullptr },
     mBorder{ 12.0f, 0.0f },
-    mGravity{ 0.01f }
+    mGravity{ 0.05f }
 {
     mMesh = new Mesh{};
     mMesh = game->GetRenderer()->GetMesh("Assets/chr_sword.gpmesh");
