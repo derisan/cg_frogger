@@ -15,6 +15,7 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	mMesh{ nullptr },
 	mBox{ nullptr },
 	mSpeed{ 0.0f },
+	mGenTerm{ 0.0f },
 	mType{ type }
 {
 	mMesh = new Mesh{};
@@ -22,9 +23,15 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	if (mType == VehicleType::kCar)
 		mMesh = game->GetRenderer()->GetMesh("Assets/car.gpmesh");
 	else if (mType == VehicleType::kTruck)
+	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/truck.gpmesh");
+		mGenTerm = 0.5f;
+	}
 	else
+	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/train.gpmesh");
+		mGenTerm = 3.0f;
+	}
 
 	mBox = new BoxComponent{ this };
 	mBox->SetObjectBox(mMesh->GetBox());

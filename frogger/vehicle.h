@@ -21,15 +21,18 @@ public:
     // Getters
     VehicleType GetType() const { return mType; }
     class BoxComponent* GetBox() const { return mBox; }
-
+    float GetGenTerm() const { return mGenTerm; }
+    
     // Setters
     void SetSpeed(float speed) { mSpeed = speed; }
-
+    void SetGenTerm(float gen) { mGenTerm = gen; }
+    
 private:
     class Mesh* mMesh;
     class BoxComponent* mBox;
 
     float mSpeed;
+    float mGenTerm;
 
     VehicleType mType;
 };

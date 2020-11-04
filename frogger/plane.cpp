@@ -24,14 +24,15 @@ Plane::Plane(Game* game, PlaneType type)
 	if (mType == PlaneType::kGrass)
 		mMesh = game->GetRenderer()->GetMesh("Assets/grass.gpmesh");
 	else if (mType == PlaneType::kRoad)
+	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/road.gpmesh");
-	else
-		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
-
-	if (mType == PlaneType::kRoad)
 		mVehicleType = static_cast<Vehicle::VehicleType>(Random::GetIntRange(0, 1));
-	else if (mType == PlaneType::kRailroad)
+	}
+	else
+	{
+		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
 		mVehicleType = Vehicle::VehicleType::kTrain;
+	}
 }
 
 void Plane::UpdateActor()
@@ -39,14 +40,15 @@ void Plane::UpdateActor()
 	Actor::UpdateActor();
 
 	mCooldown -= dt;
-	if (mType != PlaneType::kGrass && mCooldown + static_cast<int>(mVehicleType) < 0)
+	if (mType != PlaneType::kGrass && mCooldown < 0)
 	{
-		mCooldown = Random::GetFloatRange(1.0f, 2.0f);
 		auto vehicle = new Vehicle{ mGame, mVehicleType };
 		auto pos = GetPosition();
 		vehicle->SetPosition(glm::vec3{ mLeftOrRight * 15.0f, pos.y + 0.1f, pos.z });
 		vehicle->SetSpeed(mLeftOrRight * -5.0f);
 		mGame->GetVehicles().emplace_back(vehicle);
+
+		mCooldown = Random::GetFloatRange(1.0f, 2.0f) + vehicle->GetGenTerm();
 	}
 
 	auto player = mGame->GetPlayer();
