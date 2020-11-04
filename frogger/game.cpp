@@ -176,7 +176,13 @@ void Game::CollisionCheck()
 
 		if (Intersects(playerBox, vehicle->GetBox()->GetWorldBox()))
 		{
-			//std::cout << "Player collides with vehicle" << times++ << std::endl;
+			if (vehicle->GetType() == Vehicle::VehicleType::kLog)
+			{
+				auto pos = mPlayer->GetPosition();
+				pos.x = vehicle->GetPosition().x;
+				pos.y = 0.0f;
+				mPlayer->SetPosition(pos);
+			}
 		}
 	}
 
@@ -193,7 +199,6 @@ void Game::CollisionCheck()
 				pos.y = 0.0f;
 				mPlayer->SetPosition(pos);
 			}
-			//std::cout << "Player collides with plane" << times++ << std::endl
 		}
 	}
 }

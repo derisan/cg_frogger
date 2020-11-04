@@ -43,6 +43,13 @@ void Player::UpdateActor()
 
     auto pos = GetPosition();
     pos.y -= mGravity;
+
+    // Need to check twice because of log(vehicle)
+    if (pos.x > mBorder.x)
+        pos.x = mBorder.x;
+    else if (pos.x < -mBorder.x)
+        pos.x = -mBorder.x;
+
     SetPosition(pos);
 }
 
