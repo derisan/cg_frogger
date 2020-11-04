@@ -9,6 +9,7 @@
 #include "texture.h"
 #include "vertexarray.h"
 #include "random.h"
+#include "player.h"
 
 Plane::Plane(Game* game, PlaneType type)
 	: Actor{ game },
@@ -41,6 +42,13 @@ void Plane::UpdateActor()
 		vehicle->SetPosition(glm::vec3{ mLeftOrRight * 15.0f, pos.y + 0.1f, pos.z });
 		vehicle->SetSpeed(mLeftOrRight * -5.0f);
 		mGame->GetVehicles().emplace_back(vehicle);
+	}
+
+	auto player = mGame->GetPlayer();
+	if (player->GetPosition().z + 20.0f < GetPosition().z)
+	{
+		SetState(State::kDead);
+		player->SetZBorder(GetPosition().z - 10.0f);
 	}
 }
 

@@ -11,7 +11,11 @@ public:
     void ActorInput(unsigned char key) override;
     void Draw(class Shader* shader) override;
 
+    // Getters
     class BoxComponent* GetBox() const { return mBox; }
+
+    // Setters
+    void SetZBorder(float z) { mBorder.z = z; }
 
 private:
     class Mesh* mMesh;
@@ -19,9 +23,9 @@ private:
 
     struct Border
     {
-        float x;
+        const float x;
         float z;
     };
-    const Border mBorder;
+    Border mBorder;
 };
 
