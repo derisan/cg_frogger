@@ -84,6 +84,9 @@ void Game::ProcessKeyboardInput(unsigned char key)
 
 void Game::Update()
 {
+	if (mShouldPause)
+		return;
+
 	std::vector<Actor*> deads;
 	mIsUpdating = true;
 	for (auto actor : mActors)
@@ -108,7 +111,10 @@ void Game::Update()
 			continue;
 
 		if (Intersects(mPlayer->GetBox()->GetWorldBox(), vehicle->GetBox()->GetWorldBox()))
+		{
 			std::cout << "Player collides " << times++ << std::endl;
+			//mShouldPause = true;
+		}
 	}
 
 	for (auto actor : deads)
