@@ -10,7 +10,7 @@ public:
     {
         kCar,
         kTruck,
-        kTrain,
+        kBus,
         kLog
     };
 

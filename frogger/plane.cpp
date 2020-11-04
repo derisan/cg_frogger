@@ -34,7 +34,7 @@ Plane::Plane(Game* game, PlaneType type)
 	else if(mType == PlaneType::kRailroad)
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
-		mVehicleType = Vehicle::VehicleType::kTrain;
+		mVehicleType = Vehicle::VehicleType::kBus;
 	}
 	else
 	{
