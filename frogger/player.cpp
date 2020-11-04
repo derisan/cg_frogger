@@ -22,8 +22,9 @@ Player::Player(Game* game)
     mGravity{ 0.05f }
 {
     mMesh = new Mesh{};
-    mMesh = game->GetRenderer()->GetMesh("Assets/chr_sword.gpmesh");
-
+    mMesh = game->GetRenderer()->GetMesh("Assets/bird.gpmesh");
+    SetScale(0.1f);
+    
     mBox = new BoxComponent{ this };
     mBox->SetObjectBox(mMesh->GetBox());
 }
