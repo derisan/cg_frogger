@@ -168,11 +168,8 @@ void Game::CollisionCheck()
 		if (plane->GetState() != Actor::State::kActive)
 			continue;
 
-		auto planeBox = plane->GetBox()->GetWorldBox();
-		if (planeBox.mMax.y > playerBox.mMin.y)
+		if (Intersects(playerBox, plane))
 		{
-			//std::cout << planeBox.mMax.y << std::endl;
-			//std::cout << playerBox.mMin.y << std::endl;
 			std::cout << "Player collides with plane" << times++ << std::endl;
 		}
 	}

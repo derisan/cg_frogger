@@ -4,6 +4,9 @@
 
 #include <glm/gtx/rotate_vector.hpp>
 
+#include "plane.h"
+#include "box_component.h"
+
 AABB::AABB(const glm::vec3& min, const glm::vec3& max)
 	: mMin{ min },
 	mMax{ max }
@@ -83,4 +86,11 @@ bool Intersects(const AABB& a, const AABB& b)
 
 	// If none of these are true, they must intersect
 	return !no;
+}
+
+bool Intersects(const AABB& a, Plane* plane)
+{
+	const auto& b = plane->GetBox()->GetWorldBox();
+
+	return a.mMin.y < b.mMax.y;
 }
