@@ -31,10 +31,14 @@ Plane::Plane(Game* game, PlaneType type)
 		mMesh = game->GetRenderer()->GetMesh("Assets/road.gpmesh");
 		mVehicleType = static_cast<Vehicle::VehicleType>(Random::GetIntRange(0, 1));
 	}
-	else
+	else if(mType == PlaneType::kRailroad)
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
 		mVehicleType = Vehicle::VehicleType::kTrain;
+	}
+	else
+	{
+		mMesh = game->GetRenderer()->GetMesh("Assets/water.gpmesh");
 	}
 
 	mBox = new BoxComponent{ this };
@@ -46,7 +50,7 @@ void Plane::UpdateActor()
 	Actor::UpdateActor();
 
 	mCooldown -= dt;
-	if (mType != PlaneType::kGrass && mCooldown < 0)
+	if (mCooldown < 0 && (mType != PlaneType::kGrass && mType != PlaneType::kWater))
 	{
 		auto vehicle = new Vehicle{ mGame, mVehicleType };
 		auto pos = GetPosition();

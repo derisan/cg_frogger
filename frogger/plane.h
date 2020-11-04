@@ -11,10 +11,11 @@ public:
     {
         kGrass,
         kRoad,
-        kRailroad
+        kRailroad,
+        kWater
     };
 
-    Plane(class Game* game, PlaneType type = PlaneType::kGrass);
+    Plane(class Game* game, PlaneType type);
     
     void UpdateActor() override;
     void Draw(class Shader* shader) override;
