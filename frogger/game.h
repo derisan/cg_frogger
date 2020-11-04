@@ -51,5 +51,7 @@ private:
 	class Renderer* mRenderer;
 	class Player* mPlayer;
 	class SoundEngine* mSoundEngine;
+
+	int mCurStage;
 };
 

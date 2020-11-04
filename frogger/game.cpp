@@ -20,7 +20,8 @@ Game::Game()
 	mIsUpdating{ false },
 	mRenderer{ nullptr },
 	mPlayer{ nullptr },
-	mSoundEngine{ nullptr }
+	mSoundEngine{ nullptr },
+	mCurStage{ 0 }
 {
 
 }
@@ -41,6 +42,7 @@ bool Game::Init(int* argc, char** argv)
 
 bool Game::LoadData()
 {
+	// Read stage from file
 	std::ifstream file{ "Assets/stage.txt" };
 	if (!file.is_open())
 	{
@@ -58,8 +60,8 @@ bool Game::LoadData()
 
 	mPlayer = new Player{ this };
 		
-	CreateMap();
-
+	// Generate singleton instance of SoundEngine
+	// Load several sounds
 	mSoundEngine = SoundEngine::Get();
 	mSoundEngine->Create("Sounds/bgm.wav", "bgm", true);
 	mSoundEngine->Create("Sounds/jump.wav", "jump", false);
@@ -119,12 +121,14 @@ void Game::Update()
 
 	for (auto actor : deads)
 	{
-		delete actor;
 		if (RemoveVehicle(actor))
 			;
 		else
 			RemovePlane(actor);
+		delete actor;
 	}
+
+	CreateMap();
 }
 
 void Game::Draw()
@@ -152,15 +156,16 @@ void Game::RemoveActor(Actor* actor)
 }
 
 void Game::CreateMap()
-{
-	int idx{ 0 };
-	for (auto st : mStage)
+{	
+	// Generate plane along player's z position value
+	auto zPos = mPlayer->GetPosition().z;
+	for (; mCurStage < -zPos + 10; ++mCurStage)
 	{
-		auto plane = new Plane{ this, static_cast<Plane::PlaneType>(st) };
+		auto plane = new Plane{ this, static_cast<Plane::PlaneType>( mStage[mCurStage]) };
 		auto yOffset{ -0.1f };
 		if (plane->GetType() == Plane::PlaneType::kGrass || plane->GetType() == Plane::PlaneType::kRailroad)
 			yOffset -= 0.1f;
-		plane->SetPosition(glm::vec3{ 0.0f, yOffset, -2.0f * idx++ });
+		plane->SetPosition(glm::vec3{ 0.0f, yOffset, -2.0f * mCurStage });
 	}
 }
 
