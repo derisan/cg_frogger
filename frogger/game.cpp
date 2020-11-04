@@ -157,7 +157,10 @@ void Game::CreateMap()
 	for (auto st : mStage)
 	{
 		auto plane = new Plane{ this, static_cast<Plane::PlaneType>(st) };
-		plane->SetPosition(glm::vec3{ 0.0f, -0.1f, -2.0f * idx++ });
+		auto yOffset{ -0.1f };
+		if (plane->GetType() == Plane::PlaneType::kGrass || plane->GetType() == Plane::PlaneType::kRailroad)
+			yOffset -= 0.1f;
+		plane->SetPosition(glm::vec3{ 0.0f, yOffset, -2.0f * idx++ });
 	}
 }
 
@@ -188,7 +191,7 @@ void Game::CollisionCheck()
 			{
 				
 			}
-			//std::cout << "Player collides with plane" << times++ << std::endl;
+			//std::cout << "Player collides with plane" << times++ << std::endl
 		}
 	}
 }
