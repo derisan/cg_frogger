@@ -35,7 +35,7 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	else
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/log.gpmesh");
-		mGenTerm = 2.0f;
+		mGenTerm = 1.5f;
 	}
 
 	mBox = new BoxComponent{ this };
