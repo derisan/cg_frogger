@@ -39,6 +39,7 @@ Plane::Plane(Game* game, PlaneType type)
 	else
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/water.gpmesh");
+		mVehicleType = Vehicle::VehicleType::kLog;
 	}
 
 	mBox = new BoxComponent{ this };
@@ -50,7 +51,7 @@ void Plane::UpdateActor()
 	Actor::UpdateActor();
 
 	mCooldown -= dt;
-	if (mCooldown < 0 && (mType != PlaneType::kGrass && mType != PlaneType::kWater))
+	if (mCooldown < 0 && (mType != PlaneType::kGrass))
 	{
 		auto vehicle = new Vehicle{ mGame, mVehicleType };
 		auto pos = GetPosition();

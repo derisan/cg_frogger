@@ -10,7 +10,8 @@ public:
     {
         kCar,
         kTruck,
-        kTrain
+        kTrain,
+        kLog
     };
 
     Vehicle(class Game* game, VehicleType type);
