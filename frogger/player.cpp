@@ -19,7 +19,8 @@ Player::Player(Game* game)
     mMesh{ nullptr },
     mBox{ nullptr },
     mBorder{ 12.0f, 0.0f },
-    mGravity{ 0.05f }
+    mGravity{ 0.05f },
+    mPrevMovement{ 0.0f }
 {
     mMesh = new Mesh{};
     mMesh = game->GetRenderer()->GetMesh("Assets/bird.gpmesh");
@@ -60,23 +61,28 @@ void Player::ActorInput(unsigned char key)
     auto forward = GetForward();
     auto right = GetRight();
 
+    mPrevMovement = glm::vec3{ 0.0f };
     switch (key)
     {
         case 'w': case 'W':
             PlayJumpSound();
             pos += forward * 2.0f;
+            mPrevMovement = -(forward * 2.0f);
             break;
         case 's': case 'S':
             PlayJumpSound();
             pos -= forward * 2.0f;
+            mPrevMovement = (forward * 2.0f);
             break;
         case 'a': case 'A':
             PlayJumpSound();
             pos -= right * 2.0f;
+            mPrevMovement = (right * 2.0f);
             break;
         case 'd': case 'D':
             PlayJumpSound();
             pos += right * 2.0f;
+            mPrevMovement = -(right * 2.0f);
             break;
     }
 

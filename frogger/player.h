@@ -15,6 +15,7 @@ public:
 
     // Getters
     class BoxComponent* GetBox() const { return mBox; }
+    const glm::vec3& GetPrevMovement() const { return mPrevMovement; }
 
     // Setters
     void SetZBorder(float z) { mBorder.z = z; }
@@ -31,5 +32,6 @@ private:
     Border mBorder;
 
     const float mGravity;
+    glm::vec3 mPrevMovement;
 };
 

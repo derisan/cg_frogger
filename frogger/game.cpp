@@ -217,7 +217,8 @@ void Game::CollisionCheck()
 		const auto& treeBox = tree->GetBox()->GetWorldBox();
 		if (Intersects(playerBox, treeBox))
 		{
-			
+			auto pos = mPlayer->GetPosition() + mPlayer->GetPrevMovement();
+			mPlayer->SetPosition(pos);
 		}
 	}
 }
