@@ -1,5 +1,7 @@
 #include "random.h"
 
+#include <algorithm>
+
 void Random::Init()
 {
 	std::random_device rd;
@@ -30,6 +32,20 @@ int Random::GetChoice(int a, int b)
 		return a;
 	else
 		return b;
+}
+
+std::vector<int> Random::GetShuffledArray(int min, int max, int ex)
+{
+	std::vector<int> v;
+
+	for (int i = min; i < max + 1; ++i)
+	{
+		if (i == ex)
+			continue;
+		v.emplace_back(i);
+	}
+	std::random_shuffle(std::begin(v), std::end(v));
+	return v;
 }
 
 std::mt19937 Random::mEngine;

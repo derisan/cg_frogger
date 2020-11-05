@@ -1,5 +1,7 @@
 #include "plane.h"
 
+#include <iostream>
+
 #include <GL/glew.h>
 
 #include "game.h"
@@ -101,10 +103,12 @@ void Plane::GenerateTree()
 		auto treeNum = Random::GetIntRange(3, 5);
 		const auto& pos = GetPosition();
 
+		auto xPos = Random::GetShuffledArray(-6, 6, 0);
+		
 		for (int i = 0; i < treeNum; ++i)
 		{
 			auto tree = new Tree{ mGame, static_cast<Tree::TreeType>(Random::GetIntRange(0, 0)) };
-			tree->SetPosition(glm::vec3{ Random::GetIntRange(-6, 6) * 2.0f, pos.y + 0.1f, pos.z });
+			tree->SetPosition(glm::vec3{ xPos[i] * 2.0f, pos.y + 0.2f, pos.z });
 		}
 	}
 }

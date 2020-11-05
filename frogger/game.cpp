@@ -178,7 +178,8 @@ void Game::CollisionCheck()
 		if (vehicle->GetState() != Actor::State::kActive)
 			continue;
 
-		if (Intersects(playerBox, vehicle->GetBox()->GetWorldBox()))
+		const auto& vehicleBox = vehicle->GetBox()->GetWorldBox();
+		if (Intersects(playerBox, vehicleBox))
 		{
 			if (vehicle->GetType() == Vehicle::VehicleType::kLog)
 			{
@@ -213,7 +214,8 @@ void Game::CollisionCheck()
 		if (tree->GetState() != Actor::State::kActive)
 			continue;
 
-		if (Intersects(playerBox, tree->GetBox()->GetWorldBox()))
+		const auto& treeBox = tree->GetBox()->GetWorldBox();
+		if (Intersects(playerBox, treeBox))
 		{
 			
 		}
