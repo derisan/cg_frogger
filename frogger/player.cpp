@@ -13,6 +13,7 @@
 #include "renderer.h"
 #include "box_component.h"
 #include "sound_engine.h"
+#include "tree.h"
 
 Player::Player(Game* game)
     : Actor{ game },
@@ -95,6 +96,22 @@ void Player::ActorInput(unsigned char key)
         pos.z = mBorder.z;
 
     SetPosition(pos);
+
+    // This is not a proper way. But there's no other way.
+    mBox->OnUpdateWorldTransform();
+    const auto& playerBox = mBox->GetWorldBox();
+    for (auto tree : mGame->GetTrees())
+    {
+        if (tree->GetState() != Actor::State::kActive)
+            continue;
+
+        const auto& treeBox = tree->GetBox()->GetWorldBox();
+        if (Intersects(playerBox, treeBox))
+        {
+            auto pos = GetPosition() + mPrevMovement;
+            SetPosition(pos);
+        }
+    }
 }
 
 void Player::Draw(Shader* shader)

@@ -208,19 +208,6 @@ void Game::CollisionCheck()
 			}
 		}
 	}
-
-	for (auto tree : mTrees)
-	{
-		if (tree->GetState() != Actor::State::kActive)
-			continue;
-
-		const auto& treeBox = tree->GetBox()->GetWorldBox();
-		if (Intersects(playerBox, treeBox))
-		{
-			auto pos = mPlayer->GetPosition() + mPlayer->GetPrevMovement();
-			mPlayer->SetPosition(pos);
-		}
-	}
 }
 
 bool Game::RemoveVehicle(Actor* actor)
