@@ -9,6 +9,7 @@
 #include "player.h"
 #include "plane.h"
 #include "vehicle.h"
+#include "tree.h"
 #include "circle_component.h"
 #include "box_component.h"
 #include "random.h"
@@ -123,8 +124,10 @@ void Game::Update()
 	{
 		if (RemoveVehicle(actor))
 			;
+		else if (RemovePlane(actor))
+			;
 		else
-			RemovePlane(actor);
+			RemoveTree(actor);
 		delete actor;
 	}
 
@@ -162,10 +165,6 @@ void Game::CreateMap()
 	for (; mCurStage < -zPos + 10; ++mCurStage)
 	{
 		auto plane = new Plane{ this, static_cast<Plane::PlaneType>( mStage[mCurStage]) };
-		auto yOffset{ -0.1f };
-		if (plane->GetType() == Plane::PlaneType::kGrass || plane->GetType() == Plane::PlaneType::kRailroad)
-			yOffset -= 0.1f;
-		plane->SetPosition(glm::vec3{ 0.0f, yOffset, -2.0f * mCurStage });
 	}
 }
 
@@ -189,7 +188,7 @@ void Game::CollisionCheck()
 				mPlayer->SetPosition(pos);
 			}
 
-			std::cout << times++ << std::endl;
+			//std::cout << times++ << std::endl;
 		}
 	}
 
@@ -206,6 +205,17 @@ void Game::CollisionCheck()
 				pos.y = 0.0f;
 				mPlayer->SetPosition(pos);
 			}
+		}
+	}
+
+	for (auto tree : mTrees)
+	{
+		if (tree->GetState() != Actor::State::kActive)
+			continue;
+
+		if (Intersects(playerBox, tree->GetBox()->GetWorldBox()))
+		{
+			
 		}
 	}
 }
@@ -227,6 +237,17 @@ bool Game::RemovePlane(Actor* actor)
 	if (iter != std::end(mPlanes))
 	{
 		mPlanes.erase(iter);
+		return true;
+	}
+	return false;
+}
+
+bool Game::RemoveTree(Actor* actor)
+{
+	auto iter = std::find(std::begin(mTrees), std::end(mTrees), actor);
+	if (iter != std::end(mTrees))
+	{
+		mTrees.erase(iter);
 		return true;
 	}
 	return false;

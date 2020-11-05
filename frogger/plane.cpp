@@ -11,6 +11,7 @@
 #include "random.h"
 #include "player.h"
 #include "box_component.h"
+#include "tree.h"
 
 Plane::Plane(Game* game, PlaneType type)
 	: Actor{ game },
@@ -21,11 +22,15 @@ Plane::Plane(Game* game, PlaneType type)
 	mVehicleType{ Vehicle::VehicleType::kCar },
 	mLeftOrRight{ Random::GetChoice(-1, 1) }
 {
-	mGame->GetPlanes().emplace_back(this);
+	game->GetPlanes().emplace_back(this);
 	mMesh = new Mesh{};
 
+	auto yOffset{ -0.1f };
 	if (mType == PlaneType::kGrass)
+	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/grass.gpmesh");
+		yOffset -= 0.1f;
+	}
 	else if (mType == PlaneType::kRoad)
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/road.gpmesh");
@@ -35,12 +40,16 @@ Plane::Plane(Game* game, PlaneType type)
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
 		mVehicleType = Vehicle::VehicleType::kBus;
+		yOffset -= 0.1f;
 	}
 	else
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/water.gpmesh");
 		mVehicleType = Vehicle::VehicleType::kLog;
 	}
+
+	SetPosition(glm::vec3{ 0.0f, yOffset, -2.0f * game->GetCurStage() });
+	GenerateTree();
 
 	mBox = new BoxComponent{ this };
 	mBox->SetObjectBox(mMesh->GetBox());
@@ -51,18 +60,8 @@ void Plane::UpdateActor()
 	Actor::UpdateActor();
 
 	mCooldown -= dt;
-	if (mCooldown < 0 && (mType != PlaneType::kGrass))
-	{
-		auto vehicle = new Vehicle{ mGame, mVehicleType };
-		auto pos = GetPosition();
-		vehicle->SetPosition(glm::vec3{ mLeftOrRight * 15.0f, pos.y + 0.1f, pos.z });
-		vehicle->SetSpeed(-5.0f);
-		if (mLeftOrRight == -1)
-			vehicle->SetRotation(180.0f);
-		mGame->GetVehicles().emplace_back(vehicle);
-
-		mCooldown = Random::GetFloatRange(1.0f, 2.0f) + vehicle->GetGenTerm();
-	}
+	if (mCooldown < 0)
+		GenerateVehicle();
 
 	auto player = mGame->GetPlayer();
 	if (player->GetPosition().z + 20.0f < GetPosition().z)
@@ -81,5 +80,31 @@ void Plane::Draw(Shader* shader)
 	glDrawElements(GL_TRIANGLES, va->GetNumIndices(), GL_UNSIGNED_INT, nullptr);
 }
 
+void Plane::GenerateVehicle()
+{
+	if (mType != PlaneType::kGrass)
+	{
+		auto vehicle = new Vehicle{ mGame, mVehicleType };
+		const auto& pos = GetPosition();
+		vehicle->SetPosition(glm::vec3{ mLeftOrRight * 15.0f, pos.y + 0.1f, pos.z });
+		vehicle->SetSpeed(-5.0f);
+		if (mLeftOrRight == -1)
+			vehicle->SetRotation(180.0f);
+		mCooldown = Random::GetFloatRange(1.0f, 3.0f) + vehicle->GetGenTerm();
+	}
+}
 
+void Plane::GenerateTree()
+{
+	if (mType == PlaneType::kGrass)
+	{
+		auto treeNum = Random::GetIntRange(3, 5);
+		const auto& pos = GetPosition();
 
+		for (int i = 0; i < treeNum; ++i)
+		{
+			auto tree = new Tree{ mGame, static_cast<Tree::TreeType>(Random::GetIntRange(0, 0)) };
+			tree->SetPosition(glm::vec3{ Random::GetIntRange(-6, 6) * 2.0f, pos.y + 0.1f, pos.z });
+		}
+	}
+}

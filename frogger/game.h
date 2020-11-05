@@ -24,15 +24,17 @@ public:
 
 	bool RemoveVehicle(class Actor* actor);
 	bool RemovePlane(class Actor* actor);
+	bool RemoveTree(class Actor* actor);
 
 	// Getters
 	bool GetShouldCloseWindow() const { return mShouldCloseWindow; }
 	const std::vector<class Actor*>& GetActors() const { return mActors; }
 	std::vector<class Vehicle*>& GetVehicles() { return mVehicles; }
 	std::vector<class Plane*>& GetPlanes() { return mPlanes; }
+	std::vector<class Tree*>& GetTrees() { return mTrees; }
 	class Renderer* GetRenderer() {	return mRenderer; }
 	class Player* GetPlayer() { return mPlayer; }
-	class SoundEngine* GetSoundEngine() { return mSoundEngine; }
+	int GetCurStage() const { return mCurStage; }
 
 	// Setters
 	void SetShouldCloseWindow(bool value) { mShouldCloseWindow = value; }
@@ -42,6 +44,7 @@ private:
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class Vehicle*> mVehicles;
 	std::vector<class Plane*> mPlanes;
+	std::vector<class Tree*> mTrees;
 	std::vector<int> mStage;
 
 	bool mShouldCloseWindow;

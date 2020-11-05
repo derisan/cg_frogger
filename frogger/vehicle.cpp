@@ -18,6 +18,8 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	mGenTerm{ 0.0f },
 	mType{ type }
 {
+	game->GetVehicles().emplace_back(this);
+
 	mMesh = new Mesh{};
 
 	if (mType == VehicleType::kCar)
@@ -40,7 +42,7 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	else
 	{
 		mMesh = game->GetRenderer()->GetMesh("Assets/log.gpmesh");
-		mGenTerm = 1.5f;
+		mGenTerm = 1.0f;
 	}
 
 	mBox = new BoxComponent{ this };

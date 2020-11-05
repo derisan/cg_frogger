@@ -20,6 +20,9 @@ public:
     void UpdateActor() override;
     void Draw(class Shader* shader) override;
 
+    void GenerateVehicle();
+    void GenerateTree();
+
     // Getters
     class BoxComponent* GetBox() const { return mBox; }
     PlaneType GetType() const { return mType; }
