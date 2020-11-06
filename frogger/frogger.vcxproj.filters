@@ -208,5 +208,11 @@
     <None Include="Shaders\sprite.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\phong.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\phong.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

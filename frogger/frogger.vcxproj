@@ -84,6 +84,8 @@
   <ItemGroup>
     <None Include="Shaders\basicMesh.frag" />
     <None Include="Shaders\basicMesh.vert" />
+    <None Include="Shaders\phong.frag" />
+    <None Include="Shaders\phong.vert" />
     <None Include="Shaders\sprite.frag" />
     <None Include="Shaders\sprite.vert" />
   </ItemGroup>
