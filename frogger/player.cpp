@@ -50,6 +50,9 @@ void Player::UpdateActor()
     auto pos = GetPosition();
     pos.y -= mGravity;
 
+    if (pos.y < -0.5f)
+        Die();
+
     // Need to check twice because of log(vehicle)
     if (pos.x > mBorder.x)
         pos.x = mBorder.x;
@@ -80,13 +83,13 @@ void Player::ActorInput(unsigned char key)
             break;
         case 'a': case 'A':
             PlayJumpSound();
-            pos -= right * 1.5f;
-            mPrevMovement = (right * 1.5f);
+            pos -= right * 1.2f;
+            mPrevMovement = (right * 1.2f);
             break;
         case 'd': case 'D':
             PlayJumpSound();
-            pos += right * 1.5f;
-            mPrevMovement = -(right * 1.5f);
+            pos += right * 1.2f;
+            mPrevMovement = -(right * 1.2f);
             break;
     }
 
@@ -145,4 +148,9 @@ void Player::NotToFall()
     auto pos = GetPosition();
     pos.y = 0.0f;
     SetPosition(pos);
+}
+
+void Player::Die()
+{
+    mGame->SetShouldCloseGame(true);
 }

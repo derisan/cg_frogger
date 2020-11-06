@@ -50,6 +50,8 @@ void MainScene::Update()
 		return;
 
 	mGame->Update();
+	if (mGame->GetShouldCloseGame())
+		mGfw->ChangeScene("dead");
 }
 
 void MainScene::Draw()

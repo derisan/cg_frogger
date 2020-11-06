@@ -24,6 +24,8 @@
     <ClCompile Include="box_component.cpp" />
     <ClCompile Include="circle_component.cpp" />
     <ClCompile Include="component.cpp" />
+    <ClCompile Include="dead_actor.cpp" />
+    <ClCompile Include="dead_scene.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gfw.cpp" />
     <ClCompile Include="loading_actor.cpp" />
@@ -53,6 +55,8 @@
     <ClInclude Include="box_component.h" />
     <ClInclude Include="circle_component.h" />
     <ClInclude Include="component.h" />
+    <ClInclude Include="dead_actor.h" />
+    <ClInclude Include="dead_scene.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gfw.h" />
     <ClInclude Include="loading_actor.h" />

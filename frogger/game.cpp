@@ -145,6 +145,10 @@ void Game::CollisionCheck()
 			{
 				mPlayer->CollideWithLog(vehicle);
 			}
+			else
+			{
+				mPlayer->Die();
+			}
 			//std::cout << times++ << std::endl;
 		}
 	}

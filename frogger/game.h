@@ -32,9 +32,11 @@ public:
 	std::vector<class Tree*>& GetTrees() { return mTrees; }
 	class Player* GetPlayer() { return mPlayer; }
 	int GetCurStage() const { return mCurStage; }
+	bool GetShouldCloseGame() const { return mShouldCloseGame; }
 
 	// Setters
 	void SetViewMatrix(const glm::mat4& view) { mView = view; }
+	void SetShouldCloseGame(bool value) { mShouldCloseGame = value; }
 
 private:
 	std::vector<class Actor*> mActors;
@@ -52,6 +54,8 @@ private:
 	glm::mat4 mView;
 
 	bool mIsUpdating;
+	bool mShouldCloseGame;
+
 	int mCurStage;
 };
 

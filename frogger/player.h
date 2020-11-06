@@ -14,6 +14,7 @@ public:
     void PlayJumpSound();
     void CollideWithLog(class Vehicle* log);
     void NotToFall();
+    void Die();
 
     // Getters
     class BoxComponent* GetBox() const { return mBox; }
