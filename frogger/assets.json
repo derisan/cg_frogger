@@ -1,0 +1,37 @@
+{
+  "gpmesh": [
+    "basic_tree.gpmesh",
+    "bird.gpmesh",
+    "bus.gpmesh",
+    "car.gpmesh",
+    "chr_sword.gpmesh",
+    "grass.gpmesh",
+    "log.gpmesh",
+    "railroad.gpmesh",
+    "road.gpmesh",
+    "train.gpmesh",
+    "truck.gpmesh",
+    "water.gpmesh"
+  ],
+  "png": [
+    "basic_tree.png",
+    "bird.png",
+    "bus.png",
+    "car.png",
+    "chr_sword.png",
+    "grass.png",
+    "loading.png",
+    "log.png",
+    "railroad.png",
+    "road.png",
+    "train.png",
+    "truck.png",
+    "water.png"
+  ],
+  "jpg": [
+    "pressenter.jpg"
+  ],
+  "txt": [
+    "stage.txt"
+  ]
+}

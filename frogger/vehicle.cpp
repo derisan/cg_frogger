@@ -22,26 +22,27 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 
 	mMesh = new Mesh{};
 
+	auto renderer = Renderer::Get();
 	if (mType == VehicleType::kCar)
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/car.gpmesh");
+		mMesh = renderer->GetMesh("Assets/car.gpmesh");
 		SetScale(0.1f);
 	}
 	else if (mType == VehicleType::kTruck)
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/truck.gpmesh");
+		mMesh = renderer->GetMesh("Assets/truck.gpmesh");
 		SetScale(0.15f);
 		mGenTerm = 0.5f;
 	}
 	else if (mType == VehicleType::kBus)
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/bus.gpmesh");
+		mMesh = renderer->GetMesh("Assets/bus.gpmesh");
 		SetScale(0.1f);
 		mGenTerm = 3.0f;
 	}
 	else
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/log.gpmesh");
+		mMesh = renderer->GetMesh("Assets/log.gpmesh");
 		mGenTerm = 1.0f;
 	}
 

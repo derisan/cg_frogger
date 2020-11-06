@@ -5,7 +5,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 
-#include "shader.h"
 #include "game.h"
 #include "component.h"
 
@@ -24,6 +23,11 @@ Actor::Actor(Game* game)
 Actor::~Actor()
 {
 	mGame->RemoveActor(this);
+
+	while (!mComponents.empty())
+	{
+		delete mComponents.back();
+	}
 }
 
 void Actor::Update()
@@ -43,6 +47,17 @@ void Actor::UpdateComponents()
 {
 	for (auto comp : mComponents)
 		comp->Update();
+}
+
+void Actor::ProcessInput(unsigned char key)
+{
+	if (mState == State::kActive)
+	{
+		for (auto comp : mComponents)
+			comp->ProcessKeyboardInput(key);
+
+		ActorInput(key);
+	}
 }
 
 void Actor::ComputeWorldTransform()
@@ -71,17 +86,6 @@ void Actor::RemoveComponent(Component* component)
 	auto iter = std::find(std::begin(mComponents), std::end(mComponents), component);
 	if (iter != std::end(mComponents))
 		mComponents.erase(iter);
-}
-
-void Actor::ProcessInput(unsigned char key)
-{
-	if (mState == State::kActive)
-	{
-		for (auto comp : mComponents)
-			comp->ProcessKeyboardInput(key);
-
-		ActorInput(key);
-	}
 }
 
 glm::vec3 Actor::GetForward() const

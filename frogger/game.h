@@ -2,23 +2,23 @@
 
 #include <vector>
 
+#include <glm/glm.hpp>
+
 class Game
 {
 public:
-	Game();
+	Game(class Scene* scene);
 
-	bool Init(int* argc, char** argv);
-	bool LoadData();
-	void CreateMap();
+	bool Init();
 	void Shutdown();
 
-	void ProcessKeyboardInput(unsigned char key);
-	void ProcessMouseInput(int button, int state, int x, int y) { };
+	void ProcessInput(unsigned char key);
 	void Update();
 	void Draw();
 
+	void CreateMap();
 	void CollisionCheck();
-
+	
 	void AddActor(class Actor* actor);
 	void RemoveActor(class Actor* actor);
 
@@ -27,17 +27,14 @@ public:
 	bool RemoveTree(class Actor* actor);
 
 	// Getters
-	bool GetShouldCloseWindow() const { return mShouldCloseWindow; }
-	const std::vector<class Actor*>& GetActors() const { return mActors; }
 	std::vector<class Vehicle*>& GetVehicles() { return mVehicles; }
 	std::vector<class Plane*>& GetPlanes() { return mPlanes; }
 	std::vector<class Tree*>& GetTrees() { return mTrees; }
-	class Renderer* GetRenderer() {	return mRenderer; }
 	class Player* GetPlayer() { return mPlayer; }
 	int GetCurStage() const { return mCurStage; }
 
 	// Setters
-	void SetShouldCloseWindow(bool value) { mShouldCloseWindow = value; }
+	void SetViewMatrix(const glm::mat4& view) { mView = view; }
 
 private:
 	std::vector<class Actor*> mActors;
@@ -47,14 +44,14 @@ private:
 	std::vector<class Tree*> mTrees;
 	std::vector<int> mStage;
 
-	bool mShouldCloseWindow;
-	bool mShouldPause;
-	bool mIsUpdating;
-
+	class Scene* mScene;
 	class Renderer* mRenderer;
+	class Shader* mMeshShader;
 	class Player* mPlayer;
-	class SoundEngine* mSoundEngine;
 
+	glm::mat4 mView;
+
+	bool mIsUpdating;
 	int mCurStage;
 };
 

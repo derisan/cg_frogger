@@ -1,38 +1,35 @@
+// -----------------------------------
+// renderer.h
+// 2020. 11. 05
+// Code by derisan (derisan@naver.com)
+// -----------------------------------
+
 #pragma once
 
 #include <unordered_map>
+#include <string>
 
-#include <glm/glm.hpp>
-
+// Renderer is a singleton class
 class Renderer
 {
 public:
-	Renderer(class Game* game);
-	
-	bool Init(int* argc, char** argv, int w = 1024, int h = 768);
+	static Renderer* Get();
+	static class VertexArray* GetSpriteVertexArray();
+
 	void Shutdown();
 
-	void Draw();
-
-	// Getters
 	class Texture* GetTexture(const std::string& file);
 	class Mesh* GetMesh(const std::string& file);
-
-	// Setters
-	void SetViewMatrix(const glm::mat4& view) { mView = view; }
+	class Shader* GetShader(const std::string& file);
 
 private:
-	bool LoadShaders();
+	Renderer() = default;
 
 	std::unordered_map<std::string, class Texture*> mTextures;
 	std::unordered_map<std::string, class Mesh*> mMeshes;
+	std::unordered_map<std::string, class Shader*> mShaders;
 
-	class Game* mGame;
-	class Shader* mMeshShader;
-
-	glm::mat4 mView;
-
-	int mScrWidth;
-	int mScrHeight;
+	static Renderer* mInstance;
+	static class VertexArray* mSpriteVertexArray;
 };
 

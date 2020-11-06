@@ -20,4 +20,3 @@ private:
 	int mTextureWidth;
 	int mTextureHeight;
 };
-

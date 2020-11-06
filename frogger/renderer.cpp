@@ -1,97 +1,56 @@
+// -----------------------------------
+// renderer.cpp
+// 2020. 11. 05
+// Code by derisan (derisan@naver.com)
+// -----------------------------------
+
 #include "renderer.h"
 
-#include <iostream>
-#include <vector>
-
-#include <GL/glew.h>
-#include <GL/freeglut.h>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "game.h"
-#include "shader.h"
-#include "actor.h"
 #include "texture.h"
 #include "mesh.h"
+#include "shader.h"
+#include "vertexarray.h"
 
-Renderer::Renderer(Game* game)
-	: mGame{ game },
-	mMeshShader{ nullptr },
-	mView{ 1.0f },
-	mScrWidth{ 0 },
-	mScrHeight{ 0 }
+Renderer* Renderer::Get()
 {
+	if (!mInstance)
+		mInstance = new Renderer{};
 
+	return mInstance;
 }
 
-bool Renderer::Init(int* argc, char** argv, int w, int h)
+VertexArray* Renderer::GetSpriteVertexArray()
 {
-	mScrWidth = w;
-	mScrHeight = h;
-
-	glutInit(argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(mScrWidth, mScrHeight);
-	glutCreateWindow("Frogger");
-
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK)
+	if (!mSpriteVertexArray)
 	{
-		std::cout << "Unable to initialize GLEW" << std::endl;
-		return false;
+		const float vertices[] = {
+		-0.5f,  0.5f, 0.f, 0.f, 0.f, 0.0f, 0.f, 1.f, // top left
+		-0.5f, -0.5f, 0.f, 0.f, 0.f, 0.0f, 0.f, 0.f, // bottome left
+		 0.5f, -0.5f, 0.f, 0.f, 0.f, 0.0f, 1.f, 0.f, // bottom right
+		 0.5f,  0.5f, 0.f, 0.f, 0.f, 0.0f, 1.f, 1.f  // top right
+		};
+
+		const unsigned int indices[] = {
+			0, 1, 2,
+			0, 2, 3
+		};
+
+		mSpriteVertexArray = new VertexArray{ vertices, 4, indices, 6 };
 	}
 
-	if (!LoadShaders())
-	{
-		std::cout << "Failed to load shaders" << std::endl;
-		return false;
-	}
-
-	return true;
+	return mSpriteVertexArray;
 }
-
 
 void Renderer::Shutdown()
 {
-	delete mMeshShader;
-
-	// Destroy textures
 	for (auto item : mTextures)
 		delete item.second;
-	mTextures.clear();
 
-	// Destroy meshes
 	for (auto item : mMeshes)
 		delete item.second;
-	mMeshes.clear();
-}
 
-void Renderer::Draw()
-{
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-
-	mMeshShader->SetActive();
-	mMeshShader->SetMatrix4Uniform("uView", mView);
-	for (auto actor : mGame->GetActors())
-		actor->Draw(mMeshShader);
-
-	glutSwapBuffers();
-}
-
-bool Renderer::LoadShaders()
-{
-	mMeshShader = new Shader{};
-	if (!mMeshShader->Load("Shaders/basicMesh.vert", "Shaders/basicMesh.frag"))
-		return false;
-
-	mMeshShader->SetActive();
-	glm::mat4 proj{ 1.0f };
-	proj = glm::perspective(45.0f, static_cast<float>(mScrWidth) / mScrHeight, 0.1f, 100.0f);
-	mMeshShader->SetMatrix4Uniform("uProj", proj);
-
-	return true;
+	for (auto item : mShaders)
+		delete item.second;
 }
 
 Texture* Renderer::GetTexture(const std::string& file)
@@ -122,7 +81,7 @@ Mesh* Renderer::GetMesh(const std::string& file)
 		m = iter->second;
 	else
 	{
-		m = new Mesh();
+		m = new Mesh{};
 		if (m->Load(file, this))
 			mMeshes.emplace(file, m);
 		else
@@ -133,3 +92,29 @@ Mesh* Renderer::GetMesh(const std::string& file)
 	}
 	return m;
 }
+
+Shader* Renderer::GetShader(const std::string& file)
+{
+	auto vertFilePath = "Shaders/" + file + ".vert";
+	auto fragFilePath = "Shaders/" + file + ".frag";
+
+	Shader* sh = nullptr;
+	auto iter = mShaders.find(file);
+	if (iter != mShaders.end())
+		sh = iter->second;
+	else
+	{
+		sh = new Shader{};
+		if (sh->Load(vertFilePath, fragFilePath))
+			mShaders.emplace(file, sh);
+		else
+		{
+			delete sh;
+			sh = nullptr;
+		}
+	}
+	return sh;
+}
+
+Renderer* Renderer::mInstance;
+VertexArray* Renderer::mSpriteVertexArray;

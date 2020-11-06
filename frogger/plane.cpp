@@ -27,26 +27,27 @@ Plane::Plane(Game* game, PlaneType type)
 	game->GetPlanes().emplace_back(this);
 	mMesh = new Mesh{};
 
+	auto renderer = Renderer::Get();
 	auto yOffset{ -0.1f };
 	if (mType == PlaneType::kGrass)
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/grass.gpmesh");
+		mMesh = renderer->GetMesh("Assets/grass.gpmesh");
 		yOffset -= 0.1f;
 	}
 	else if (mType == PlaneType::kRoad)
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/road.gpmesh");
+		mMesh = renderer->GetMesh("Assets/road.gpmesh");
 		mVehicleType = static_cast<Vehicle::VehicleType>(Random::GetIntRange(0, 1));
 	}
 	else if(mType == PlaneType::kRailroad)
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/railroad.gpmesh");
+		mMesh = renderer->GetMesh("Assets/railroad.gpmesh");
 		mVehicleType = Vehicle::VehicleType::kBus;
 		yOffset -= 0.1f;
 	}
 	else
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/water.gpmesh");
+		mMesh = renderer->GetMesh("Assets/water.gpmesh");
 		mVehicleType = Vehicle::VehicleType::kLog;
 	}
 

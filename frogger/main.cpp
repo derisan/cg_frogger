@@ -1,7 +1,7 @@
 // -----------------------------------
 // main.cpp
-// 2020. 11. 02
-// Code by Kim
+// 2020. 11. 06
+// Code by derisan (derisan@naver.com)
 // -----------------------------------
 
 #include <iostream>
@@ -9,30 +9,27 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 
-#include "game.h"
+#include "gfw.h"
 
 void DisplayFunc();
 void ReshapeFunc(int w, int h);
-void KeyboardFunc(unsigned char key, int x, int y);
-void MouseFunc(int button, int state, int x, int y);
+void KeyboardFunc(unsigned char i, int x, int y);
 void TimerFunc(int value);
-
 void Shutdown();
 
-Game game{};
+Gfw gfw;
 
 int main(int argc, char** argv)
 {
-	if (!game.Init(&argc, argv))
+	if (!gfw.Init(&argc, argv, 1024, 768))
 	{
-		std::cout << "Failed to initialize game" << std::endl;
+		std::cout << "Failed to initialize gfw" << std::endl;
 		return -1;
 	}
 
 	glutDisplayFunc(DisplayFunc);
 	glutReshapeFunc(ReshapeFunc);
 	glutKeyboardFunc(KeyboardFunc);
-	glutMouseFunc(MouseFunc);
 	glutTimerFunc(16, TimerFunc, 1);
 
 	glutMainLoop();
@@ -42,7 +39,7 @@ int main(int argc, char** argv)
 
 void DisplayFunc()
 {
-	game.Draw();
+
 }
 
 void ReshapeFunc(int w, int h)
@@ -50,28 +47,23 @@ void ReshapeFunc(int w, int h)
 	glViewport(0, 0, w, h);
 }
 
-void KeyboardFunc(unsigned char key, int x, int y)
+unsigned char key;
+void KeyboardFunc(unsigned char i, int x, int y)
 {
-	game.ProcessKeyboardInput(key);
-}
-
-void MouseFunc(int button, int state, int x, int y)
-{
-	game.ProcessMouseInput(button, state, x, y);
+	key = i;
 }
 
 void TimerFunc(int value)
 {
-	// Update is called per 16 ms
 	glutTimerFunc(16, TimerFunc, 1);
-	game.Update();
-	if (game.GetShouldCloseWindow())
+	gfw.Run(key);
+	if (gfw.GetShouldClose())
 		Shutdown();
-	glutPostRedisplay();
+	key = NULL;
 }
 
 void Shutdown()
 {
-	game.Shutdown();
+	gfw.Shutdown();
 	glutLeaveMainLoop();
 }

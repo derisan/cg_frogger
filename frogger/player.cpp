@@ -24,7 +24,9 @@ Player::Player(Game* game)
     mPrevMovement{ 0.0f }
 {
     mMesh = new Mesh{};
-    mMesh = game->GetRenderer()->GetMesh("Assets/bird.gpmesh");
+
+    auto renderer = Renderer::Get();
+    mMesh = renderer->GetMesh("Assets/bird.gpmesh");
     SetScale(0.1f);
     
     mBox = new BoxComponent{ this };
@@ -42,7 +44,7 @@ void Player::UpdateActor()
 
     glm::mat4 view = lookAt(cameraPos, cameraTarget, cameraUp);
 
-    mGame->GetRenderer()->SetViewMatrix(view);
+    mGame->SetViewMatrix(view);
 
     auto pos = GetPosition();
     pos.y -= mGravity;
@@ -77,13 +79,13 @@ void Player::ActorInput(unsigned char key)
             break;
         case 'a': case 'A':
             PlayJumpSound();
-            pos -= right * 2.0f;
-            mPrevMovement = (right * 2.0f);
+            pos -= right * 1.5f;
+            mPrevMovement = (right * 1.5f);
             break;
         case 'd': case 'D':
             PlayJumpSound();
-            pos += right * 2.0f;
-            mPrevMovement = -(right * 2.0f);
+            pos += right * 1.0f;
+            mPrevMovement = -(right * 1.5f);
             break;
     }
 

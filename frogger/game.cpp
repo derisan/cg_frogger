@@ -5,44 +5,46 @@
 #include <sstream>
 #include <algorithm>
 
-#include "renderer.h"
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "player.h"
 #include "plane.h"
 #include "vehicle.h"
 #include "tree.h"
-#include "circle_component.h"
+
+#include "renderer.h"
+#include "sound_engine.h"
 #include "box_component.h"
 #include "random.h"
-#include "sound_engine.h"
+#include "shader.h"
+#include "scene.h"
+#include "gfw.h"
 
-Game::Game()
-	: mShouldCloseWindow{ false },
-	mShouldPause{ false },
-	mIsUpdating{ false },
+
+
+Game::Game(Scene* scene)
+	: mScene{ scene },
 	mRenderer{ nullptr },
+	mMeshShader{ nullptr },
 	mPlayer{ nullptr },
-	mSoundEngine{ nullptr },
+	mView{ 1.0f },
+	mIsUpdating{ false },
 	mCurStage{ 0 }
 {
 
 }
 
-bool Game::Init(int* argc, char** argv)
+bool Game::Init()
 {
-	mRenderer = new Renderer{ this };
-	if (!mRenderer->Init(argc, argv))
-		return false;
+	mRenderer = Renderer::Get();
+	mMeshShader = mRenderer->GetShader("basicMesh");
+	mMeshShader->SetActive();
+	glm::mat4 proj{ 1.0f };
+	proj = glm::perspective(45.0f, static_cast<float>(mScene->GetGfw()->GetScrWidth()) / mScene->GetGfw()->GetScrHeight(),
+		0.1f, 100.0f);
+	mMeshShader->SetMatrix4Uniform("uProj", proj);
+	mPlayer = new Player{ this };
 
-	Random::Init();
-
-	if (!LoadData())
-		return false;
-
-	return true;
-}
-
-bool Game::LoadData()
-{
 	// Read stage from file
 	std::ifstream file{ "Assets/stage.txt" };
 	if (!file.is_open())
@@ -59,15 +61,6 @@ bool Game::LoadData()
 		if (ch != '\n' && ch != ' ')
 			mStage.emplace_back(ch - 65);
 
-	mPlayer = new Player{ this };
-		
-	// Generate singleton instance of SoundEngine
-	// Load several sounds
-	mSoundEngine = SoundEngine::Get();
-	mSoundEngine->Create("Sounds/bgm.wav", "bgm", true);
-	mSoundEngine->Create("Sounds/jump.wav", "jump", false);
-	mSoundEngine->Play("bgm");
-
 	return true;
 }
 
@@ -75,32 +68,16 @@ void Game::Shutdown()
 {
 	while (!mActors.empty())
 		delete mActors.back();
-
-	if (mRenderer)
-	{
-		mRenderer->Shutdown();
-		//delete mRenderer;
-	}
-
-	delete mSoundEngine;
 }
 
-void Game::ProcessKeyboardInput(unsigned char key)
+void Game::ProcessInput(unsigned char key)
 {
-	if (key == 27)
-		mShouldCloseWindow = true;
-	else if (key == 'p' || key == 'P')
-		mShouldPause = !mShouldPause;
-
 	for (auto actor : mActors)
 		actor->ProcessInput(key);
 }
 
 void Game::Update()
 {
-	if (mShouldPause)
-		return;
-
 	std::vector<Actor*> deads;
 	mIsUpdating = true;
 	for (auto actor : mActors)
@@ -118,8 +95,6 @@ void Game::Update()
 	}
 	mPendingActors.clear();
 
-	CollisionCheck();
-
 	for (auto actor : deads)
 	{
 		if (RemoveVehicle(actor))
@@ -131,40 +106,25 @@ void Game::Update()
 		delete actor;
 	}
 
+	CollisionCheck();
 	CreateMap();
 }
 
 void Game::Draw()
 {
-	mRenderer->Draw();
-}
-
-void Game::AddActor(Actor* actor)
-{
-	if (mIsUpdating)
-		mPendingActors.emplace_back(actor);
-	else
-		mActors.emplace_back(actor);
-}
-
-void Game::RemoveActor(Actor* actor)
-{
-	auto iter = std::find(std::begin(mPendingActors), std::end(mPendingActors), actor);
-	if (iter != std::end(mPendingActors))
-		mPendingActors.erase(iter);
-
-	iter = std::find(std::begin(mActors), std::end(mActors), actor);
-	if (iter != std::end(mActors))
-		mActors.erase(iter);
+	mMeshShader->SetActive();
+	mMeshShader->SetMatrix4Uniform("uView", mView);
+	for (auto actor : mActors)
+		actor->Draw(mMeshShader);
 }
 
 void Game::CreateMap()
-{	
+{
 	// Generate plane along player's z position value
 	auto zPos = mPlayer->GetPosition().z;
 	for (; mCurStage < -zPos + 10; ++mCurStage)
 	{
-		auto plane = new Plane{ this, static_cast<Plane::PlaneType>( mStage[mCurStage]) };
+		auto plane = new Plane{ this, static_cast<Plane::PlaneType>(mStage[mCurStage]) };
 	}
 }
 
@@ -188,7 +148,6 @@ void Game::CollisionCheck()
 				pos.y = 0.0f;
 				mPlayer->SetPosition(pos);
 			}
-
 			//std::cout << times++ << std::endl;
 		}
 	}
@@ -208,6 +167,25 @@ void Game::CollisionCheck()
 			}
 		}
 	}
+}
+
+void Game::AddActor(Actor* actor)
+{
+	if (mIsUpdating)
+		mPendingActors.emplace_back(actor);
+	else
+		mActors.emplace_back(actor);
+}
+
+void Game::RemoveActor(Actor* actor)
+{
+	auto iter = std::find(std::begin(mPendingActors), std::end(mPendingActors), actor);
+	if (iter != std::end(mPendingActors))
+		mPendingActors.erase(iter);
+
+	iter = std::find(std::begin(mActors), std::end(mActors), actor);
+	if (iter != std::end(mActors))
+		mActors.erase(iter);
 }
 
 bool Game::RemoveVehicle(Actor* actor)

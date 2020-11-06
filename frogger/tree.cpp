@@ -18,10 +18,10 @@ Tree::Tree(Game* game, TreeType type)
 	game->GetTrees().emplace_back(this);
 
 	mMesh = new Mesh{};
-
+	auto renderer = Renderer::Get();
 	if (mType == TreeType::kBasic)
 	{
-		mMesh = game->GetRenderer()->GetMesh("Assets/basic_tree.gpmesh");
+		mMesh = renderer->GetMesh("Assets/basic_tree.gpmesh");
 		SetScale(0.1f);
 	}
 
