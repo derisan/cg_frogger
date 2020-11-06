@@ -12,6 +12,7 @@
     "water.gpmesh"
   ],
   "wav": [
+    "DragonHawkDeath1.wav",
     "gameover.wav",
     "jump.wav"
   ],

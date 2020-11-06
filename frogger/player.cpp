@@ -160,6 +160,7 @@ void Player::HitByCar()
     {
         --mLives;
         mInvincible = 1.0f;
+        SoundEngine::Get()->Play("DragonHawkDeath1.wav");
     }
 
     if (mLives == 0)
