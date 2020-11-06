@@ -143,10 +143,7 @@ void Game::CollisionCheck()
 		{
 			if (vehicle->GetType() == Vehicle::VehicleType::kLog)
 			{
-				auto pos = mPlayer->GetPosition();
-				pos.x = vehicle->GetPosition().x;
-				pos.y = 0.0f;
-				mPlayer->SetPosition(pos);
+				mPlayer->CollideWithLog(vehicle);
 			}
 			//std::cout << times++ << std::endl;
 		}
@@ -161,9 +158,7 @@ void Game::CollisionCheck()
 		{
 			if (plane->GetType() != Plane::PlaneType::kWater)
 			{
-				auto pos = mPlayer->GetPosition();
-				pos.y = 0.0f;
-				mPlayer->SetPosition(pos);
+				mPlayer->NotToFall();
 			}
 		}
 	}

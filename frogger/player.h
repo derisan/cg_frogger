@@ -12,6 +12,8 @@ public:
     void Draw(class Shader* shader) override;
 
     void PlayJumpSound();
+    void CollideWithLog(class Vehicle* log);
+    void NotToFall();
 
     // Getters
     class BoxComponent* GetBox() const { return mBox; }

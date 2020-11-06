@@ -14,6 +14,7 @@
 #include "box_component.h"
 #include "sound_engine.h"
 #include "tree.h"
+#include "vehicle.h"
 
 Player::Player(Game* game)
     : Actor{ game },
@@ -84,7 +85,7 @@ void Player::ActorInput(unsigned char key)
             break;
         case 'd': case 'D':
             PlayJumpSound();
-            pos += right * 1.0f;
+            pos += right * 1.5f;
             mPrevMovement = -(right * 1.5f);
             break;
     }
@@ -129,4 +130,19 @@ void Player::PlayJumpSound()
 {
     SoundEngine::Get()->Stop("jump");
     SoundEngine::Get()->Play("jump");
+}
+
+void Player::CollideWithLog(Vehicle* log)
+{
+    auto pos = GetPosition();
+    pos.x = log->GetPosition().x;
+    pos.y = 0.0f;
+    SetPosition(pos);
+}
+
+void Player::NotToFall()
+{
+    auto pos = GetPosition();
+    pos.y = 0.0f;
+    SetPosition(pos);
 }
