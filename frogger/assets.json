@@ -11,24 +11,11 @@
     "truck.gpmesh",
     "water.gpmesh"
   ],
-  "png": [
-    "basic_tree.png",
-    "bird.png",
-    "bus.png",
-    "car.png",
-    "deadscreen.png",
-    "grass.png",
-    "loading.png",
-    "log.png",
-    "railroad.png",
-    "road.png",
-    "truck.png",
-    "water.png"
+  "wav": [
+    "gameover.wav",
+    "jump.wav"
   ],
-  "jpg": [
-    "pressenter.jpg"
-  ],
-  "txt": [
-    "stage.txt"
+  "mp3": [
+    "happy.mp3"
   ]
 }

@@ -25,12 +25,16 @@ void DeadScene::Enter()
 	mSpriteShader = mRenderer->GetShader("sprite");
 
 	new DeadActor{ this };
+
+	SoundEngine::Get()->Play("gameover.wav");
 }
 
 void DeadScene::Exit()
 {
 	while (!mActors.empty())
 		delete mActors.back();
+
+	SoundEngine::Get()->Stop("gameover.wav");
 }
 
 void DeadScene::ProcessInput(unsigned char key)

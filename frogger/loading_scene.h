@@ -26,11 +26,13 @@ public:
 private:
 	std::vector<class SceneActor*> mActors;
 	std::vector<std::string> mMeshFiles;
+	std::vector<std::string> mSoundFiles;
 
 	class Renderer* mRenderer;
 	class Shader* mSpriteShader;
 
-	unsigned int mCurIdx;
+	unsigned int mMeshIdx;
+	unsigned int mSoundIdx;
 	float mElapsed;
 };
 

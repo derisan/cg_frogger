@@ -7,8 +7,12 @@ files = os.listdir(path)
 
 assets = {}
 
+needs = ['gpmesh', 'wav', 'mp3']
+
 for file in files:
     extension = file.split('.')[1]
+    if extension not in needs:
+        continue
     if extension not in assets:
         assets[extension] = []
         assets[extension].append(file)

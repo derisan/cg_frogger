@@ -131,8 +131,8 @@ void Player::Draw(Shader* shader)
 
 void Player::PlayJumpSound()
 {
-    SoundEngine::Get()->Stop("jump");
-    SoundEngine::Get()->Play("jump", 0.5f);
+    SoundEngine::Get()->Stop("jump.wav");
+    SoundEngine::Get()->Play("jump.wav", 10.0f);
 }
 
 void Player::CollideWithLog(Vehicle* log)

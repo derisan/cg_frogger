@@ -19,7 +19,8 @@ LoadingScene::LoadingScene(Gfw* gfw)
 	: Scene{ gfw },
 	mRenderer{ nullptr },
 	mSpriteShader{ nullptr },
-	mCurIdx{ 0 },
+	mMeshIdx{ 0 },
+	mSoundIdx{ 0 },
 	mElapsed{ 0.0f }
 {
 
@@ -37,10 +38,6 @@ void LoadingScene::Enter()
 	}
 
 	new LoadingActor{ this };
-
-	auto se = SoundEngine::Get();
-	se->Create("Sounds/jump.wav", "jump");
-	se->Create("Sounds/bgm.wav", "bgm", true);
 }
 
 void LoadingScene::Exit()
@@ -62,12 +59,17 @@ void LoadingScene::Update()
 	for (auto actor : mActors)
 		actor->Update();
 
-	if (mCurIdx < mMeshFiles.size())
+	if (mMeshIdx < mMeshFiles.size())
 	{
-		mRenderer->GetMesh(mMeshFiles[mCurIdx]);
-		std::cout << "Read mesh: " << mMeshFiles[mCurIdx++] << std::endl;
+		mRenderer->GetMesh(mMeshFiles[mMeshIdx]);
+		std::cout << "Read mesh: " << mMeshFiles[mMeshIdx++] << std::endl;
 	}
-	else if (mCurIdx == mMeshFiles.size() && mElapsed > 3.5f)
+	else if (mSoundIdx < mSoundFiles.size())
+	{
+		SoundEngine::Get()->Create("Assets/" + mSoundFiles[mSoundIdx], mSoundFiles[mSoundIdx]);
+		std::cout << "Create music: " << mSoundFiles[mSoundIdx++] << std::endl;
+	}
+	else if(mElapsed > 3.0f)
 		mGfw->ChangeScene("start");
 }
 
@@ -129,6 +131,32 @@ bool LoadingScene::ReadFromJson(const std::string& file)
 	{
 		std::string meshName = meshes[i].GetString();
 		mMeshFiles.push_back("Assets/" + meshName);
+	}
+
+	const rapidjson::Value& wavs = doc["wav"];
+	if (!wavs.IsArray() || wavs.Size() < 1)
+	{
+		std::cout << file << " has no gpmesh." << std::endl;
+		return false;
+	}
+
+	for (rapidjson::SizeType i = 0; i < wavs.Size(); i++)
+	{
+		std::string soundName = wavs[i].GetString();
+		mSoundFiles.push_back(soundName);
+	}
+
+	const rapidjson::Value& mp3s = doc["mp3"];
+	if (!mp3s.IsArray() || mp3s.Size() < 1)
+	{
+		std::cout << file << " has no gpmesh." << std::endl;
+		return false;
+	}
+
+	for (rapidjson::SizeType i = 0; i < mp3s.Size(); i++)
+	{
+		std::string soundName = mp3s[i].GetString();
+		mSoundFiles.push_back(soundName);
 	}
 
 	return true;
