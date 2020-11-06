@@ -102,6 +102,9 @@
     <ClCompile Include="dead_actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="life_gauge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h">
@@ -186,6 +189,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dead_actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="life_gauge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,8 +20,6 @@
 #include "scene.h"
 #include "gfw.h"
 
-
-
 Game::Game(Scene* scene)
 	: mScene{ scene },
 	mRenderer{ nullptr },

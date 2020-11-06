@@ -23,6 +23,7 @@ public:
 
 private:
 	std::vector<class SceneActor*> mActors;
-
+	
 	class Game* mGame;
+	class Shader* mSpriteShader;
 };

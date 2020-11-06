@@ -28,6 +28,7 @@
     <ClCompile Include="dead_scene.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gfw.cpp" />
+    <ClCompile Include="life_gauge.cpp" />
     <ClCompile Include="loading_actor.cpp" />
     <ClCompile Include="loading_scene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="dead_scene.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gfw.h" />
+    <ClInclude Include="life_gauge.h" />
     <ClInclude Include="loading_actor.h" />
     <ClInclude Include="loading_scene.h" />
     <ClInclude Include="main_scene.h" />
