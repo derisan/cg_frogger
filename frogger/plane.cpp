@@ -19,7 +19,7 @@ Plane::Plane(Game* game, PlaneType type)
 	: Actor{ game },
 	mMesh{ nullptr },
 	mBox{ nullptr },
-	mCooldown{ Random::GetFloatRange(0.0f, 1.5f) },
+	mCooldown{ Random::GetFloatRange(0.0f, 2.5f) },
 	mType{ type },
 	mVehicleType{ Vehicle::VehicleType::kCar },
 	mLeftOrRight{ Random::GetChoice(-1, 1) }

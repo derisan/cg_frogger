@@ -27,6 +27,7 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	{
 		mMesh = renderer->GetMesh("Assets/car.gpmesh");
 		SetScale(0.1f);
+		mGenTerm = 0.25f;
 	}
 	else if (mType == VehicleType::kTruck)
 	{
@@ -43,7 +44,7 @@ Vehicle::Vehicle(Game* game, VehicleType type)
 	else
 	{
 		mMesh = renderer->GetMesh("Assets/log.gpmesh");
-		mGenTerm = 1.0f;
+		mGenTerm = 0.75f;
 	}
 
 	mBox = new BoxComponent{ this };

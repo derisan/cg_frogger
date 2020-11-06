@@ -26,6 +26,8 @@ public:
 	bool RemovePlane(class Actor* actor);
 	bool RemoveTree(class Actor* actor);
 
+	void SetPhongUniforms();
+
 	// Getters
 	std::vector<class Vehicle*>& GetVehicles() { return mVehicles; }
 	std::vector<class Plane*>& GetPlanes() { return mPlanes; }
@@ -37,6 +39,7 @@ public:
 
 	// Setters
 	void SetViewMatrix(const glm::mat4& view) { mView = view; }
+	void SetCameraPosition(const glm::vec3& pos) { mCameraPos = pos; }
 	void SetShouldCloseGame(bool value) { mShouldCloseGame = value; }
 
 private:
@@ -49,10 +52,11 @@ private:
 
 	class Scene* mScene;
 	class Renderer* mRenderer;
-	class Shader* mMeshShader;
+	class Shader* mPhongShader;
 	class Player* mPlayer;
 
 	glm::mat4 mView;
+	glm::vec3 mCameraPos;
 
 	bool mIsUpdating;
 	bool mShouldCloseGame;

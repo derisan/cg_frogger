@@ -23,7 +23,7 @@
 Game::Game(Scene* scene)
 	: mScene{ scene },
 	mRenderer{ nullptr },
-	mMeshShader{ nullptr },
+	mPhongShader{ nullptr },
 	mPlayer{ nullptr },
 	mView{ 1.0f },
 	mIsUpdating{ false },
@@ -35,12 +35,15 @@ Game::Game(Scene* scene)
 bool Game::Init()
 {
 	mRenderer = Renderer::Get();
-	mMeshShader = mRenderer->GetShader("basicMesh");
-	mMeshShader->SetActive();
+
 	glm::mat4 proj{ 1.0f };
 	proj = glm::perspective(45.0f, static_cast<float>(mScene->GetGfw()->GetScrWidth()) / mScene->GetGfw()->GetScrHeight(),
 		0.1f, 100.0f);
-	mMeshShader->SetMatrix4Uniform("uProj", proj);
+	
+	mPhongShader = mRenderer->GetShader("phong");
+	mPhongShader->SetActive();
+	mPhongShader->SetMatrix4Uniform("uProj", proj);
+
 	mPlayer = new Player{ this };
 
 	// Read stage from file
@@ -110,10 +113,10 @@ void Game::Update()
 
 void Game::Draw()
 {
-	mMeshShader->SetActive();
-	mMeshShader->SetMatrix4Uniform("uView", mView);
+	mPhongShader->SetActive();
+	SetPhongUniforms();
 	for (auto actor : mActors)
-		actor->Draw(mMeshShader);
+		actor->Draw(mPhongShader);
 }
 
 void Game::CreateMap()
@@ -219,4 +222,14 @@ bool Game::RemoveTree(Actor* actor)
 int Game::GetPlayerLives() const
 {
 	return mPlayer->GetLives();
+}
+
+void Game::SetPhongUniforms()
+{
+	mPhongShader->SetMatrix4Uniform("uView", mView);
+	mPhongShader->SetVectorUniform("uViewPos", mCameraPos);
+	mPhongShader->SetVectorUniform("light.direction", glm::vec3{ -12.0f, -4.0f, -0.1f });
+	mPhongShader->SetVectorUniform("light.ambient", glm::vec3{ 0.1f });
+	mPhongShader->SetVectorUniform("light.diffuse", glm::vec3{ 1.0f });
+	mPhongShader->SetVectorUniform("light.specular", glm::vec3{ 1.0f });
 }

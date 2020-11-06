@@ -50,6 +50,7 @@ void Player::UpdateActor()
     glm::mat4 view = lookAt(cameraPos, cameraTarget, cameraUp);
 
     mGame->SetViewMatrix(view);
+    mGame->SetCameraPosition(cameraPos);
 
     auto pos = GetPosition();
     pos.y -= mGravity;
