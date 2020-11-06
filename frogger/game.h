@@ -33,6 +33,7 @@ public:
 	class Player* GetPlayer() { return mPlayer; }
 	int GetCurStage() const { return mCurStage; }
 	bool GetShouldCloseGame() const { return mShouldCloseGame; }
+	int GetPlayerLives() const;
 
 	// Setters
 	void SetViewMatrix(const glm::mat4& view) { mView = view; }

@@ -130,7 +130,6 @@ void Game::CollisionCheck()
 {
 	const auto& playerBox = mPlayer->GetBox()->GetWorldBox();
 
-	static int times = 0;
 	for (auto vehicle : mVehicles)
 	{
 		if (vehicle->GetState() != Actor::State::kActive)
@@ -145,9 +144,8 @@ void Game::CollisionCheck()
 			}
 			else
 			{
-				mPlayer->Die();
+				mPlayer->HitByCar();
 			}
-			//std::cout << times++ << std::endl;
 		}
 	}
 
@@ -216,4 +214,9 @@ bool Game::RemoveTree(Actor* actor)
 		return true;
 	}
 	return false;
+}
+
+int Game::GetPlayerLives() const
+{
+	return mPlayer->GetLives();
 }

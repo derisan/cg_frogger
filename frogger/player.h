@@ -14,14 +14,17 @@ public:
     void PlayJumpSound();
     void CollideWithLog(class Vehicle* log);
     void NotToFall();
+    void HitByCar();
     void Die();
 
     // Getters
     class BoxComponent* GetBox() const { return mBox; }
     const glm::vec3& GetPrevMovement() const { return mPrevMovement; }
+    int GetLives() const { return mLives; }
 
     // Setters
     void SetZBorder(float z) { mBorder.z = z; }
+    void SetLives(int lives) { mLives = lives; }
 
 private:
     class Mesh* mMesh;
@@ -36,5 +39,7 @@ private:
 
     const float mGravity;
     glm::vec3 mPrevMovement;
+    int mLives;
+    float mInvincible;
 };
 

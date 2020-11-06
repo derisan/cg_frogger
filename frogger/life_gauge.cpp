@@ -11,13 +11,11 @@
 LifeGauge::LifeGauge(Scene* scene)
 	: SceneActor{ scene },
 	mVertexArray{ nullptr },
-	mTexture{ nullptr },
-	mLives{ 3 }
+	mTexture{ nullptr }
 {
 	mVertexArray = Renderer::GetSpriteVertexArray();
 	mTexture = Renderer::Get()->GetTexture("Assets/life.png");
-	SetScale(0.3f);
-	SetPosition(glm::vec3{ -0.7f, 0.7f, 0.0f });
+	SetScale(0.2f);
 }
 
 void LifeGauge::UpdateSceneActor()

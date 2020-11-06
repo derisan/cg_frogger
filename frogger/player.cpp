@@ -22,7 +22,9 @@ Player::Player(Game* game)
     mBox{ nullptr },
     mBorder{ 12.0f, 0.0f },
     mGravity{ 0.05f },
-    mPrevMovement{ 0.0f }
+    mPrevMovement{ 0.0f },
+    mLives{ 3 },
+    mInvincible{ 0.0f }
 {
     mMesh = new Mesh{};
 
@@ -37,6 +39,8 @@ Player::Player(Game* game)
 void Player::UpdateActor()
 {
 	Actor::UpdateActor();
+
+    mInvincible -= dt;
 
     const auto& actorPos = GetPosition();
     auto cameraPos = glm::vec3{ actorPos.x + 3.0f, 15.0f, actorPos.z + 10.0f };
@@ -148,6 +152,18 @@ void Player::NotToFall()
     auto pos = GetPosition();
     pos.y = 0.0f;
     SetPosition(pos);
+}
+
+void Player::HitByCar()
+{
+    if (mInvincible < 0)
+    {
+        --mLives;
+        mInvincible = 1.0f;
+    }
+
+    if (mLives == 0)
+        Die();
 }
 
 void Player::Die()

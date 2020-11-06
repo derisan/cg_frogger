@@ -32,7 +32,13 @@ void MainScene::Enter()
 		return;
 	}
 
-	new LifeGauge{ this };
+	auto lives = mGame->GetPlayerLives();
+	for (int i = 0; i < lives; ++i)
+	{
+		auto heart = new LifeGauge{ this };
+		heart->SetPosition(glm::vec3{ -0.8f + 0.2f * i, 0.8f, 0.0f });
+		mLives.emplace_back(heart);
+	}
 }
 
 void MainScene::Exit()
@@ -40,6 +46,12 @@ void MainScene::Exit()
 	// Shutdown game
 	mGame->Shutdown();
 	delete mGame;
+	mGame = nullptr;
+
+	while (!mActors.empty())
+		delete mActors.back();
+	mLives.clear();
+
 }
 
 void MainScene::ProcessInput(unsigned char key)
@@ -49,24 +61,44 @@ void MainScene::ProcessInput(unsigned char key)
 	else if (key == 'p' || key == 'P')
 		Pause();
 
+	if (!mGame)
+		return;
 	mGame->ProcessInput(key);
 }
 
 void MainScene::Update()
 {
-	if (GetState() == State::kPaused)
+	if (GetState() == State::kPaused || !mGame)
 		return;
 
 	mGame->Update();
+
+	std::vector<SceneActor*> deads;
+	for (auto actor : mActors)
+	{
+		actor->Update();
+		if (actor->GetState() == SceneActor::State::kDead)
+			deads.emplace_back(actor);
+	}
+
+	if (mGame->GetPlayerLives() < mLives.size())
+	{
+		mLives[mLives.size() - 1]->SetState(SceneActor::State::kDead);
+		mLives.pop_back();
+	}
+	
+	for (auto actor : deads)
+		delete actor;
+
 	if (mGame->GetShouldCloseGame())
 		mGfw->ChangeScene("dead");
-
-	for (auto actor : mActors)
-		actor->Update();
 }
 
 void MainScene::Draw()
 {
+	if (!mGame)
+		return;
+
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	

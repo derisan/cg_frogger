@@ -9,16 +9,8 @@ public:
     void UpdateSceneActor() override;
     void Draw(class Shader* shader) override;
 
-    // Getters
-    int GetLives() const { return mLives; }
-
-    // Setters
-	void SetLives(int lives) { mLives = lives; }
-
 private:
     class VertexArray* mVertexArray;
     class Texture* mTexture;
-
-    int mLives;
 };
 
