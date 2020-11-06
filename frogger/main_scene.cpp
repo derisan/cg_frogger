@@ -8,6 +8,7 @@
 
 #include "gfw.h"
 #include "game.h"
+#include "sound_engine.h"
 
 MainScene::MainScene(Gfw* gfw)
 	: Scene{ gfw },
@@ -25,6 +26,8 @@ void MainScene::Enter()
 		std::cout << "Failed to initialize game" << std::endl;
 		return;
 	}
+
+	SoundEngine::Get()->Play("bgm");
 }
 
 void MainScene::Exit()
@@ -32,6 +35,8 @@ void MainScene::Exit()
 	// Shutdown game
 	mGame->Shutdown();
 	delete mGame;
+
+	SoundEngine::Get()->Stop("bgm");
 }
 
 void MainScene::ProcessInput(unsigned char key)

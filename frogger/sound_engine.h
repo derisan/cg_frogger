@@ -13,14 +13,14 @@ public:
 	static SoundEngine* Get();
 
 	void Create(const std::string& file, const std::string& sound, bool loop = false);
-	void Play(const std::string& sound);
+	void Play(const std::string& sound, float volume = 1.0f);
 	void Stop(const std::string& sound);
 
 private:
 	SoundEngine();
 
 	std::unordered_map<std::string, FMOD::Sound*> mSounds;
-	std::unordered_map < FMOD::Sound*, FMOD::Channel*> mChannels;
+	std::unordered_map <FMOD::Sound*, FMOD::Channel*> mChannels;
 
 	FMOD::System* mSystem;
 

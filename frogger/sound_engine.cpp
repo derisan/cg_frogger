@@ -60,7 +60,7 @@ void SoundEngine::Create(const std::string& file, const std::string& sound, bool
 	}
 }
 
-void SoundEngine::Play(const std::string& sound)
+void SoundEngine::Play(const std::string& sound, float volume)
 {
 	auto iter = mSounds.find(sound);
 	if (iter == std::end(mSounds))
@@ -79,6 +79,7 @@ void SoundEngine::Play(const std::string& sound)
 		return;
 
 	res = mSystem->playSound(soundPtr, 0, false, &channelPtr);
+	channelPtr->setVolume(volume);
 
 	if (res != FMOD_OK)
 	{

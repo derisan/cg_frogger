@@ -25,16 +25,12 @@ void StartScene::Enter()
 	mSpriteShader = mRenderer->GetShader("sprite");
 
 	new StartActor{ this };
-
-	SoundEngine::Get()->Play("bgm");
 }
 
 void StartScene::Exit()
 {
 	while (!mActors.empty())
 		delete mActors.back();
-
-	SoundEngine::Get()->Stop("bgm");
 }
 
 void StartScene::ProcessInput(unsigned char key)
