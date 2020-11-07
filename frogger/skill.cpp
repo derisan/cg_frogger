@@ -11,13 +11,14 @@
 #include "box_component.h"
 #include "vehicle.h"
 #include "particle.h"
+#include "sound_engine.h"
 
 Skill::Skill(Game* game, Vehicle* vehicle, SkillType type)
 	: Actor{ game },
 	mMesh{ nullptr },
 	mBox{ nullptr },
 	mTarget{ vehicle },
-	mSpeed{ -10.0f },
+	mSpeed{ -7.0f },
 	mType{ type },
 	mCollides{ false }
 {
@@ -35,6 +36,8 @@ Skill::Skill(Game* game, Vehicle* vehicle, SkillType type)
 
 	const auto& vPos = vehicle->GetPosition();
 	SetPosition(glm::vec3{ vPos.x, 5.0f, vPos.z });
+
+	SoundEngine::Get()->Play("penguin_drop.wav");
 }
 
 void Skill::UpdateActor()
@@ -47,6 +50,9 @@ void Skill::UpdateActor()
 	const auto& vehicleBox = mTarget->GetBox()->GetWorldBox();
 	if (!mCollides && Intersects(mBox->GetWorldBox(), vehicleBox))
 	{
+		SoundEngine::Get()->Stop("penguin_drop.wav");
+		SoundEngine::Get()->Play("penguin_boom.wav");
+		
 		mCollides = true;
 		mTarget->SetState(State::kDead);
 		for (int i = 0; i < 5; ++i)

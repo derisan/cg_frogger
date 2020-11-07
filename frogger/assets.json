@@ -16,7 +16,9 @@
   "wav": [
     "DragonHawkDeath1.wav",
     "gameover.wav",
-    "jump.wav"
+    "jump.wav",
+    "penguin_boom.wav",
+    "penguin_drop.wav"
   ],
   "mp3": [
     "happy.mp3"
