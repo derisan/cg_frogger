@@ -23,6 +23,8 @@ MainScene::MainScene(Gfw* gfw)
 
 void MainScene::Enter()
 {
+	SetState(State::kActive);
+
 	mGame = new Game{ this };
 	mSpriteShader = Renderer::Get()->GetShader("sprite");
 
@@ -60,8 +62,10 @@ void MainScene::ProcessInput(unsigned char key)
 		mGfw->ChangeScene("start");
 	else if (key == 'p' || key == 'P')
 		Pause();
+	else if (key == 'r' || key == 'R')
+		Resume();
 
-	if (!mGame)
+	if (GetState() == State::kPaused || !mGame)
 		return;
 	mGame->ProcessInput(key);
 }
