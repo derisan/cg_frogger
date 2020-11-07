@@ -36,5 +36,5 @@ private:
     Vehicle::VehicleType mVehicleType;
     
     int mLeftOrRight;
+    static int sLampStride;
 };
-

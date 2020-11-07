@@ -99,17 +99,27 @@ void Plane::GenerateVehicle()
 
 void Plane::GenerateTree()
 {
+	const auto& pos = GetPosition();
 	if (mType == PlaneType::kGrass)
 	{
 		auto treeNum = Random::GetIntRange(3, 5);
-		const auto& pos = GetPosition();
-
 		auto xPos = Random::GetShuffledArray(-6, 6, 0);
 		
 		for (int i = 0; i < treeNum; ++i)
 		{
-			auto tree = new Tree{ mGame, static_cast<Tree::TreeType>(Random::GetIntRange(0, 0)) };
+			auto tree = new Tree{ mGame, Tree::TreeType::kBasic };
 			tree->SetPosition(glm::vec3{ xPos[i] * 2.0f, pos.y + 0.2f, pos.z });
 		}
 	}
+
+	--sLampStride;
+	if (sLampStride < 0)
+	{
+		sLampStride = 10;
+		auto tree = new Tree{ mGame, Tree::TreeType::kLamp };
+		tree->SetPosition(glm::vec3{ 0.0f, 4.0f, pos.z });
+		tree->SetRotation(210.0f);
+	}
 }
+
+int Plane::sLampStride{ 0 };

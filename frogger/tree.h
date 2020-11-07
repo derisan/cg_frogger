@@ -8,6 +8,7 @@ public:
     enum class TreeType
     {
         kBasic,
+        kLamp
     };
 
     Tree(class Game* game, TreeType type);

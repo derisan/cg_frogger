@@ -24,6 +24,11 @@ Tree::Tree(Game* game, TreeType type)
 		mMesh = renderer->GetMesh("Assets/basic_tree.gpmesh");
 		SetScale(0.1f);
 	}
+	else if (mType == TreeType::kLamp)
+	{
+		mMesh = renderer->GetMesh("Assets/pumpkin.gpmesh");
+		SetScale(0.75f);
+	}
 
 	mBox = new BoxComponent{ this };
 	mBox->SetObjectBox(mMesh->GetBox());

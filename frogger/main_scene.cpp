@@ -12,6 +12,7 @@
 #include "life_gauge.h"
 #include "renderer.h"
 #include "shader.h"
+#include "plane.h"
 
 MainScene::MainScene(Gfw* gfw)
 	: Scene{ gfw },
@@ -53,7 +54,6 @@ void MainScene::Exit()
 	while (!mActors.empty())
 		delete mActors.back();
 	mLives.clear();
-
 }
 
 void MainScene::ProcessInput(unsigned char key)
