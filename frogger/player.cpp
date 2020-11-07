@@ -31,8 +31,8 @@ Player::Player(Game* game)
     mMesh = new Mesh{};
 
     auto renderer = Renderer::Get();
-    mMesh = renderer->GetMesh("Assets/bird.gpmesh");
-    SetScale(0.1f);
+    mMesh = renderer->GetMesh("Assets/bunny.gpmesh");
+    SetScale(1.0f);
     
     mBox = new BoxComponent{ this };
     mBox->SetObjectBox(mMesh->GetBox());
@@ -146,7 +146,7 @@ void Player::CollideWithLog(Vehicle* log)
 {
     auto pos = GetPosition();
     pos.x = log->GetPosition().x;
-    pos.y = 0.0f;
+    pos.y = 0.1f;
     SetPosition(pos);
 }
 
