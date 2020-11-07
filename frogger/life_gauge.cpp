@@ -14,7 +14,7 @@ LifeGauge::LifeGauge(Scene* scene)
 	mTexture{ nullptr }
 {
 	mVertexArray = Renderer::GetSpriteVertexArray();
-	mTexture = Renderer::Get()->GetTexture("Assets/life.png");
+	mTexture = Renderer::Get()->GetTexture("Assets/life_carrot.png");
 	SetScale(0.2f);
 }
 
