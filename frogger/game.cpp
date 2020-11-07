@@ -255,16 +255,38 @@ void Game::SetPhongUniforms()
 	mPhongShader->SetVectorUniform("uDirLight.diffuse", glm::vec3{ 1.0f });
 	mPhongShader->SetVectorUniform("uDirLight.specular", glm::vec3{ 1.0f });
 
-	mPhongShader->SetVectorUniform("uPointLights[0].position", glm::vec3{ 0.0f, 1.0f, -2.0f });
-	mPhongShader->SetVectorUniform("uPointLights[0].ambient", glm::vec3{ 0.05f });
-	mPhongShader->SetVectorUniform("uPointLights[0].diffuse", glm::vec3{ 0.8f });
-	mPhongShader->SetVectorUniform("uPointLights[0].specular", glm::vec3{ 1.0f });
-	mPhongShader->SetFloatUniform("uPointLights[0].constant", 1.0f);
-	mPhongShader->SetFloatUniform("uPointLights[0].linear", 0.07f);
-	mPhongShader->SetFloatUniform("uPointLights[0].quadratic", 0.017f);
+	//mPhongShader->SetVectorUniform("uPointLights[0].position", glm::vec3{ 0.0f, 1.0f, -2.0f });
+	//mPhongShader->SetVectorUniform("uPointLights[0].ambient", glm::vec3{ 0.05f });
+	//mPhongShader->SetVectorUniform("uPointLights[0].diffuse", glm::vec3{ 0.8f });
+	//mPhongShader->SetVectorUniform("uPointLights[0].specular", glm::vec3{ 1.0f });
+	//mPhongShader->SetFloatUniform("uPointLights[0].constant", 1.0f);
+	//mPhongShader->SetFloatUniform("uPointLights[0].linear", 0.07f);
+	//mPhongShader->SetFloatUniform("uPointLights[0].quadratic", 0.017f);
+
+	const auto& playerPos = mPlayer->GetPosition();
+	for (auto lamp : mTrees)
+	{	
+		if(lamp->GetType() != Tree::TreeType::kLamp)
+			continue;
+
+		const auto& lampPos = lamp->GetPosition();
+		if (fabs(lampPos.z - playerPos.z) > 14.0f)
+			continue;
+
+		std::string path = "uPointLights[0].";
+		mPhongShader->SetVectorUniform(path + "position", lampPos);
+		mPhongShader->SetVectorUniform(path + "ambient", glm::vec3{ 0.05f });
+		mPhongShader->SetVectorUniform(path + "diffuse", glm::vec3{ 0.8f });
+		mPhongShader->SetVectorUniform(path + "specular", glm::vec3{ 1.0f });
+		mPhongShader->SetFloatUniform(path + "constant", 1.0f);
+		mPhongShader->SetFloatUniform(path + "linear", 0.045f);
+		mPhongShader->SetFloatUniform(path + "quadratic", 0.0075f);
+
+		break;
+	}
 
 	mPhongShader->SetVectorUniform("uSpotLight.position", mPlayer->GetPosition());
-	mPhongShader->SetVectorUniform("uSpotLight.direction", glm::vec3{ 0.0f, -0.1f, -1.0f });
+	mPhongShader->SetVectorUniform("uSpotLight.direction", glm::vec3{ 0.0f, -0.1f, 1.0f });
 	mPhongShader->SetVectorUniform("uSpotLight.ambient", glm::vec3{ 0.1f });
 	mPhongShader->SetVectorUniform("uSpotLight.diffuse", glm::vec3{ 1.0f });
 	mPhongShader->SetVectorUniform("uSpotLight.specular", glm::vec3{ 1.0f });

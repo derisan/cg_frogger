@@ -28,6 +28,7 @@ Tree::Tree(Game* game, TreeType type)
 	{
 		mMesh = renderer->GetMesh("Assets/pumpkin.gpmesh");
 		SetScale(0.75f);
+		SetRotation(180.0f);
 	}
 
 	mBox = new BoxComponent{ this };

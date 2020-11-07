@@ -118,7 +118,6 @@ void Plane::GenerateTree()
 		sLampStride = 10;
 		auto tree = new Tree{ mGame, Tree::TreeType::kLamp };
 		tree->SetPosition(glm::vec3{ 0.0f, 4.0f, pos.z });
-		tree->SetRotation(210.0f);
 	}
 }
 
