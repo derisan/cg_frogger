@@ -108,6 +108,9 @@
     <ClCompile Include="particle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="skill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h">
@@ -198,6 +201,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="particle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

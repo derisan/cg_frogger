@@ -11,6 +11,7 @@
 #include "plane.h"
 #include "vehicle.h"
 #include "tree.h"
+#include "skill.h"
 
 #include "renderer.h"
 #include "sound_engine.h"
@@ -27,7 +28,8 @@ Game::Game(Scene* scene)
 	mPlayer{ nullptr },
 	mView{ 1.0f },
 	mIsUpdating{ false },
-	mCurStage{ 0 }
+	mCurStage{ 0 },
+	mSkillCooldown{ 0.0f }
 {
 
 }
@@ -75,6 +77,13 @@ void Game::ProcessInput(unsigned char key)
 {
 	for (auto actor : mActors)
 		actor->ProcessInput(key);
+
+
+	if (key == 32 && mSkillCooldown < 0.0f)
+	{
+		LaunchSkills();
+		mSkillCooldown = 5.0f;
+	}
 }
 
 void Game::Update()
@@ -106,6 +115,8 @@ void Game::Update()
 			RemoveTree(actor);
 		delete actor;
 	}
+
+	mSkillCooldown -= dt;
 
 	CollisionCheck();
 	CreateMap();
@@ -197,6 +208,17 @@ bool Game::RemoveVehicle(Actor* actor)
 	return false;
 }
 
+bool Game::RemoveNearVehicle(Actor* actor)
+{
+	auto iter = std::find(std::begin(mNearVehicles), std::end(mNearVehicles), actor);
+	if (iter != std::end(mNearVehicles))
+	{
+		mNearVehicles.erase(iter);
+		return true;
+	}
+	return false;
+}
+
 bool Game::RemovePlane(Actor* actor)
 {
 	auto iter = std::find(std::begin(mPlanes), std::end(mPlanes), actor);
@@ -232,4 +254,25 @@ void Game::SetPhongUniforms()
 	mPhongShader->SetVectorUniform("light.ambient", glm::vec3{ 0.1f });
 	mPhongShader->SetVectorUniform("light.diffuse", glm::vec3{ 1.0f });
 	mPhongShader->SetVectorUniform("light.specular", glm::vec3{ 1.0f });
+}
+
+void Game::LaunchSkills()
+{
+	mNearVehicles.clear();
+	for (auto vehicle : mVehicles)
+	{
+		if (vehicle->GetState() != Actor::State::kActive || vehicle->GetType() == Vehicle::VehicleType::kLog)
+			continue;
+
+		const auto& vPos = vehicle->GetPosition();
+		const auto& pPos = mPlayer->GetPosition();
+		if (vPos.z <= pPos.z && fabs(vPos.z - pPos.z) <= 12.0f)
+			mNearVehicles.emplace_back(vehicle);
+	}
+	
+	for (auto vehicle : mNearVehicles)
+	{
+		vehicle->SetSpeed(0.0f);
+		new Skill{ this, vehicle };
+	}
 }

@@ -42,6 +42,7 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scene_actor.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="skill.cpp" />
     <ClCompile Include="sound_engine.cpp" />
     <ClCompile Include="start_actor.cpp" />
     <ClCompile Include="start_scene.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="scene_actor.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="skill.h" />
     <ClInclude Include="sound_engine.h" />
     <ClInclude Include="start_actor.h" />
     <ClInclude Include="start_scene.h" />

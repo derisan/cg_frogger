@@ -25,11 +25,14 @@ public:
 	bool RemoveVehicle(class Actor* actor);
 	bool RemovePlane(class Actor* actor);
 	bool RemoveTree(class Actor* actor);
+	bool RemoveNearVehicle(class Actor* actor);
 
+	void LaunchSkills();
 	void SetPhongUniforms();
 
 	// Getters
 	std::vector<class Vehicle*>& GetVehicles() { return mVehicles; }
+	std::vector<class Vehicle*>& GetNearVehicles() { return mNearVehicles; }
 	std::vector<class Plane*>& GetPlanes() { return mPlanes; }
 	std::vector<class Tree*>& GetTrees() { return mTrees; }
 	class Player* GetPlayer() { return mPlayer; }
@@ -46,6 +49,7 @@ private:
 	std::vector<class Actor*> mActors;
 	std::vector<class Actor*> mPendingActors;
 	std::vector<class Vehicle*> mVehicles;
+	std::vector<class Vehicle*> mNearVehicles;
 	std::vector<class Plane*> mPlanes;
 	std::vector<class Tree*> mTrees;
 	std::vector<int> mStage;
@@ -62,5 +66,8 @@ private:
 	bool mShouldCloseGame;
 
 	int mCurStage;
+	float mSkillCooldown;
+
+	const float dt{ 16.0f / 1000.0f };
 };
 
