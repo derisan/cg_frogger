@@ -166,9 +166,9 @@ void Player::HitByCar()
         SoundEngine::Get()->Stop("DragonHawkDeath1.wav");
         SoundEngine::Get()->Play("DragonHawkDeath1.wav");
 
-        for (int i = 0; i < 20; ++i)
+        for (int i = 0; i < 10; ++i)
         {
-            new Particle{ mGame, GetPosition() };
+            new Particle{ mGame, GetPosition(), Particle::ParticleType::kCarrot };
         }
     }
 

@@ -55,13 +55,10 @@ void Skill::UpdateActor()
 		
 		mCollides = true;
 		mTarget->SetState(State::kDead);
+		SetState(State::kDead);
 		for (int i = 0; i < 5; ++i)
 			new Particle{ mGame, mTarget->GetPosition() };
 	}
-
-	if (pos.y < -1.0f)
-		SetState(State::kDead);
-
 	SetPosition(pos);
 }
 

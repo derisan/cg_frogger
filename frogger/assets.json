@@ -2,8 +2,10 @@
   "gpmesh": [
     "basic_tree.gpmesh",
     "bird.gpmesh",
+    "bunny.gpmesh",
     "bus.gpmesh",
     "car.gpmesh",
+    "carrot.gpmesh",
     "fireball.gpmesh",
     "grass.gpmesh",
     "log.gpmesh",
