@@ -46,9 +46,10 @@ uniform vec3 uViewPos;
 uniform sampler2D uTexture;
 
 #define NR_POINT_LIGHTS 1
+#define NR_SPOT_LIGHTS 20
 uniform DirLight uDirLight;
 uniform PointLight uPointLights[NR_POINT_LIGHTS];
-uniform SpotLight uSpotLight;
+uniform SpotLight uSpotLights[NR_SPOT_LIGHTS];
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -62,7 +63,9 @@ void main()
 	vec3 result = CalcDirLight(uDirLight, norm, viewDir);
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
         result += CalcPointLight(uPointLights[i], norm, fragPos, viewDir);
-    result += CalcSpotLight(uSpotLight, norm, fragPos, viewDir);
+
+    for(int i = 0; i < NR_SPOT_LIGHTS; i++)
+        result += CalcSpotLight(uSpotLights[i], norm, fragPos, viewDir);
 
     fragColor = vec4(result, 1.0f);
 }
