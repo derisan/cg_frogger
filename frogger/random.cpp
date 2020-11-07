@@ -48,6 +48,12 @@ std::vector<int> Random::GetShuffledArray(int min, int max, int ex)
 	return v;
 }
 
+glm::vec3 Random::GetVec3(float min, float max)
+{
+	return glm::vec3{ Random::GetFloatRange(min, max), Random::GetFloatRange(min, max),
+		Random::GetFloatRange(min, max) };
+}
+
 std::mt19937 Random::mEngine;
 
 

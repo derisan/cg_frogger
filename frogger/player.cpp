@@ -16,6 +16,8 @@
 #include "tree.h"
 #include "vehicle.h"
 
+#include "particle.h"
+
 Player::Player(Game* game)
     : Actor{ game },
     mMesh{ nullptr },
@@ -163,6 +165,11 @@ void Player::HitByCar()
         mInvincible = 1.0f;
         SoundEngine::Get()->Stop("DragonHawkDeath1.wav");
         SoundEngine::Get()->Play("DragonHawkDeath1.wav");
+
+        for (int i = 0; i < 20; ++i)
+        {
+            new Particle{ mGame, GetPosition() };
+        }
     }
 
     if (mLives == 0)
