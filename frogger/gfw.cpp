@@ -15,6 +15,7 @@
 #include "start_scene.h"
 #include "main_scene.h"
 #include "dead_scene.h"
+#include "win_scene.h"
 #include "renderer.h"
 
 Gfw::Gfw()
@@ -47,6 +48,7 @@ bool Gfw::Init(int* argc, char** argv, int w, int h)
 	mScenesMap.emplace("start", new StartScene{ this });
 	mScenesMap.emplace("main", new MainScene{ this });
 	mScenesMap.emplace("dead", new DeadScene{ this });
+	mScenesMap.emplace("win", new WinScene{ this });
 
 	PushScene("loading");
 	//PushScene("start");

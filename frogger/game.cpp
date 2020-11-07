@@ -264,7 +264,7 @@ void Game::SetPhongUniforms()
 			continue;
 
 		const auto& lampPos = lamp->GetPosition();
-		if (fabs(lampPos.z - playerPos.z) > 14.0f)
+		if (fabs(lampPos.z - playerPos.z) > 10.0f)
 			continue;
 
 		std::string path = "uPointLights[0].";
