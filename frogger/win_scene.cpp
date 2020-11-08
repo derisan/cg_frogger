@@ -12,6 +12,7 @@
 #include "start_actor.h"
 #include "sound_engine.h"
 #include "sparticle.h"
+#include "bunny.h"
 
 WinScene::WinScene(Gfw* gfw)
 	: Scene{ gfw },
@@ -31,14 +32,17 @@ void WinScene::Enter()
 
 	glm::mat4 view{ 1.0f };
 	view = glm::lookAt(glm::vec3{ 0.0f, 1.0f, 10.0f }, glm::vec3{ 0.0f, 0.0f, -1.0f }, glm::vec3{ 0.0f, 1.0f, 0.0f });
-
 	glm::mat4 proj{ 1.0f };
 	proj = glm::perspective(45.0f, static_cast<float>(GetGfw()->GetScrWidth()) / GetGfw()->GetScrHeight(),
 		0.1f, 100.0f);
-
 	mMeshShader->SetActive();
 	mMeshShader->SetMatrix4Uniform("uView", view);
 	mMeshShader->SetMatrix4Uniform("uProj", proj);
+
+	auto bunny1 = new Bunny{ this };
+	bunny1->SetPosition(glm::vec3{ -5.0f, 0.0f, -3.0f });
+	auto bunny2 = new Bunny{ this };
+	bunny2->SetPosition(glm::vec3{ 5.0f, 0.0f, -3.0f });
 
 	SoundEngine::Get()->Play("victory.mp3");
 }

@@ -53,10 +53,6 @@ void SParticle::UpdateSceneActor()
 
 void SParticle::Draw(Shader* shader)
 {
-	if (GetState() == State::kDead)
-		return;
-
-
 	shader->SetMatrix4Uniform("uWorld", GetWorldTransform());
 	mMesh->GetTexture()->SetActive();
 	auto va = mMesh->GetVertexArray();

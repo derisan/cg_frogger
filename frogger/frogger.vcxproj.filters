@@ -117,6 +117,9 @@
     <ClCompile Include="sparticle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bunny.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h">
@@ -216,6 +219,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sparticle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bunny.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
