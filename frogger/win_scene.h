@@ -24,5 +24,7 @@ private:
 	class Renderer* mRenderer;
 	class Shader* mSpriteShader;
 	class Shader* mMeshShader;
+
+	int mCurParticleNum;
 };
 
