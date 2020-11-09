@@ -39,6 +39,8 @@ void WinScene::Enter()
 	mMeshShader->SetMatrix4Uniform("uView", view);
 	mMeshShader->SetMatrix4Uniform("uProj", proj);
 
+	mCurParticleNum = 0;
+
 	auto bunny1 = new Bunny{ this };
 	bunny1->SetPosition(glm::vec3{ -5.0f, 0.0f, -3.0f });
 	auto bunny2 = new Bunny{ this };

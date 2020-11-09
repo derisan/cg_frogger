@@ -119,7 +119,9 @@ void Game::Update()
 	mSkillCooldown -= dt;
 
 	CollisionCheck();
-	CreateMap();
+
+	if(mCurStage < mStage.size())
+		CreateMap();
 }
 
 void Game::Draw()
