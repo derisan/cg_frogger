@@ -53,6 +53,7 @@
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="vehicle.cpp" />
     <ClCompile Include="vertexarray.cpp" />
+    <ClCompile Include="win_actor.cpp" />
     <ClCompile Include="win_scene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +90,7 @@
     <ClInclude Include="utils.h" />
     <ClInclude Include="vehicle.h" />
     <ClInclude Include="vertexarray.h" />
+    <ClInclude Include="win_actor.h" />
     <ClInclude Include="win_scene.h" />
   </ItemGroup>
   <ItemGroup>

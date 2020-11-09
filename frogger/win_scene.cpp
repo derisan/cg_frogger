@@ -14,6 +14,7 @@
 #include "sparticle.h"
 #include "bunny.h"
 #include "random.h"
+#include "win_actor.h"
 
 WinScene::WinScene(Gfw* gfw)
 	: Scene{ gfw },
@@ -55,6 +56,10 @@ void WinScene::Enter()
 	bunny->SetPosition(glm::vec3{ -2.5f, 0.0f, 1.5f });
 	bunny->SetRotation(Random::GetFloatRange(0.0f, 360.0f));
 	bunny = new Bunny{ this };
+
+	auto youwin = new WinActor{ this };
+	youwin->SetPosition(glm::vec3{ 5.0f, -3.0f, 0.0f });
+	youwin->SetScale(5.0f);
 
 	SoundEngine::Get()->Play("victory.mp3");
 }
