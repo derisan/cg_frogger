@@ -20,6 +20,7 @@
 #include "shader.h"
 #include "scene.h"
 #include "gfw.h"
+#include "earth.h"
 
 Game::Game(Scene* scene)
 	: mScene{ scene },
@@ -47,6 +48,7 @@ bool Game::Init()
 	mPhongShader->SetMatrix4Uniform("uProj", proj);
 
 	mPlayer = new Player{ this };
+	new Earth{ this };
 
 	// Read stage from file
 	std::ifstream file{ "Assets/stage.txt" };
