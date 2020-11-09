@@ -11,7 +11,7 @@
 #include "plane.h"
 #include "vehicle.h"
 #include "tree.h"
-#include "skill.h"
+#include "bomb.h"
 
 #include "renderer.h"
 #include "sound_engine.h"
@@ -85,7 +85,7 @@ void Game::ProcessInput(unsigned char key)
 
 	if (key == 32 && mSkillCooldown < 0.0f)
 	{
-		LaunchSkills();
+		LaunchPenguinBombs();
 		mSkillCooldown = 5.0f;
 	}
 
@@ -138,9 +138,9 @@ void Game::Update()
 		CreateMap();
 
 	if (mIsNight)
-		mDirLightYPos += dt * 12.5;
+		mDirLightYPos += dt * 12.5f;
 	else
-		mDirLightYPos -= dt * 12.5;
+		mDirLightYPos -= dt * 12.5f;
 
 	if (mDirLightYPos > 20.0f)
 		mDirLightYPos = 20.0f;
@@ -352,7 +352,7 @@ void Game::SetPhongUniforms()
 	}
 }
 
-void Game::LaunchSkills()
+void Game::LaunchPenguinBombs()
 {
 	mNearVehicles.clear();
 	for (auto vehicle : mVehicles)
@@ -369,7 +369,7 @@ void Game::LaunchSkills()
 	for (auto vehicle : mNearVehicles)
 	{
 		vehicle->SetSpeed(0.0f);
-		new Skill{ this, vehicle };
+		new Bomb{ this, vehicle };
 	}
 }
 

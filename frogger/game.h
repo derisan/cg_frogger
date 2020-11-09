@@ -27,7 +27,7 @@ public:
 	bool RemoveTree(class Actor* actor);
 	bool RemoveNearVehicle(class Actor* actor);
 
-	void LaunchSkills();
+	void LaunchPenguinBombs();
 	void SetPhongUniforms();
 	bool IsWin();
 
