@@ -28,6 +28,8 @@ Game::Game(Scene* scene)
 	mPhongShader{ nullptr },
 	mPlayer{ nullptr },
 	mView{ 1.0f },
+	mDirLightYPos{ -20.0f },
+	mIsNight{ false },
 	mIsUpdating{ false },
 	mCurStage{ 0 },
 	mSkillCooldown{ 0.0f }
@@ -86,6 +88,16 @@ void Game::ProcessInput(unsigned char key)
 		LaunchSkills();
 		mSkillCooldown = 5.0f;
 	}
+
+	else if (key == 'g' || key == 'G')
+	{
+		mIsNight = !mIsNight;
+
+		if(mIsNight)
+			SoundEngine::Get()->Play("owl.mp3");
+		else
+			SoundEngine::Get()->Play("chicken.mp3");
+	}
 }
 
 void Game::Update()
@@ -124,6 +136,16 @@ void Game::Update()
 
 	if(mCurStage < mStage.size())
 		CreateMap();
+
+	if (mIsNight)
+		mDirLightYPos += dt * 12.5;
+	else
+		mDirLightYPos -= dt * 12.5;
+
+	if (mDirLightYPos > 20.0f)
+		mDirLightYPos = 20.0f;
+	else if (mDirLightYPos < -20.0f)
+		mDirLightYPos = -20.0f;
 }
 
 void Game::Draw()
@@ -255,7 +277,7 @@ void Game::SetPhongUniforms()
 	// Directional light
 	mPhongShader->SetMatrix4Uniform("uView", mView);
 	mPhongShader->SetVectorUniform("uViewPos", mCameraPos);
-	mPhongShader->SetVectorUniform("uDirLight.direction", glm::vec3{ -12.0f, 0.0f, -0.1f });
+	mPhongShader->SetVectorUniform("uDirLight.direction", glm::vec3{ -12.0f, mDirLightYPos, -0.1f });
 	mPhongShader->SetVectorUniform("uDirLight.ambient", glm::vec3{ 0.0f });
 	mPhongShader->SetVectorUniform("uDirLight.diffuse", glm::vec3{ 1.0f });
 	mPhongShader->SetVectorUniform("uDirLight.specular", glm::vec3{ 1.0f });

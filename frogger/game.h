@@ -62,7 +62,9 @@ private:
 
 	glm::mat4 mView;
 	glm::vec3 mCameraPos;
+	float mDirLightYPos;
 
+	bool mIsNight;
 	bool mIsUpdating;
 	bool mShouldCloseGame;
 

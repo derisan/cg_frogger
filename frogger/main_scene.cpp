@@ -64,10 +64,10 @@ void MainScene::ProcessInput(unsigned char key)
 		Pause();
 	else if (key == 'r' || key == 'R')
 		Resume();
-	else if (key == 't')
-		mGfw->ChangeScene("win");
-	else if (key == 'y')
-		mGfw->ChangeScene("dead");
+	//else if (key == 't')
+	//	mGfw->ChangeScene("win");
+	//else if (key == 'y')
+	//	mGfw->ChangeScene("dead");
 
 	if (GetState() == State::kPaused || !mGame)
 		return;

@@ -17,15 +17,17 @@
     "truck.gpmesh",
     "water.gpmesh"
   ],
+  "mp3": [
+    "chicken.mp3",
+    "happy.mp3",
+    "owl.mp3",
+    "victory.mp3"
+  ],
   "wav": [
     "DragonHawkDeath1.wav",
     "gameover.wav",
     "jump.wav",
     "penguin_boom.wav",
     "penguin_drop.wav"
-  ],
-  "mp3": [
-    "happy.mp3",
-    "victory.mp3"
   ]
 }
