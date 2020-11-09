@@ -115,9 +115,9 @@ void Plane::GenerateTree()
 	--sLampStride;
 	if (sLampStride < 0)
 	{
-		sLampStride = 10;
+		sLampStride = 8;
 		auto tree = new Tree{ mGame, Tree::TreeType::kLamp };
-		tree->SetPosition(glm::vec3{ 0.0f, 4.0f, pos.z });
+		tree->SetPosition(glm::vec3{ 0.0f, 2.0f, pos.z });
 	}
 }
 

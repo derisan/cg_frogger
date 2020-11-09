@@ -46,7 +46,7 @@ uniform vec3 uViewPos;
 uniform sampler2D uTexture;
 
 #define NR_POINT_LIGHTS 1
-#define NR_SPOT_LIGHTS 20
+#define NR_SPOT_LIGHTS 10
 uniform DirLight uDirLight;
 uniform PointLight uPointLights[NR_POINT_LIGHTS];
 uniform SpotLight uSpotLights[NR_SPOT_LIGHTS];

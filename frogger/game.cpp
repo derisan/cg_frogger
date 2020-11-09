@@ -256,7 +256,7 @@ void Game::SetPhongUniforms()
 	mPhongShader->SetMatrix4Uniform("uView", mView);
 	mPhongShader->SetVectorUniform("uViewPos", mCameraPos);
 	mPhongShader->SetVectorUniform("uDirLight.direction", glm::vec3{ -12.0f, 0.0f, -0.1f });
-	mPhongShader->SetVectorUniform("uDirLight.ambient", glm::vec3{ 0.1f });
+	mPhongShader->SetVectorUniform("uDirLight.ambient", glm::vec3{ 0.0f });
 	mPhongShader->SetVectorUniform("uDirLight.diffuse", glm::vec3{ 1.0f });
 	mPhongShader->SetVectorUniform("uDirLight.specular", glm::vec3{ 1.0f });
 
@@ -277,15 +277,15 @@ void Game::SetPhongUniforms()
 		mPhongShader->SetVectorUniform(path + "diffuse", glm::vec3{ 0.8f });
 		mPhongShader->SetVectorUniform(path + "specular", glm::vec3{ 1.0f });
 		mPhongShader->SetFloatUniform(path + "constant", 1.0f);
-		mPhongShader->SetFloatUniform(path + "linear", 0.09f);
-		mPhongShader->SetFloatUniform(path + "quadratic", 0.032f);
+		mPhongShader->SetFloatUniform(path + "linear", 0.022f);
+		mPhongShader->SetFloatUniform(path + "quadratic", 0.0019f);
 
 		break;
 	}
 
 	// Spot light
 	int curVehicles{ 0 };
-	const int spotLimit{ 20 };
+	const int spotLimit{ 10 };
 	for (auto vehicle : mVehicles)
 	{
 		if (curVehicles >= spotLimit)
@@ -302,14 +302,14 @@ void Game::SetPhongUniforms()
 		mPhongShader->SetVectorUniform(path + "position", vehicle->GetPosition());
 		auto direction = -vehicle->GetRight() + glm::vec3{ 0.0f, -0.1f, 0.0f };
 		mPhongShader->SetVectorUniform(path + "direction", direction);
-		mPhongShader->SetVectorUniform(path + "ambient", glm::vec3{ 0.2f });
+		mPhongShader->SetVectorUniform(path + "ambient", glm::vec3{ 0.3f });
 		mPhongShader->SetVectorUniform(path + "diffuse", glm::vec3{ 1.0f });
 		mPhongShader->SetVectorUniform(path + "specular", glm::vec3{ 1.0f });
 		mPhongShader->SetFloatUniform(path + "constant", 1.0f);
-		mPhongShader->SetFloatUniform(path + "linear", 0.027f);
-		mPhongShader->SetFloatUniform(path + "quadratic", 0.0028f);
-		mPhongShader->SetFloatUniform(path + "cutOff", glm::cos(glm::radians(25.0f)));
-		mPhongShader->SetFloatUniform(path + "outerCutOff", glm::cos(glm::radians(35.0f)));
+		mPhongShader->SetFloatUniform(path + "linear", 0.0045f);
+		mPhongShader->SetFloatUniform(path + "quadratic", 0.0075f);
+		mPhongShader->SetFloatUniform(path + "cutOff", glm::cos(glm::radians(12.5f)));
+		mPhongShader->SetFloatUniform(path + "outerCutOff", glm::cos(glm::radians(17.5f)));
 
 		++curVehicles;
 	}
@@ -325,8 +325,8 @@ void Game::SetPhongUniforms()
 		mPhongShader->SetFloatUniform(path + "constant", 1.0f);
 		mPhongShader->SetFloatUniform(path + "linear", 0.027f);
 		mPhongShader->SetFloatUniform(path + "quadratic", 0.0028f);
-		mPhongShader->SetFloatUniform(path + "cutOff", glm::cos(glm::radians(25.0f)));
-		mPhongShader->SetFloatUniform(path + "outerCutOff", glm::cos(glm::radians(35.0f)));
+		mPhongShader->SetFloatUniform(path + "cutOff", glm::cos(glm::radians(12.5f)));
+		mPhongShader->SetFloatUniform(path + "outerCutOff", glm::cos(glm::radians(17.5f)));
 	}
 }
 
