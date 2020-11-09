@@ -21,6 +21,7 @@ LoadingScene::LoadingScene(Gfw* gfw)
 	mSpriteShader{ nullptr },
 	mMeshIdx{ 0 },
 	mSoundIdx{ 0 },
+	mCurIdx{ 0 },
 	mElapsed{ 0.0f }
 {
 
@@ -36,8 +37,6 @@ void LoadingScene::Enter()
 		std::cout << "Failed to read assets from json" << std::endl;
 		mGfw->PopScene();
 	}
-
-	new LoadingActor{ this };
 }
 
 void LoadingScene::Exit()
@@ -55,6 +54,14 @@ void LoadingScene::ProcessInput(unsigned char key)
 void LoadingScene::Update()
 {
 	mElapsed += dt;
+
+	for (; mCurIdx < mMeshIdx + mSoundIdx; ++mCurIdx)
+	{
+		if (mCurIdx >= 19)
+			break;
+		auto box = new LoadingActor{ this };
+		box->SetPosition(glm::vec3{ -0.9f + mCurIdx * 0.1f, -0.2f, 0.0f });
+	}
 
 	for (auto actor : mActors)
 		actor->Update();
@@ -77,8 +84,10 @@ void LoadingScene::Draw()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-
+	
+	glEnable(GL_BLEND);
+	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
+	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 	mSpriteShader->SetActive();
 	for (auto actor : mActors)
 		actor->Draw(mSpriteShader);
@@ -136,7 +145,7 @@ bool LoadingScene::ReadFromJson(const std::string& file)
 	const rapidjson::Value& wavs = doc["wav"];
 	if (!wavs.IsArray() || wavs.Size() < 1)
 	{
-		std::cout << file << " has no gpmesh." << std::endl;
+		std::cout << file << " has no wav." << std::endl;
 		return false;
 	}
 
@@ -149,7 +158,7 @@ bool LoadingScene::ReadFromJson(const std::string& file)
 	const rapidjson::Value& mp3s = doc["mp3"];
 	if (!mp3s.IsArray() || mp3s.Size() < 1)
 	{
-		std::cout << file << " has no gpmesh." << std::endl;
+		std::cout << file << " has no mp3." << std::endl;
 		return false;
 	}
 

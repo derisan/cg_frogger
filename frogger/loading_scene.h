@@ -33,6 +33,7 @@ private:
 
 	unsigned int mMeshIdx;
 	unsigned int mSoundIdx;
+	unsigned int mCurIdx;
 	float mElapsed;
 };
 
