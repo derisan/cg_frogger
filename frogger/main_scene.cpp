@@ -101,7 +101,7 @@ void MainScene::Update()
 	if (mGame->GetShouldCloseGame())
 		mGfw->ChangeScene("dead");
 
-	if (mGame->IsWin())
+	if (mGame && mGame->IsWin())
 		mGfw->ChangeScene("win");
 }
 
