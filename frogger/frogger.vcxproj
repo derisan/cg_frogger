@@ -50,6 +50,7 @@
     <ClCompile Include="sparticle.cpp" />
     <ClCompile Include="start_actor.cpp" />
     <ClCompile Include="start_scene.cpp" />
+    <ClCompile Include="sword.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="sparticle.h" />
     <ClInclude Include="start_actor.h" />
     <ClInclude Include="start_scene.h" />
+    <ClInclude Include="sword.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="utils.h" />

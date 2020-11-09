@@ -12,6 +12,7 @@
 #include "vehicle.h"
 #include "tree.h"
 #include "bomb.h"
+#include "sword.h"
 
 #include "renderer.h"
 #include "sound_engine.h"
@@ -86,6 +87,12 @@ void Game::ProcessInput(unsigned char key)
 	if (key == 32 && mSkillCooldown < 0.0f)
 	{
 		LaunchPenguinBombs();
+		mSkillCooldown = 5.0f;
+	}
+
+	else if ((key == 'c' || key == 'C') && mSkillCooldown < 0.0f)
+	{
+		new Sword{ this };
 		mSkillCooldown = 5.0f;
 	}
 
