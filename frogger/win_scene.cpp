@@ -13,6 +13,7 @@
 #include "sound_engine.h"
 #include "sparticle.h"
 #include "bunny.h"
+#include "random.h"
 
 WinScene::WinScene(Gfw* gfw)
 	: Scene{ gfw },
@@ -41,10 +42,19 @@ void WinScene::Enter()
 
 	mCurParticleNum = 0;
 
-	auto bunny1 = new Bunny{ this };
-	bunny1->SetPosition(glm::vec3{ -5.0f, 0.0f, -3.0f });
-	auto bunny2 = new Bunny{ this };
-	bunny2->SetPosition(glm::vec3{ 5.0f, 0.0f, -3.0f });
+	auto bunny = new Bunny{ this };
+	bunny->SetPosition(glm::vec3{ -5.0f, 0.0f, -3.0f });
+	bunny->SetRotation(Random::GetFloatRange(0.0f, 360.0f));
+	bunny = new Bunny{ this };
+	bunny->SetPosition(glm::vec3{ 5.0f, 0.0f, -3.0f });
+	bunny->SetRotation(Random::GetFloatRange(0.0f, 360.0f));
+	bunny = new Bunny{ this };
+	bunny->SetPosition(glm::vec3{ 2.5f, 0.0f, 1.5f });
+	bunny->SetRotation(Random::GetFloatRange(0.0f, 360.0f));
+	bunny = new Bunny{ this };
+	bunny->SetPosition(glm::vec3{ -2.5f, 0.0f, 1.5f });
+	bunny->SetRotation(Random::GetFloatRange(0.0f, 360.0f));
+	bunny = new Bunny{ this };
 
 	SoundEngine::Get()->Play("victory.mp3");
 }
