@@ -69,7 +69,7 @@ void WinScene::Update()
 {
 	if (mCurParticleNum < 30)
 	{
-		new SParticle{ this, glm::vec3{0.0f, 0.0f, 0.0f} };
+		new SParticle{ this, glm::vec3{0.0f, 0.0f, 0.0f}, SParticle::SParticleType::kCarrot };
 		++mCurParticleNum;
 	}
 

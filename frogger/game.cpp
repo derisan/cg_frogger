@@ -348,3 +348,13 @@ void Game::LaunchSkills()
 		new Skill{ this, vehicle };
 	}
 }
+
+bool Game::IsWin()
+{
+	const auto& playerPos = mPlayer->GetPosition();
+
+	if (playerPos.z == -2.0f * (mStage.size() - 1))
+		return true;
+
+	return false;
+}

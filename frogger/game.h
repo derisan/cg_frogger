@@ -29,6 +29,7 @@ public:
 
 	void LaunchSkills();
 	void SetPhongUniforms();
+	bool IsWin();
 
 	// Getters
 	std::vector<class Vehicle*>& GetVehicles() { return mVehicles; }
