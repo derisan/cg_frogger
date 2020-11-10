@@ -3,11 +3,12 @@ import os
 
 path = os.getcwd() + '/Assets'
 
+
 files = os.listdir(path)
 
 assets = {}
 
-needs = ['gpmesh', 'wav', 'mp3']
+needs = ['gpmesh', 'wav', 'mp3', 'jpg', 'png']
 
 for file in files:
     extension = file.split('.')[1]

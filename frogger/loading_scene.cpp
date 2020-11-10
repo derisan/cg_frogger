@@ -21,6 +21,7 @@ LoadingScene::LoadingScene(Gfw* gfw)
 	mSpriteShader{ nullptr },
 	mMeshIdx{ 0 },
 	mSoundIdx{ 0 },
+	mImgIdx{ 0 },
 	mCurIdx{ 0 },
 	mElapsed{ 0.0f }
 {
@@ -55,7 +56,7 @@ void LoadingScene::Update()
 {
 	mElapsed += dt;
 
-	for (; mCurIdx < mMeshIdx + mSoundIdx; ++mCurIdx)
+	for (; mCurIdx < mMeshIdx + mSoundIdx + mImgIdx; ++mCurIdx)
 	{
 		if (mCurIdx >= 19)
 			break;
@@ -75,6 +76,11 @@ void LoadingScene::Update()
 	{
 		SoundEngine::Get()->Create("Assets/" + mSoundFiles[mSoundIdx], mSoundFiles[mSoundIdx]);
 		std::cout << "Create music: " << mSoundFiles[mSoundIdx++] << std::endl;
+	}
+	else if (mImgIdx < mImgFiles.size())
+	{
+		mRenderer->GetTexture(mImgFiles[mImgIdx]);
+		std::cout << "Read texture: " << mImgFiles[mImgIdx++] << std::endl;
 	}
 	else if(mElapsed > 3.0f)
 		mGfw->ChangeScene("start");
@@ -129,6 +135,7 @@ bool LoadingScene::ReadFromJson(const std::string& file)
 		return false;
 	}
 
+	// gpmesh file
 	const rapidjson::Value& meshes = doc["gpmesh"];
 	if (!meshes.IsArray() || meshes.Size() < 1)
 	{
@@ -142,6 +149,7 @@ bool LoadingScene::ReadFromJson(const std::string& file)
 		mMeshFiles.push_back("Assets/" + meshName);
 	}
 
+	// wav file
 	const rapidjson::Value& wavs = doc["wav"];
 	if (!wavs.IsArray() || wavs.Size() < 1)
 	{
@@ -155,6 +163,7 @@ bool LoadingScene::ReadFromJson(const std::string& file)
 		mSoundFiles.push_back(soundName);
 	}
 
+	// mp3 file
 	const rapidjson::Value& mp3s = doc["mp3"];
 	if (!mp3s.IsArray() || mp3s.Size() < 1)
 	{
@@ -166,6 +175,34 @@ bool LoadingScene::ReadFromJson(const std::string& file)
 	{
 		std::string soundName = mp3s[i].GetString();
 		mSoundFiles.push_back(soundName);
+	}
+
+	// png
+	const rapidjson::Value& pngs = doc["png"];
+	if (!pngs.IsArray() || pngs.Size() < 1)
+	{
+		std::cout << file << " is unknown png file." << std::endl;
+		return false;
+	}
+
+	for (rapidjson::SizeType i = 0; i < pngs.Size(); i++)
+	{
+		std::string png = pngs[i].GetString();
+		mImgFiles.push_back("Assets/" + png);
+	}
+
+	// jpg
+	const rapidjson::Value& jpgs = doc["jpg"];
+	if (!jpgs.IsArray() || jpgs.Size() < 1)
+	{
+		std::cout << file << " is unknown jpg file." << std::endl;
+		return false;
+	}
+
+	for (rapidjson::SizeType i = 0; i < jpgs.Size(); i++)
+	{
+		std::string jpg = jpgs[i].GetString();
+		mImgFiles.push_back("Assets/" + jpg);
 	}
 
 	return true;

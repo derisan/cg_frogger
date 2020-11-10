@@ -27,12 +27,14 @@ private:
 	std::vector<class SceneActor*> mActors;
 	std::vector<std::string> mMeshFiles;
 	std::vector<std::string> mSoundFiles;
+	std::vector<std::string> mImgFiles;
 
 	class Renderer* mRenderer;
 	class Shader* mSpriteShader;
 
 	unsigned int mMeshIdx;
 	unsigned int mSoundIdx;
+	unsigned int mImgIdx;
 	unsigned int mCurIdx;
 	float mElapsed;
 };
