@@ -3,7 +3,7 @@
 	"vertexformat":"PosNormTex",
 	"shader":"BasicMesh",
 	"textures":[
-		"Assets/earth.jpg"
+		"Assets/moon.jpg"
 	],
 	"specularPower":100.0,
 	"vertices":[

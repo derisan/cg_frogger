@@ -30,7 +30,7 @@ void MainScene::Enter()
 
 	mGame = new Game{ this };
 	mSpriteShader = Renderer::Get()->GetShader("sprite");
-	mBackground = new Background{"Assets/space.jpg"};
+	mBackground = new Background{"Assets/earth.jpg"};
 
 	if (!mGame->Init())
 	{
