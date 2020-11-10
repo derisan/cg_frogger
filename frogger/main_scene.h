@@ -27,4 +27,5 @@ private:
 
 	class Game* mGame;
 	class Shader* mSpriteShader;
+	class Background* mBackground;
 };

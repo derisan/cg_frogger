@@ -132,6 +132,9 @@
     <ClCompile Include="sword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="background.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="actor.h">
@@ -248,6 +251,9 @@
     <ClInclude Include="sword.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="background.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\basicMesh.frag">
@@ -266,6 +272,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\phong.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\bg.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\bg.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

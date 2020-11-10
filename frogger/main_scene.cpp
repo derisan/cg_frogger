@@ -13,11 +13,13 @@
 #include "renderer.h"
 #include "shader.h"
 #include "plane.h"
+#include "background.h"
 
 MainScene::MainScene(Gfw* gfw)
 	: Scene{ gfw },
 	mGame{ nullptr },
-	mSpriteShader{ nullptr }
+	mSpriteShader{ nullptr },
+	mBackground{ nullptr }
 {
 
 }
@@ -28,6 +30,7 @@ void MainScene::Enter()
 
 	mGame = new Game{ this };
 	mSpriteShader = Renderer::Get()->GetShader("sprite");
+	mBackground = new Background{"Assets/earth.jpg"};
 
 	if (!mGame->Init())
 	{
@@ -50,6 +53,8 @@ void MainScene::Exit()
 	mGame->Shutdown();
 	delete mGame;
 	mGame = nullptr;
+
+	delete mBackground;
 
 	while (!mActors.empty())
 		delete mActors.back();
@@ -116,6 +121,7 @@ void MainScene::Draw()
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_BLEND);
 
+	mBackground->Draw();
 	mGame->Draw();
 
 	glDisable(GL_DEPTH_TEST);

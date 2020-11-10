@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="aabb.cpp" />
     <ClCompile Include="actor.cpp" />
+    <ClCompile Include="background.cpp" />
     <ClCompile Include="bomb.cpp" />
     <ClCompile Include="box_component.cpp" />
     <ClCompile Include="bunny.cpp" />
@@ -62,6 +63,7 @@
   <ItemGroup>
     <ClInclude Include="aabb.h" />
     <ClInclude Include="actor.h" />
+    <ClInclude Include="background.h" />
     <ClInclude Include="bomb.h" />
     <ClInclude Include="box_component.h" />
     <ClInclude Include="bunny.h" />
@@ -102,6 +104,8 @@
   <ItemGroup>
     <None Include="Shaders\basicMesh.frag" />
     <None Include="Shaders\basicMesh.vert" />
+    <None Include="Shaders\bg.frag" />
+    <None Include="Shaders\bg.vert" />
     <None Include="Shaders\phong.frag" />
     <None Include="Shaders\phong.vert" />
     <None Include="Shaders\sprite.frag" />
@@ -172,7 +176,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgEnabled>true</VcpkgEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
