@@ -84,8 +84,7 @@ void WinScene::Update()
 {
 	if (mCurParticleNum < 30)
 	{
-		auto particle = new SParticle{ this, glm::vec3{-7.0f, -5.0f, 0.0f}, SParticle::SParticleType::kCarrot };
-		particle->SetVelocity(glm::vec3{ Random::GetFloatRange(6.0f, 7.0f), Random::GetFloatRange(6.0f, 8.0f), 0.0f });
+		new SParticle{ this, glm::vec3{0.0f, 0.0f, 0.0f}, SParticle::SParticleType::kCarrot };
 		++mCurParticleNum;
 	}
 

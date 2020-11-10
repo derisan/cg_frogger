@@ -15,9 +15,6 @@ public:
     void UpdateSceneActor() override;
     void Draw(class Shader* shader) override;
 
-    // Setters
-    void SetVelocity(const glm::vec3& vel) { mVelocity = vel; }
-
 private:
     class Mesh* mMesh;
 
