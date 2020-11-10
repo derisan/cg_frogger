@@ -36,6 +36,7 @@ private:
 	unsigned int mSoundIdx;
 	unsigned int mImgIdx;
 	unsigned int mCurIdx;
+	unsigned int mTotalFiles;
 	float mElapsed;
 };
 

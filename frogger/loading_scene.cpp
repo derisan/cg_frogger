@@ -23,6 +23,7 @@ LoadingScene::LoadingScene(Gfw* gfw)
 	mSoundIdx{ 0 },
 	mImgIdx{ 0 },
 	mCurIdx{ 0 },
+	mTotalFiles{ 0 },
 	mElapsed{ 0.0f }
 {
 
@@ -38,6 +39,8 @@ void LoadingScene::Enter()
 		std::cout << "Failed to read assets from json" << std::endl;
 		mGfw->PopScene();
 	}
+
+	mTotalFiles = mMeshFiles.size() + mSoundFiles.size() + mImgFiles.size();
 }
 
 void LoadingScene::Exit()
@@ -58,10 +61,9 @@ void LoadingScene::Update()
 
 	for (; mCurIdx < mMeshIdx + mSoundIdx + mImgIdx; ++mCurIdx)
 	{
-		if (mCurIdx >= 19)
-			break;
 		auto box = new LoadingActor{ this };
-		box->SetPosition(glm::vec3{ -0.9f + mCurIdx * 0.1f, -0.2f, 0.0f });
+		box->SetPosition(glm::vec3{ -0.9f + (1.8f / mTotalFiles) * mCurIdx, -0.2f, 0.0f });
+		box->SetScale(1.8f / mTotalFiles);
 	}
 
 	for (auto actor : mActors)

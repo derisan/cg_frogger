@@ -15,18 +15,11 @@ LoadingActor::LoadingActor(Scene* scene)
 {
 	mVertexArray = Renderer::GetSpriteVertexArray();
 	mTexture = Renderer::Get()->GetTexture("Assets/white.png");
-
-	SetScale(0.1f);
-	SetAxis(glm::vec3{ 0.0f, 0.0f, 1.0f });
 }
 
 void LoadingActor::UpdateSceneActor()
 {
 	SceneActor::UpdateSceneActor();
-
-	//mAngle += dt;
-
-	//SetRotation(mAngle * 65);
 }
 
 void LoadingActor::Draw(Shader* shader)
